@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.translate.R;
-import com.example.translate.ui.dashboard.BlankFragment;
+import com.example.translate.ui.dashboard.LearningFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.nav_host_fragment, new BlankFragment(), "NewFragmentTag");
+                ft.replace(R.id.nav_host_fragment, new LearningFragment(), "NewFragmentTag");
                 ft.commit();
                 ft.addToBackStack(null);
             }
@@ -48,5 +48,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    // TODO: add scrolling space
+    // TODO: move start button to RHS
+    // TODO: add bookmark icon button
 }

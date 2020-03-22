@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         mBtnSplash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_main);
+                setContentView(R.layout.activity_main);////
             }
         });
 

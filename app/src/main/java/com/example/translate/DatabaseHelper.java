@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "language.db";
-	private static final String TABLE_NAME = "content_table";
-	private static final String COL_1 = "id_pk";
-	private static final String COL_2 = "phrase";
-	private static final String COL_3 = "category";
-	private static final String COL_4 = "learned";
+    private static final String TABLE_NAME = "content_table";
+    private static final String COL_1 = "id_pk";
+    private static final String COL_2 = "phrase";
+    private static final String COL_3 = "category";
+    private static final String COL_4 = "learned";
 
 
     public DatabaseHelper(Context context) {
@@ -41,22 +41,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_3, category);
         contentValues.put(COL_4, learned);
         long result = db.insert(TABLE_NAME, null, contentValues);
-		return result != -1;
+        return result != -1;
 
 
     }
 
-    public Cursor getAllData(){
-		SQLiteDatabase db = this.getWritableDatabase();
-    	Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-    	return res;
+    public Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return res;
 
     }
 
-    public void dropTable(){
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		onCreate(db);
-	}
+    public Cursor getCategory(String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE category = '" + category + "'", null);
+        return res;
+    }
+
+
+    public void dropTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+
 
 }

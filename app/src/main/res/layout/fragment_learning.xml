@@ -11,7 +11,7 @@
         android:layout_height="384dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         app:cardElevation="4dp"
@@ -134,47 +134,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/txtPhrase"
-        android:layout_width="59dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginBottom="90dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintStart_toEndOf="@+id/txtId" />
-
-    <TextView
-        android:id="@+id/txtId"
+    <Button
+        android:id="@+id/btnDropTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginBottom="90dp"
-        android:text="TextView"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="droptable"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/txtCategory"
+    <Button
+        android:id="@+id/btnAddValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginBottom="90dp"
-        android:text="TextView"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:text="addvalues"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintEnd_toStartOf="@+id/txtLearned" />
+        app:layout_constraintEnd_toStartOf="@+id/btnShowValues"
+        app:layout_constraintStart_toEndOf="@+id/btnDropTable" />
 
-    <TextView
-        android:id="@+id/txtLearned"
+    <Button
+        android:id="@+id/btnShowValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginBottom="90dp"
-        android:text="TextView"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:text="showvalues"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

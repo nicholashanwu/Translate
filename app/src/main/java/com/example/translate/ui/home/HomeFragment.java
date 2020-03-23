@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.translate.R;
-import com.example.translate.ui.dashboard.LearningFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -24,7 +23,6 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
 
         return root;
     }
@@ -48,7 +46,5 @@ public class HomeFragment extends Fragment {
 
     }
 
-    // TODO: add scrolling space
-    // TODO: move start button to RHS
     // TODO: add bookmark icon button
 }

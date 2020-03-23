@@ -9,7 +9,8 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="560dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -35,7 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:contentPadding="8dp">
 
                 <LinearLayout
@@ -72,27 +73,36 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="128dp"
+                            android:layout_width="192dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
                             android:text="Learn how to count. 3, 2, 1, let's go!" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivNumbers"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="16dp"
+                            android:src="@android:mipmap/sym_def_app_icon" />
 
                         <Button
                             android:id="@+id/btnStartNumbers"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
+                            android:layout_marginTop="16dp"
                             android:text="START" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/ivNumbers"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="92dp"
-                        android:src="@android:mipmap/sym_def_app_icon" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -102,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:contentPadding="8dp">
 
                 <LinearLayout
@@ -139,27 +149,36 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="128dp"
+                            android:layout_width="192dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
                             android:text="Learn how to meet and greet your new friends!" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivGreetings"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="16dp"
+                            android:src="@android:mipmap/sym_def_app_icon" />
 
                         <Button
                             android:id="@+id/btnStartGreetings"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
+                            android:layout_marginTop="16dp"
                             android:text="START" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/ivGreetings"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="92dp"
-                        android:src="@android:mipmap/sym_def_app_icon" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -169,7 +188,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp"
+                app:cardElevation="4dp"
                 app:contentPadding="8dp">
 
                 <LinearLayout
@@ -201,32 +220,41 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
-                            android:text="Greetings"
+                            android:text="Food"
                             android:textSize="24sp" />
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="128dp"
+                            android:layout_width="192dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
                             android:text="Learn to order Maccas and some weird shit!" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/ivFood"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginTop="16dp"
+                            android:src="@android:mipmap/sym_def_app_icon" />
 
                         <Button
                             android:id="@+id/btnStartFood"
                             style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="32dp"
+                            android:layout_marginTop="16dp"
                             android:text="START" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/ivFood"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="92dp"
-                        android:src="@android:mipmap/sym_def_app_icon" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

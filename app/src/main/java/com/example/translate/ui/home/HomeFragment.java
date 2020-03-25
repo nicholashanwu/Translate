@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
 
 	}
 
-	
+
 
 	// TODO: add bookmark icon button
 }

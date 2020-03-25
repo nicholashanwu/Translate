@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.provider.ContactsContract;
@@ -15,7 +16,15 @@ import android.widget.TextView;
 
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
+import com.example.translate.Translater;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -36,6 +45,8 @@ public class LearningFragment extends Fragment {
     private TextView mTxtCategory;
     private TextView mTxtLearned;
     private TextView mTxtChineseCharacter;
+
+
 
     private DatabaseHelper myDb;
 
@@ -78,6 +89,30 @@ public class LearningFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
+
+        Translater translater = new Translater();
+        translater.checkModelExists(translater.configure());
+
+//        translater.configure().translate("再见")
+//                .addOnSuccessListener(
+//                        new OnSuccessListener<String>() {
+//                            @Override
+//                            public void onSuccess(@NonNull String translatedText) {
+//                                System.out.println(translatedText);
+//
+//                                // Translation successful.
+//                            }
+//                        })
+//                .addOnFailureListener(
+//                        new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                System.out.println("ERROR");// Error.
+//                                // ...
+//                            }
+//                        });
+
+
 
 
 

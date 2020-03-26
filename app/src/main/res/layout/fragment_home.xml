@@ -9,265 +9,274 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="175dp"
                 android:elevation="-90dp"
                 android:fadingEdge="none"
+
                 android:fadingEdgeLength="100dp"
                 android:requiresFadingEdge="none"
                 android:src="@drawable/temple_heaven_768" />
 
-            <TextView
-                android:id="@+id/txtHome"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="0dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Lingo Pal"
-                android:textSize="30sp" />
+                android:layout_marginTop="90dp"
+                android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:contentPadding="8dp">
+                <TextView
+                    android:id="@+id/txtHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="36dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="0dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Lingo Pal"
+                    android:textColor="#FFFFFF"
+                    android:textSize="36sp" />
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtLevelOne"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:letterSpacing="0.1"
-                            android:lineSpacingExtra="0dp"
-                            android:padding="0dp"
-                            android:text="LEVEL 1"
-                            android:textSize="10dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Numbers"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="192dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Learn how to count. 3, 2, 1, let's go!" />
-
-                    </LinearLayout>
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/ivNumbers"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginTop="16dp"
-                            android:src="@android:mipmap/sym_def_app_icon" />
-
-                        <Button
-                            android:id="@+id/btnStartNumbers"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="START" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtLevelOne"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:letterSpacing="0.1"
+                                android:lineSpacingExtra="0dp"
+                                android:padding="0dp"
+                                android:text="LEVEL 1"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Numbers"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="192dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Learn how to count. 3, 2, 1, let's go!" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/ivNumbers"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="16dp"
+                                android:src="@android:mipmap/sym_def_app_icon" />
+
+                            <Button
+                                android:id="@+id/btnStartNumbers"
+                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="START" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:contentPadding="8dp">
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtLevelTwo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:letterSpacing="0.1"
-                            android:lineSpacingExtra="0dp"
-                            android:padding="0dp"
-                            android:text="LEVEL 2"
-                            android:textSize="10dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Greetings"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="192dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Learn how to meet and greet your new friends!" />
-
-                    </LinearLayout>
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/ivGreetings"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginTop="16dp"
-                            android:src="@android:mipmap/sym_def_app_icon" />
-
-                        <Button
-                            android:id="@+id/btnStartGreetings"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="START" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtLevelTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:letterSpacing="0.1"
+                                android:lineSpacingExtra="0dp"
+                                android:padding="0dp"
+                                android:text="LEVEL 2"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Greetings"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="192dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Learn how to meet and greet your new friends!" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/ivGreetings"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="16dp"
+                                android:src="@android:mipmap/sym_def_app_icon" />
+
+                            <Button
+                                android:id="@+id/btnStartGreetings"
+                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="START" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="4dp"
-                app:contentPadding="8dp">
-
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtLevelThree"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:letterSpacing="0.1"
-                            android:lineSpacingExtra="0dp"
-                            android:padding="0dp"
-                            android:text="LEVEL 2"
-                            android:textSize="10dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Food"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="192dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:text="Learn to order Maccas and some weird shit!" />
-
-                    </LinearLayout>
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/ivFood"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginTop="16dp"
-                            android:src="@android:mipmap/sym_def_app_icon" />
-
-                        <Button
-                            android:id="@+id/btnStartFood"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="START" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtLevelThree"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:letterSpacing="0.1"
+                                android:lineSpacingExtra="0dp"
+                                android:padding="0dp"
+                                android:text="LEVEL 2"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Food"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="192dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="Learn to order Maccas and some weird shit!" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/ivFood"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="16dp"
+                                android:src="@android:mipmap/sym_def_app_icon" />
+
+                            <Button
+                                android:id="@+id/btnStartFood"
+                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="START" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

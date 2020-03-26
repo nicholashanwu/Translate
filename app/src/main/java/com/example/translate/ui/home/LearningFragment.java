@@ -39,25 +39,21 @@ public class LearningFragment extends Fragment {
     private Button mBtnAddValues;
     private Button mBtnShowValues;
 
-
     private TextView mTxtId;
     private TextView mTxtPhrase;
     private TextView mTxtCategory;
     private TextView mTxtLearned;
     private TextView mTxtChineseCharacter;
 
-
-
     private DatabaseHelper myDb;
 
     private int currentCardNumber = 0;
-    ArrayList<String> categoryList = new ArrayList<>();
-
+    ArrayList<String> categoryListEn = new ArrayList<>();
+    ArrayList<String> categoryListCn = new ArrayList<>();
 
     public LearningFragment() {
         // Required empty public constructor
     }
-
 
     public static LearningFragment newInstance(String param1, String param2) {
         LearningFragment fragment = new LearningFragment();
@@ -75,7 +71,6 @@ public class LearningFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     private void showMessage(String title, String message) {
@@ -93,7 +88,7 @@ public class LearningFragment extends Fragment {
         Translater translater = new Translater();
         translater.checkModelExists(translater.configure());
 
-//        translater.configure().translate("再见")
+//        translater.configure().translate("bye")
 //                .addOnSuccessListener(
 //                        new OnSuccessListener<String>() {
 //                            @Override
@@ -113,12 +108,8 @@ public class LearningFragment extends Fragment {
 //                        });
 
 
-
-
-
         myDb = new DatabaseHelper(getContext());
         myDb.dropTable();
-
 
         mFabAnswer = view.findViewById(R.id.fabAnswer);
         mFabSave = view.findViewById(R.id.fabSave);
@@ -132,40 +123,37 @@ public class LearningFragment extends Fragment {
 //        myDb.insertData("phrase", "category", true);
 //        myDb.insertData("phrase", "category", true);
 //        myDb.insertData("phrase", "category", true);
-        myDb.insertData("one", "numbers", true);
-        myDb.insertData("two", "numbers", true);
-        myDb.insertData("three", "numbers", true);
-        myDb.insertData("four", "numbers", true);
-        myDb.insertData("seven", "numbers", false);
-        myDb.insertData("hello", "greetings", true);
-        myDb.insertData("bye", "greetings", false);
-        myDb.insertData("pizza", "food", true);
-        myDb.insertData("sushi", "food", true);
+        myDb.insertData("one", "一", "numbers", true, false);
+        myDb.insertData("two", "二", "numbers", true, false);
+        myDb.insertData("three", "三", "numbers", true, false);
+        myDb.insertData("four", "四", "numbers", true, false);
+        myDb.insertData("seven", "七", "numbers", false, false);
+        myDb.insertData("hello", "你好", "greetings", true, false);
+        myDb.insertData("bye", "再见", "greetings", false, false);
+        myDb.insertData("pizza", "比萨", "food", true, false);
+        myDb.insertData("sushi", "寿司", "food", true, false);
 
         Cursor res = myDb.getCategory("numbers");
 
-        StringBuffer buffer = new StringBuffer();
-
         while (res.moveToNext()) {
-            buffer.append(res.getString(1));
-            categoryList.add(res.getString(1));
-            System.out.println(categoryList.size());
-        }
+            categoryListEn.add(res.getString(1));
+            categoryListCn.add(res.getString(2));                              //display English or Chinese
 
-        System.out.println(buffer.toString());
+            //System.out.println(categoryList.size());
+        }
 
         mBtnAddValues.setOnClickListener(new View.OnClickListener() {        //adds sample data if the row exists
             @Override
             public void onClick(View view) {
-                myDb.insertData("one", "numbers", true);
-                myDb.insertData("two", "numbers", true);
-                myDb.insertData("three", "numbers", true);
-                myDb.insertData("four", "numbers", true);
-                myDb.insertData("seven", "numbers", false);
-                myDb.insertData("hello", "greetings", true);
-                myDb.insertData("bye", "greetings", false);
-                myDb.insertData("pizza", "food", true);
-                myDb.insertData("sushi", "food", true);
+                myDb.insertData("one", "一", "numbers", true, false);
+                myDb.insertData("two", "二", "numbers", true, false);
+                myDb.insertData("three", "三", "numbers", true, false);
+                myDb.insertData("four", "四", "numbers", true, false);
+                myDb.insertData("seven", "七", "numbers", false, false);
+                myDb.insertData("hello", "你好", "greetings", true, false);
+                myDb.insertData("bye", "再见", "greetings", false, false);
+                myDb.insertData("pizza", "比萨", "food", true, false);
+                myDb.insertData("sushi", "寿司", "food", true, false);
             }
         });
 
@@ -179,29 +167,16 @@ public class LearningFragment extends Fragment {
                     StringBuffer buffer = new StringBuffer();
                     while (res.moveToNext()) {
                         buffer.append("Id: " + res.getString(0));
-                        buffer.append("\nPhrase: " + res.getString(1));
-                        buffer.append("\nCategory: " + res.getString(2));
-                        buffer.append("\nLearned: " + res.getString(3) + "\n\n");
+                        buffer.append("\nPhraseEn: " + res.getString(1));
+                        buffer.append("\nPhraseCn: " + res.getString(2));
+                        buffer.append("\nCategory: " + res.getString(3));
+                        buffer.append("\nLearned: " + res.getString(4));
+                        buffer.append("\nSaved: " + res.getString(5) + "\n\n");
                     }
                     showMessage("Data", buffer.toString());
                 }
             }
         });
-
-        mFabDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (currentCardNumber < categoryList.size()) {
-                    mTxtChineseCharacter.setText(categoryList.get(currentCardNumber));
-                    System.out.println(currentCardNumber);
-                    currentCardNumber++;
-
-                } else {
-                    mTxtChineseCharacter.setText("You're Finished!");
-                }
-            }
-        });
-
 
         mBtnDropTable.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +187,50 @@ public class LearningFragment extends Fragment {
             }
         });
 
+        mFabDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentCardNumber++;
+                if (currentCardNumber < categoryListEn.size()) {
+                    mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
+                    System.out.println(currentCardNumber);
+                } else {
+                    mTxtChineseCharacter.setText("You're Finished!");
+                }
+            }
+        });
+
+        mFabSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res = myDb.getSave(categoryListEn.get(currentCardNumber));
+                while(res.moveToNext()){
+                    if(res.getInt(5) == 0){
+                        myDb.updateSave(categoryListEn.get(currentCardNumber), true);
+                        mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+                    } else {
+                        myDb.updateSave(categoryListEn.get(currentCardNumber), false);
+                        mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+                    }
+                }
+            }
+        });
+
+        mFabAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mTxtChineseCharacter.getText().equals(categoryListCn.get(currentCardNumber))){
+                    mTxtChineseCharacter.setText(categoryListEn.get(currentCardNumber));
+                    mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
+                } else {
+                    mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
+                    mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
+                }
+
+
+                //show English version
+            }
+        });
 
         return view;
     }

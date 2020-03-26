@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.translate.DatabaseHelper;
@@ -38,16 +39,20 @@ public class LearningFragment extends Fragment {
     private Button mBtnDropTable;
     private Button mBtnAddValues;
     private Button mBtnShowValues;
-
+    private ProgressBar mProgressBar;
     private TextView mTxtId;
     private TextView mTxtPhrase;
     private TextView mTxtCategory;
     private TextView mTxtLearned;
     private TextView mTxtChineseCharacter;
+    private TextView mTxtProgress;
+
 
     private DatabaseHelper myDb;
 
     private int currentCardNumber = 0;
+    private double progressDouble = 0;
+    private int progressInt = 0;
     ArrayList<String> categoryListEn = new ArrayList<>();
     ArrayList<String> categoryListCn = new ArrayList<>();
 
@@ -68,8 +73,6 @@ public class LearningFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -107,7 +110,6 @@ public class LearningFragment extends Fragment {
 //                            }
 //                        });
 
-
         myDb = new DatabaseHelper(getContext());
         myDb.dropTable();
 
@@ -117,12 +119,11 @@ public class LearningFragment extends Fragment {
         mBtnDropTable = view.findViewById(R.id.btnDropTable);
         mBtnAddValues = view.findViewById(R.id.btnAddValues);
         mBtnShowValues = view.findViewById(R.id.btnShowValues);
+        mProgressBar = view.findViewById(R.id.progressBar);
+        mTxtProgress = view.findViewById(R.id.txtProgress);
 
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
 
-//        myDb.insertData("phrase", "category", true);
-//        myDb.insertData("phrase", "category", true);
-//        myDb.insertData("phrase", "category", true);
         myDb.insertData("one", "一", "numbers", true, false);
         myDb.insertData("two", "二", "numbers", true, false);
         myDb.insertData("three", "三", "numbers", true, false);
@@ -138,9 +139,12 @@ public class LearningFragment extends Fragment {
         while (res.moveToNext()) {
             categoryListEn.add(res.getString(1));
             categoryListCn.add(res.getString(2));                              //display English or Chinese
-
-            //System.out.println(categoryList.size());
         }
+
+        mProgressBar.setProgress(0);
+        mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
+
+        mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
 
         mBtnAddValues.setOnClickListener(new View.OnClickListener() {        //adds sample data if the row exists
             @Override
@@ -190,12 +194,19 @@ public class LearningFragment extends Fragment {
         mFabDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 currentCardNumber++;
                 if (currentCardNumber < categoryListEn.size()) {
+
                     mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
-                    System.out.println(currentCardNumber);
+                    progressDouble = (double) 100 * (currentCardNumber)/categoryListCn.size();
+                    progressInt = (int) progressDouble;
+                    mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
+                    mProgressBar.setProgress(progressInt, true);
                 } else {
                     mTxtChineseCharacter.setText("You're Finished!");
+                    mTxtProgress.setText("");
+                    mProgressBar.setProgress(100, true);
                 }
             }
         });

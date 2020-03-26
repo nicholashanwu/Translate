@@ -6,16 +6,30 @@
     android:layout_height="match_parent"
     android:transitionGroup="true"
     tools:targetApi="lollipop"
-    tools:context=".ui.dashboard.BlankFragment" >
+    tools:context=".ui.home.LearningFragment" >
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginEnd="150dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/circle"
+        android:translationZ="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="300dp"
         android:layout_height="384dp"
         android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="128dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,12 +43,20 @@
             <TextView
                 android:id="@+id/txtChineseCharacter"
                 android:layout_width="200dp"
-                android:layout_height="256dp"
+                android:layout_height="244dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="ChineseCharacter4535245325345235"
                 android:textAlignment="center"
-                android:textSize="36sp" />
+                android:textSize="64dp" />
+
+            <TextView
+                android:id="@+id/txtProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="progress"
+                android:textAlignment="textStart" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,10 +133,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginLeft="150dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="150dp"
-        android:layout_marginRight="150dp"
         android:fontFamily="@font/quicksand_bold"
         android:text="Level 1: Numbers"
         android:textSize="30sp"
@@ -122,54 +142,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginBottom="44dp"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/btnDropTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
         android:text="droptable"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <Button
         android:id="@+id/btnAddValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:text="addvalues"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toStartOf="@+id/btnShowValues"
-        app:layout_constraintStart_toEndOf="@+id/btnDropTable" />
+        app:layout_constraintStart_toEndOf="@+id/btnDropTable"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <Button
         android:id="@+id/btnShowValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
         android:text="showvalues"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

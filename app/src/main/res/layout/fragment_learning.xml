@@ -46,7 +46,7 @@
                 android:layout_height="244dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center|center_horizontal|center_vertical"
-                android:text="ChineseCharacter4535245325345235"
+                android:text="@string/phrase_placeholder"
                 android:textAlignment="center"
                 android:textSize="64dp" />
 
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="progress"
+                android:text="@string/progress_placeholder"
                 android:textAlignment="textStart" />
 
             <LinearLayout
@@ -136,7 +136,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="150dp"
         android:fontFamily="@font/quicksand_bold"
-        android:text="Level 1: Numbers"
+        android:text="@string/learning_category_numbers"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -177,13 +177,13 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:letterSpacing="0.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
-        android:text="LEARNING"
+        android:letterSpacing="0.1"
+        android:text="@string/assessment_learning"
         android:textAlignment="center"
         android:textSize="14sp"
         android:textStyle="bold"

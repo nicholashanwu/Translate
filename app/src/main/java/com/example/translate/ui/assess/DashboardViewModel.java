@@ -1,4 +1,4 @@
-package com.example.translate.ui.dashboard;
+package com.example.translate.ui.assess;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -17,18 +17,22 @@ import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.example.translate.R;
+import com.example.translate.ui.profile.ProfileFragment;
 
 public class HomeFragment extends Fragment {
 
-	private HomeViewModel homeViewModel;
 	private Button mBtnStartNumbers;
+	private Button mBtnStartGreetings;
+	private Button mBtnStartFood;
+	private Button mBtnStartHelp;
+	private CircleImageView mBtnProfileImage;
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
-		homeViewModel =
-				ViewModelProviders.of(this).get(HomeViewModel.class);
+
 		View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 		return root;
@@ -40,6 +44,11 @@ public class HomeFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		mBtnStartNumbers = (Button) view.findViewById(R.id.btnStartNumbers);
+		mBtnStartGreetings = (Button) view.findViewById(R.id.btnStartGreetings);
+		mBtnStartFood = (Button) view.findViewById(R.id.btnStartFood);
+		mBtnStartHelp = (Button) view.findViewById(R.id.btnStartHelp);
+		mBtnProfileImage = (CircleImageView) view.findViewById(R.id.btnProfileImage);
+
 		mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
 			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 			@Override
@@ -64,6 +73,20 @@ public class HomeFragment extends Fragment {
 
 			}
 		});
+
+		mBtnProfileImage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+
+				final FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+				ft.replace(R.id.nav_host_fragment, new ProfileFragment(), "NewFragmentTag");
+				ft.commit();
+				ft.addToBackStack(null);
+			}
+		});
+
+
 
 
 	}

@@ -199,7 +199,7 @@ public class LearningFragment extends Fragment {
                 if (currentCardNumber < categoryListEn.size()) {
 
                     mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
-                    progressDouble = (double) 100 * (currentCardNumber)/categoryListCn.size();
+                    progressDouble = (double) 100 * (currentCardNumber) / categoryListCn.size();
                     progressInt = (int) progressDouble;
                     mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
                     mProgressBar.setProgress(progressInt, true);
@@ -215,8 +215,8 @@ public class LearningFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Cursor res = myDb.getSave(categoryListEn.get(currentCardNumber));
-                while(res.moveToNext()){
-                    if(res.getInt(5) == 0){
+                while (res.moveToNext()) {
+                    if (res.getInt(5) == 0) {
                         myDb.updateSave(categoryListEn.get(currentCardNumber), true);
                         mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
                     } else {
@@ -230,7 +230,7 @@ public class LearningFragment extends Fragment {
         mFabAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mTxtChineseCharacter.getText().equals(categoryListCn.get(currentCardNumber))){
+                if (mTxtChineseCharacter.getText().equals(categoryListCn.get(currentCardNumber))) {
                     mTxtChineseCharacter.setText(categoryListEn.get(currentCardNumber));
                     mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
                 } else {

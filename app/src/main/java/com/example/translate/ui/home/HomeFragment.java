@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,22 +55,17 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 
-//			    Fragment f = new LearningFragment();
-//			    f.setEnterTransition(new Slide(Gravity.BOTTOM));
-//			    f.setExitTransition(new Slide(Gravity.TOP));
-//
-//
-//				final FragmentTransaction ft = getFragmentManager().beginTransaction();
-//				ft.replace(R.id.nav_host_fragment, f, "NewFragmentTag");
-//				ft.commit();
-//				ft.addToBackStack(null);
+				FragmentManager manager = getFragmentManager();
+				FragmentTransaction transaction = manager.beginTransaction();
+				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+				Fragment fragment = new LearningFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("learningType", "numbers");
+				fragment.setArguments(bundle);
+				transaction.replace(R.id.nav_host_fragment, fragment);
+				transaction.commit();
+				transaction.addToBackStack(null);
 
-
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-                ft.replace(R.id.nav_host_fragment, new LearningFragment(), "NewFragmentTag");
-                ft.commit();
-                ft.addToBackStack(null);
 
 			}
 		});
@@ -86,12 +82,6 @@ public class HomeFragment extends Fragment {
 			}
 		});
 
-
-
-
 	}
 
-
-
-	// TODO: add bookmark icon button
 }

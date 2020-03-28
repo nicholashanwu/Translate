@@ -53,6 +53,8 @@ public class LearningFragment extends Fragment {
     private int currentCardNumber = 0;
     private double progressDouble = 0;
     private int progressInt = 0;
+    private String learningType;
+
     ArrayList<String> categoryListEn = new ArrayList<>();
     ArrayList<String> categoryListCn = new ArrayList<>();
 
@@ -87,6 +89,8 @@ public class LearningFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
+
+        String learningType = getArguments().getString("learningType");
 
         Translater translater = new Translater();
         translater.checkModelExists(translater.configure());
@@ -124,42 +128,33 @@ public class LearningFragment extends Fragment {
 
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
 
-        myDb.insertData("one", "一", "numbers", true, false);
-        myDb.insertData("two", "二", "numbers", true, false);
-        myDb.insertData("three", "三", "numbers", true, false);
-        myDb.insertData("four", "四", "numbers", true, false);
-        myDb.insertData("seven", "七", "numbers", false, false);
-        myDb.insertData("hello", "你好", "greetings", true, false);
-        myDb.insertData("bye", "再见", "greetings", false, false);
-        myDb.insertData("pizza", "比萨", "food", true, false);
-        myDb.insertData("sushi", "寿司", "food", true, false);
 
-        Cursor res = myDb.getCategory("numbers");
+        insertSampleData();
+
+
+        // Grab Data
+        Cursor res;
+
+        if(learningType.equals("saved")){
+            res = myDb.getSaved();
+        } else if (learningType.equals("learned")) {
+            res = myDb.getLearned();
+        } else {
+            res = myDb.getCategory(learningType);
+        }
 
         while (res.moveToNext()) {
             categoryListEn.add(res.getString(1));
+
             categoryListCn.add(res.getString(2));                              //display English or Chinese
         }
-
+        // Set Progress and advance it
         mProgressBar.setProgress(0);
         mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
 
         mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
 
-        mBtnAddValues.setOnClickListener(new View.OnClickListener() {        //adds sample data if the row exists
-            @Override
-            public void onClick(View view) {
-                myDb.insertData("one", "一", "numbers", true, false);
-                myDb.insertData("two", "二", "numbers", true, false);
-                myDb.insertData("three", "三", "numbers", true, false);
-                myDb.insertData("four", "四", "numbers", true, false);
-                myDb.insertData("seven", "七", "numbers", false, false);
-                myDb.insertData("hello", "你好", "greetings", true, false);
-                myDb.insertData("bye", "再见", "greetings", false, false);
-                myDb.insertData("pizza", "比萨", "food", true, false);
-                myDb.insertData("sushi", "寿司", "food", true, false);
-            }
-        });
+
 
         mBtnShowValues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +209,7 @@ public class LearningFragment extends Fragment {
         mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor res = myDb.getSave(categoryListEn.get(currentCardNumber));
+                Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
                 while (res.moveToNext()) {
                     if (res.getInt(5) == 0) {
                         myDb.updateSave(categoryListEn.get(currentCardNumber), true);
@@ -245,4 +240,61 @@ public class LearningFragment extends Fragment {
 
         return view;
     }
+
+    public void insertSampleData() {
+        myDb.insertData("One", "一", "numbers", true, false);
+        myDb.insertData("Two", "二", "numbers", true, false);
+        myDb.insertData("Three", "三", "numbers", true, false);
+        myDb.insertData("Four", "四", "numbers", true, false);
+        myDb.insertData("Five", "五", "numbers", true, false);
+        myDb.insertData("Six", "六", "numbers", true, false);
+        myDb.insertData("Seven", "七", "numbers", false, false);
+        myDb.insertData("Eight", "八", "numbers", false, false);
+        myDb.insertData("Nine", "九", "numbers", false, false);
+        myDb.insertData("Ten", "十", "numbers", false, false);
+        myDb.insertData("Twenty", "二十", "numbers", false, false);
+        myDb.insertData("Fifty", "五十", "numbers", false, false);
+        myDb.insertData("One Hundred", "一百", "numbers", false, false);
+        myDb.insertData("One Thousand", "一千", "numbers", false, false);
+
+        myDb.insertData("Hello", "你好", "greetings", true, false);
+        myDb.insertData("How are you?", "你好吗", "greetings", true, false);
+        myDb.insertData("Thank you", "谢谢", "greetings", true, false);
+        myDb.insertData("Good", "好", "greetings", true, false);
+        myDb.insertData("Not good", "不好", "greetings", true, false);
+        myDb.insertData("I'm sorry", "对不起", "greetings", true, false);
+        myDb.insertData("Ok!", "好的", "greetings", true, false);
+        myDb.insertData("Good Morning", "早上好", "greetings", true, false);
+        myDb.insertData("Goodnight", "晚安", "greetings", true, false);
+        myDb.insertData("Good Evening", "晚上好", "greetings", true, false);
+        myDb.insertData("I am-", "我是", "greetings", true, false);
+        myDb.insertData("Bye", "再见", "greetings", false, false);
+
+        myDb.insertData("Apple", "苹果", "food", true, false);
+        myDb.insertData("Banana", "香蕉", "food", true, false);
+        myDb.insertData("Orange", "橙子", "food", true, false);
+        myDb.insertData("Hamburger", "汉堡包", "food", true, false);
+        myDb.insertData("Dumpling", "饺子", "food", true, false);
+        myDb.insertData("Baifan", "白饭", "food", true, false);
+        myDb.insertData("Noodles", "面条", "food", true, false);
+        myDb.insertData("Orange Juice", "橙汁", "food", true, false);
+        myDb.insertData("Apple Juice", "苹果汁", "food", true, false);
+        myDb.insertData("Coffee", "咖啡", "food", true, false);
+        myDb.insertData("Tea", "茶", "food", true, false);
+        myDb.insertData("Pizza", "比萨", "food", true, false);
+        myDb.insertData("Sushi", "寿司", "food", true, false);
+
+        myDb.insertData("Police", "警察", "emergency", true, false);
+        myDb.insertData("Police Station", "警察局", "emergency", true, false);
+        myDb.insertData("Ambulance", "救护车", "emergency", true, false);
+        myDb.insertData("Hospital", "医院", "emergency", true, false);
+        myDb.insertData("Fire", "火", "emergency", true, false);
+        myDb.insertData("Drugstore", "药店", "emergency", true, false);
+        myDb.insertData("Help", "救命", "emergency", true, false);
+        myDb.insertData("Stay Away", "远离", "emergency", true, false);
+        myDb.insertData("Headache", "头痛", "emergency", true, false);
+        myDb.insertData("Hot Water", "热水", "emergency", true, false);
+        myDb.insertData("Go Away!", "走开", "emergency", true, false);
+    }
+
 }

@@ -62,9 +62,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+    //data retrieval
     public Cursor getCategory(String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE category = '" + category + "'", null);
+        return res;
+    }
+
+    public Cursor getSaved() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE saved = 1", null);
+        return res;
+    }
+
+    public Cursor getLearned() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE learned = 1", null);
         return res;
     }
 
@@ -83,10 +97,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
     }
 
-    public Cursor getSave(String phrase){
+    public Cursor getSaveStatus(String phrase){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phrase + "'", null);
         return res;
     }
+
+
+    //test fragment
+
+    public void updateLearned (String phraseEn, Boolean learned) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        System.out.println(phraseEn);
+        contentValues.put(COL_5, learned);
+        db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
+    }
+
+    public Cursor getLearnedStatus(String phrase){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phrase + "'", null);
+        return res;
+    }
+
 
 }

@@ -83,6 +83,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView5"
                     android:layout_width="250dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="16dp"
@@ -97,6 +98,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
                 </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/txtMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="TextView"
+                    android:textColor="@color/colorRed"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView5" />
 
                 <RadioGroup
                     android:id="@+id/rbGroup"
@@ -118,7 +131,11 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
                         android:elevation="10dp"
-                        android:text="answerOne" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="answerOne"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="18sp" />
 
                     <RadioButton
                         android:id="@+id/rbAnswerTwo"
@@ -127,7 +144,11 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
                         android:elevation="10dp"
-                        android:text="answerTwo" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="answerTwo"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="18sp" />
 
                     <RadioButton
                         android:id="@+id/rbAnswerThree"
@@ -136,7 +157,11 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
                         android:elevation="10dp"
-                        android:text="answerThree" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="answerThree"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="18sp" />
 
                 </RadioGroup>
 

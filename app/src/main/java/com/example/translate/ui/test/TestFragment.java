@@ -12,6 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.example.translate.Translater;
@@ -30,6 +32,7 @@ public class TestFragment extends Fragment {
 
     private TextView mTxtChineseCharacter;
     private TextView mTxtLevelTitle;
+    private TextView mTxtMessage;
 
     private RadioGroup mRbGroup;
     private RadioButton mRbAnswerOne;
@@ -102,6 +105,7 @@ public class TestFragment extends Fragment {
         mTxtProgress = view.findViewById(R.id.txtProgress);
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
         mTxtLevelTitle = view.findViewById(R.id.txtLevelTitle);
+        mTxtMessage = view.findViewById(R.id.txtMessage);
 
         mRbGroup = view.findViewById(R.id.rbGroup);
         mRbAnswerOne = view.findViewById(R.id.rbAnswerOne);
@@ -114,20 +118,7 @@ public class TestFragment extends Fragment {
         setTitle(testingType);
         setParameters();
 
-
-//        answerList.add(phraseList.get(currentCardNumber).getPhraseEn());
-//        answerList.add(phraseList.get((int) (Math.random() * phraseList.size())).getPhraseEn());
-//        answerList.add(phraseList.get((int) (Math.random() * phraseList.size())).getPhraseEn());
-//        Collections.shuffle(answerList);
-//
-//        answerIndex = answerList.indexOf(phraseList.get(currentCardNumber).getPhraseEn()) + 1;
-//
-//        mRbAnswerOne.setText(answerList.get(0));
-//        mRbAnswerTwo.setText(answerList.get(1));
-//        mRbAnswerThree.setText(answerList.get(2));
-
-        //Collections.shuffle(categoryListCn);
-
+        mTxtMessage.setText("");
         showNextQuestion();
 
         mFabSubmit.setOnClickListener(new View.OnClickListener() {
@@ -135,9 +126,12 @@ public class TestFragment extends Fragment {
             public void onClick(View view) {
                 if (!answered) {
                     if (mRbAnswerOne.isChecked() || mRbAnswerTwo.isChecked() || mRbAnswerThree.isChecked()) {
+                        YoYo.with(Techniques.FadeOutUp).duration(300).playOn(mTxtMessage);
                         checkAnswer(answerIndex);
                     } else {
-                        System.out.println("please select an answer");
+                        mTxtMessage.setText("Please choose an answer");
+                        YoYo.with(Techniques.FadeInDown).duration(300).playOn(mTxtMessage);
+
                     }
                 } else {
                     showNextQuestion();
@@ -258,9 +252,9 @@ public class TestFragment extends Fragment {
             mRbAnswerOne.setText(answerList.get(0));
             mRbAnswerTwo.setText(answerList.get(1));
             mRbAnswerThree.setText(answerList.get(2));
-            mRbAnswerOne.setTextColor(Color.BLACK);
-            mRbAnswerTwo.setTextColor(Color.BLACK);
-            mRbAnswerThree.setTextColor(Color.BLACK);
+            mRbAnswerOne.setTextColor(Color.parseColor("#444444"));
+            mRbAnswerTwo.setTextColor(Color.parseColor("#444444"));
+            mRbAnswerThree.setTextColor(Color.parseColor("#444444"));
 
             answered = false;
             currentCardNumber++;

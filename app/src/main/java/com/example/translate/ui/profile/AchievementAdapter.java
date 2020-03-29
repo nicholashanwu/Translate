@@ -80,7 +80,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         holder.isAchieved.setText(achievement.getCurrentProgress() + "/" + achievement.getTotalProgress());
         if(progressInt == 100){
             holder.isAchieved.setTypeface(Typeface.DEFAULT_BOLD);
-            holder.isAchieved.setTextColor(Color.parseColor("#8BC34A"));
+            holder.isAchieved.setTextColor(Color.parseColor("#D4E157"));
         }
 
     }

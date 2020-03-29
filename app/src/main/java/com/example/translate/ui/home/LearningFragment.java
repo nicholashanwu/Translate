@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.example.translate.Translater;
@@ -34,6 +36,9 @@ public class LearningFragment extends Fragment {
     private TextView mTxtPinyin;
     private TextView mTxtProgress;
     private TextView mTxtLevelTitle;
+    private TextView mTxtSavedMessage;
+    private TextView mTxtAnswerMessage;
+    private TextView mTxtUnsavedMessage;
 
     private DatabaseHelper myDb;
 
@@ -100,12 +105,19 @@ public class LearningFragment extends Fragment {
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
         mTxtPinyin = view.findViewById(R.id.txtPinyin);
         mTxtLevelTitle = view.findViewById(R.id.txtLevelTitle);
+        mTxtSavedMessage = view.findViewById(R.id.txtSavedMessage);
+        mTxtAnswerMessage = view.findViewById(R.id.txtAnswerMessage);
+        mTxtUnsavedMessage = view.findViewById(R.id.txtUnsavedMessage);
 
         final String learningType = getArguments().getString("learningType");
 
         getData(learningType);
         setTitle(learningType);
         setParameters();
+        mTxtAnswerMessage.setVisibility(View.GONE);
+        mTxtSavedMessage.setVisibility(View.GONE);
+        mTxtUnsavedMessage.setVisibility(View.GONE);
+
 
         mBtnShowValues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +160,12 @@ public class LearningFragment extends Fragment {
                     mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
                     mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
 
+                    mTxtSavedMessage.setVisibility(View.GONE);
+                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
+                    mTxtUnsavedMessage.setVisibility(View.GONE);
+                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
+                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
+
                     progressDouble = (double) 100 * (currentCardNumber) / phraseList.size();
                     progressInt = (int) progressDouble;
                     mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
@@ -180,11 +198,28 @@ public class LearningFragment extends Fragment {
                 if(phraseList.get(currentCardNumber).getSaved().equals("1")){
                     myDb.updateSave(phraseList.get(currentCardNumber).getId(), false);
                     phraseList.get(currentCardNumber).setSaved("0");
+
+                    mTxtSavedMessage.setVisibility(View.GONE);
+                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
+
+                    mTxtUnsavedMessage.setVisibility(View.VISIBLE);
+                    YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtUnsavedMessage);
+
+
                     mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
                 } else {
                     myDb.updateSave(phraseList.get(currentCardNumber).getId(), true);
-                    mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
                     phraseList.get(currentCardNumber).setSaved("1");
+
+                    mTxtUnsavedMessage.setVisibility(View.GONE);
+                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
+
+                    mTxtSavedMessage.setVisibility(View.VISIBLE);
+                    YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtSavedMessage);
+
+
+
+                    mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
                 }
             }
         });
@@ -194,9 +229,18 @@ public class LearningFragment extends Fragment {
             public void onClick(View view) {
                 if (mTxtPinyin.getText().equals(phraseList.get(currentCardNumber).getPinyin())) {
                     mTxtPinyin.setText(phraseList.get(currentCardNumber).getPhraseEn());
+
+                    mTxtAnswerMessage.setVisibility(View.VISIBLE);
+                    YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtAnswerMessage);
+
                     mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
                 } else {
                     mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
+
+
+                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
+                    //mTxtAnswerMessage.setVisibility(View.GONE);
+
                     mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
                 }
             }

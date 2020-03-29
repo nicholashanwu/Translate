@@ -149,6 +149,39 @@
                     app:maxImageSize="24dp"
                     app:pressedTranslationZ="0dp"
                     app:rippleColor="@android:color/holo_orange_dark" />
+
+                <TextView
+                    android:id="@+id/txtSavedMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saved!"
+                    android:textColor="@color/colorYellow"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/fabSave"
+                    app:layout_constraintEnd_toEndOf="@+id/fabSave"
+                    app:layout_constraintStart_toStartOf="@+id/fabSave" />
+
+                <TextView
+                    android:id="@+id/txtAnswerMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Here's a hint..."
+                    android:textColor="@color/colorBlue"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/fabAnswer"
+                    app:layout_constraintEnd_toEndOf="@+id/fabAnswer"
+                    app:layout_constraintStart_toStartOf="@+id/fabAnswer" />
+
+                <TextView
+                    android:id="@+id/txtUnsavedMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unsaved!"
+                    android:textColor="@color/colorYellow"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/fabSave"
+                    app:layout_constraintEnd_toEndOf="@+id/fabSave"
+                    app:layout_constraintStart_toStartOf="@+id/fabSave" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

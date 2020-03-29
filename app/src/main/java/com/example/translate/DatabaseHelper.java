@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateSave (String phraseEn, Boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        System.out.println(phraseEn);
+        //System.out.println(phraseEn);
         contentValues.put(COL_7, saved);
         db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
     }

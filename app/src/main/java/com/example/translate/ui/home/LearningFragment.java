@@ -3,12 +3,6 @@ package com.example.translate.ui.home;
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +13,12 @@ import android.widget.TextView;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.example.translate.Translater;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
-import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
-import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
-import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
-import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class LearningFragment extends Fragment {
 
@@ -83,7 +72,6 @@ public class LearningFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
 
-
         Translater translater = new Translater();
         translater.checkModelExists(translater.configure());
 //        translate stuff here
@@ -122,19 +110,15 @@ public class LearningFragment extends Fragment {
         mTxtPinyin = view.findViewById(R.id.txtPinyin);
         mTxtLevelTitle = view.findViewById(R.id.txtLevelTitle);
 
-        insertSampleData();
         final String learningType = getArguments().getString("learningType");
+
         getData(learningType);
         setTitle(learningType);
+        setParameters();
 
 
         // Set Text Progress Indicator and advance it
 
-        mProgressBar.setProgress(0);
-        mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
-
-        mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
-        mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
 
         mBtnShowValues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,44 +149,33 @@ public class LearningFragment extends Fragment {
             }
         });
 
-        mBtnAddValues.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                insertSampleData();
-            }
-        });
 
         mFabDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTxtChineseCharacter.setTextSize(64);
+
                 currentCardNumber++;
 
-                //check if saved and update status
-                //always make invisible again
-
-                Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
-                while (res.moveToNext()) {
-                    if (res.getInt(6) == 0) {
-                        mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
-                    } else {
-                        mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-                    }
-                }
-
-                mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
                 mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
 
-
-                if (currentCardNumber == 0) {
-                    mProgressBar.setProgress(0, true);
-                } else if (currentCardNumber < categoryListEn.size()) {
+                if (currentCardNumber < categoryListEn.size()) {
                     mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
+                    mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
 
                     progressDouble = (double) 100 * (currentCardNumber) / categoryListCn.size();
                     progressInt = (int) progressDouble;
                     mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
                     mProgressBar.setProgress(progressInt, true);
+
+                    Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
+                    while (res.moveToNext()) {
+                        if (res.getInt(6) == 0) {
+                            mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+                        } else {
+                            mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+                        }
+                    }
+
                 } else {
                     mTxtProgress.setText("");
                     mProgressBar.setProgress(100, true);
@@ -212,7 +185,10 @@ public class LearningFragment extends Fragment {
                     FragmentManager fm = getFragmentManager();
 
                     fm.popBackStack();
+                    mProgressBar.setProgress(0, true);
                 }
+
+
             }
         });
 
@@ -248,6 +224,25 @@ public class LearningFragment extends Fragment {
         return view;
     }
 
+    public void setParameters() {
+        mProgressBar.setProgress(0, true);
+        mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
+
+        mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
+        mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
+
+        Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
+        while (res.moveToNext()) {
+            if (res.getInt(6) == 0) {
+                System.out.println("notSaved");
+                mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+            } else {
+                System.out.println("Saved");
+                mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+            }
+        }
+    }
+
     public void setTitle(String learningType) {
         if (learningType.equals("numbers")) {
             mTxtLevelTitle.setText("Level 1 : Numbers");
@@ -279,62 +274,6 @@ public class LearningFragment extends Fragment {
         }
     }
 
-
-    public void insertSampleData() {
-        myDb.insertData("One", "一", "Yī", "numbers", true, false);
-        myDb.insertData("Two", "二", "Èr", "numbers", true, false);
-        myDb.insertData("Three", "三", "Sān", "numbers", true, false);
-        myDb.insertData("Four", "四", "Sì", "numbers", true, false);
-        myDb.insertData("Five", "五", "Wǔ", "numbers", true, false);
-        myDb.insertData("Six", "六", "Liù", "numbers", true, false);
-        myDb.insertData("Seven", "七", "Qī", "numbers", false, false);
-        myDb.insertData("Eight", "八", "Bā", "numbers", false, false);
-        myDb.insertData("Nine", "九", "Jiǔ", "numbers", false, false);
-        myDb.insertData("Ten", "十", "Shí", "numbers", false, false);
-        myDb.insertData("Twenty", "二十", "Èrshí", "numbers", false, false);
-        myDb.insertData("Fifty", "五十", "Wǔshí", "numbers", false, false);
-        myDb.insertData("One Hundred", "一百", "Yībǎi", "numbers", false, false);
-        myDb.insertData("One Thousand", "一千", "Yīqiān", "numbers", false, false);
-
-        myDb.insertData("Hello", "你好", "Nǐ hǎo", "essentials", true, false);
-        myDb.insertData("How are you?", "你好吗", "Nǐ hǎo ma", "essentials", true, false);
-        myDb.insertData("Thank you", "谢谢", "Xièxiè", "essentials", true, false);
-        myDb.insertData("Good", "好", "Hǎo", "essentials", true, false);
-        myDb.insertData("Not good", "不好", "Bù hǎo", "essentials", true, false);
-        myDb.insertData("I'm sorry", "对不起", "Duìbùqǐ", "essentials", true, false);
-        myDb.insertData("Ok!", "好的", "Hǎo de", "essentials", true, false);
-        myDb.insertData("Good Morning", "早上好", "Zǎoshang hǎo", "essentials", true, false);
-        myDb.insertData("Goodnight", "晚安", "Wǎn'ān", "essentials", true, false);
-        myDb.insertData("Good Evening", "晚上好", "Wǎnshàng hǎo", "essentials", true, false);
-        myDb.insertData("I am-", "我是", "Wǒ shì", "essentials", true, false);
-        myDb.insertData("Bye", "再见", "Zàijiàn", "essentials", false, false);
-
-        myDb.insertData("Apple", "苹果", "Píngguǒ", "food", true, false);
-        myDb.insertData("Banana", "香蕉", "Xiāngjiāo", "food", true, false);
-        myDb.insertData("Orange", "橙子", "Chéngzi", "food", true, false);
-        myDb.insertData("Hamburger", "汉堡包", "Hànbǎobāo", "food", true, false);
-        myDb.insertData("Dumpling", "饺子", "Jiǎozi", "food", true, false);
-        myDb.insertData("Baifan", "白饭", "Báifàn", "food", true, false);
-        myDb.insertData("Noodles", "面条", "Miàntiáo", "food", true, false);
-        myDb.insertData("Orange Juice", "橙汁", "Chéngzhī", "food", true, false);
-        myDb.insertData("Apple Juice", "苹果汁", "Píngguǒ zhī", "food", true, false);
-        myDb.insertData("Coffee", "咖啡", "Kāfēi", "food", true, false);
-        myDb.insertData("Tea", "茶", "Chá", "food", true, false);
-        myDb.insertData("Pizza", "比萨", "Bǐsà", "food", true, false);
-        myDb.insertData("Sushi", "寿司", "Shòusī", "food", true, false);
-
-        myDb.insertData("Police", "警察", "Jǐngchá", "help", true, false);
-        myDb.insertData("Police Station", "警察局", "Jǐngchá jú", "help", true, false);
-        myDb.insertData("Ambulance", "救护车", "Jiùhù chē", "help", true, false);
-        myDb.insertData("Hospital", "医院", "Yīyuàn", "help", true, false);
-        myDb.insertData("Fire", "火", "Huǒ", "help", true, false);
-        myDb.insertData("Drugstore", "药店", "Yàodiàn", "help", true, false);
-        myDb.insertData("Help", "救命", "Jiùmìng", "help", true, false);
-        myDb.insertData("Stay Away", "远离", "Yuǎnlí", "help", true, false);
-        myDb.insertData("Headache", "头痛", "Tóutòng", "help", true, false);
-        myDb.insertData("Hot Water", "热水", "Rè shuǐ", "help", true, false);
-        myDb.insertData("Go Away!", "走开", "Zǒu kāi", "help", true, false);
-    }
 
     private void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

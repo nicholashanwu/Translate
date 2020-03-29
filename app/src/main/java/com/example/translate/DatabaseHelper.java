@@ -92,12 +92,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void updateSave (String phraseEn, Boolean saved) {
+    public void updateSave (String id, Boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         //System.out.println(phraseEn);
         contentValues.put(COL_7, saved);
-        db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
+        db.update(TABLE_NAME, contentValues, "id = ?", new String[] { id });
     }
 
     public Cursor getSaveStatus(String phrase){

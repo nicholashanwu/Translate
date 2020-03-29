@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.example.translate.Translater;
+import com.example.translate.ui.Phrase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -26,18 +27,13 @@ public class LearningFragment extends Fragment {
     private FloatingActionButton mFabSave;
     private FloatingActionButton mFabAnswer;
     private Button mBtnDropTable;
-    private Button mBtnAddValues;
     private Button mBtnShowValues;
     private ProgressBar mProgressBar;
-    private TextView mTxtId;
-    private TextView mTxtPhrase;
-    private TextView mTxtCategory;
-    private TextView mTxtLearned;
+
     private TextView mTxtChineseCharacter;
     private TextView mTxtPinyin;
     private TextView mTxtProgress;
     private TextView mTxtLevelTitle;
-
 
     private DatabaseHelper myDb;
 
@@ -45,9 +41,7 @@ public class LearningFragment extends Fragment {
     private double progressDouble = 0;
     private int progressInt = 0;
 
-    ArrayList<String> categoryListEn = new ArrayList<>();
-    ArrayList<String> categoryListCn = new ArrayList<>();
-    ArrayList<String> categoryListPinyin = new ArrayList<>();
+    private ArrayList<Phrase> phraseList = new ArrayList<>();
 
     public LearningFragment() {
     }
@@ -65,7 +59,6 @@ public class LearningFragment extends Fragment {
         if (getArguments() != null) {
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,13 +89,11 @@ public class LearningFragment extends Fragment {
 
         myDb = new DatabaseHelper(getContext());
 
-        //myDb.dropTable();
-
         mFabAnswer = view.findViewById(R.id.fabAnswer);
         mFabSave = view.findViewById(R.id.fabSave);
         mFabDone = view.findViewById(R.id.fabDone);
         mBtnDropTable = view.findViewById(R.id.btnDropTable);
-        mBtnAddValues = view.findViewById(R.id.btnAddValues);
+
         mBtnShowValues = view.findViewById(R.id.btnShowValues);
         mProgressBar = view.findViewById(R.id.progressBar);
         mTxtProgress = view.findViewById(R.id.txtProgress);
@@ -115,10 +106,6 @@ public class LearningFragment extends Fragment {
         getData(learningType);
         setTitle(learningType);
         setParameters();
-
-
-        // Set Text Progress Indicator and advance it
-
 
         mBtnShowValues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +136,6 @@ public class LearningFragment extends Fragment {
             }
         });
 
-
         mFabDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,27 +144,25 @@ public class LearningFragment extends Fragment {
 
                 mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
 
-                if (currentCardNumber < categoryListEn.size()) {
-                    mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
-                    mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
+                if (currentCardNumber < phraseList.size()) {
+                    mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
+                    mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
 
-                    progressDouble = (double) 100 * (currentCardNumber) / categoryListCn.size();
+                    progressDouble = (double) 100 * (currentCardNumber) / phraseList.size();
                     progressInt = (int) progressDouble;
-                    mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
+                    mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
                     mProgressBar.setProgress(progressInt, true);
 
-                    Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
-                    while (res.moveToNext()) {
-                        if (res.getInt(6) == 0) {
-                            mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
-                        } else {
-                            mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-                        }
+                    if(phraseList.get(currentCardNumber).getSaved().equals("1")){
+                        mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+                        System.out.println("saved");
+                    } else {
+                        mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+                        System.out.println("not saved");
                     }
-
                 } else {
                     mTxtProgress.setText("");
-                    mProgressBar.setProgress(100, true);
+                    mProgressBar.setProgress(99, true);
 
                     showMessage("You're Finished!", "You completed the " + learningType + " learning module!");
 
@@ -187,23 +171,20 @@ public class LearningFragment extends Fragment {
                     fm.popBackStack();
                     mProgressBar.setProgress(0, true);
                 }
-
-
             }
         });
 
         mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
-                while (res.moveToNext()) {
-                    if (res.getInt(6) == 0) {
-                        myDb.updateSave(categoryListEn.get(currentCardNumber), true);
-                        mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-                    } else {
-                        myDb.updateSave(categoryListEn.get(currentCardNumber), false);
-                        mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
-                    }
+                if(phraseList.get(currentCardNumber).getSaved().equals("1")){
+                    myDb.updateSave(phraseList.get(currentCardNumber).getId(), false);
+                    phraseList.get(currentCardNumber).setSaved("0");
+                    mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+                } else {
+                    myDb.updateSave(phraseList.get(currentCardNumber).getId(), true);
+                    mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+                    phraseList.get(currentCardNumber).setSaved("1");
                 }
             }
         });
@@ -211,11 +192,11 @@ public class LearningFragment extends Fragment {
         mFabAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mTxtPinyin.getText().equals(categoryListPinyin.get(currentCardNumber))) {
-                    mTxtPinyin.setText(categoryListEn.get(currentCardNumber));
+                if (mTxtPinyin.getText().equals(phraseList.get(currentCardNumber).getPinyin())) {
+                    mTxtPinyin.setText(phraseList.get(currentCardNumber).getPhraseEn());
                     mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
                 } else {
-                    mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
+                    mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
                     mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
                 }
             }
@@ -226,21 +207,17 @@ public class LearningFragment extends Fragment {
 
     public void setParameters() {
         mProgressBar.setProgress(0, true);
-        mTxtProgress.setText((currentCardNumber + 1) + "/" + categoryListCn.size());
+        mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
 
-        mTxtChineseCharacter.setText(categoryListCn.get(currentCardNumber));
-        mTxtPinyin.setText(categoryListPinyin.get(currentCardNumber));
+        mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
+        mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
 
-        Cursor res = myDb.getSaveStatus(categoryListEn.get(currentCardNumber));
-        while (res.moveToNext()) {
-            if (res.getInt(6) == 0) {
-                System.out.println("notSaved");
-                mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
-            } else {
-                System.out.println("Saved");
-                mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-            }
+        if(phraseList.get(currentCardNumber).getSaved().equals("true")){
+            mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+        } else {
+            mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
         }
+
     }
 
     public void setTitle(String learningType) {
@@ -251,7 +228,7 @@ public class LearningFragment extends Fragment {
         } else if (learningType.equals("food")) {
             mTxtLevelTitle.setText("Level 3 : Food");
         } else {
-            mTxtLevelTitle.setText("Level 4: Help");
+            mTxtLevelTitle.setText("Level 4 : Help");
         }
 
     }
@@ -267,13 +244,15 @@ public class LearningFragment extends Fragment {
         }
 
         while (res.moveToNext()) {
-            categoryListEn.add(res.getString(1));
-            categoryListCn.add(res.getString(2));
-            categoryListPinyin.add(res.getString(3));
-
+            phraseList.add(new Phrase(res.getString(0),
+                    res.getString(1),
+                    res.getString(2),
+                    res.getString(3),
+                    res.getString(4),
+                    res.getString(5),
+                    res.getString(6)));
         }
     }
-
 
     private void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

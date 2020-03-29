@@ -2,22 +2,16 @@ package com.example.translate.ui.home;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.example.translate.R;
@@ -65,8 +59,60 @@ public class HomeFragment extends Fragment {
 				transaction.replace(R.id.nav_host_fragment, fragment);
 				transaction.commit();
 				transaction.addToBackStack(null);
+			}
+		});
 
+		mBtnStartGreetings.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
 
+				FragmentManager manager = getFragmentManager();
+				FragmentTransaction transaction = manager.beginTransaction();
+				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+				Fragment fragment = new LearningFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("learningType", "essentials");
+				fragment.setArguments(bundle);
+				transaction.replace(R.id.nav_host_fragment, fragment);
+				transaction.commit();
+				transaction.addToBackStack(null);
+			}
+		});
+
+		mBtnStartFood.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
+
+				FragmentManager manager = getFragmentManager();
+				FragmentTransaction transaction = manager.beginTransaction();
+				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+				Fragment fragment = new LearningFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("learningType", "food");
+				fragment.setArguments(bundle);
+				transaction.replace(R.id.nav_host_fragment, fragment);
+				transaction.commit();
+				transaction.addToBackStack(null);
+			}
+		});
+
+		mBtnStartHelp.setOnClickListener(new View.OnClickListener() {
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			@Override
+			public void onClick(View view) {
+
+				FragmentManager manager = getFragmentManager();
+				FragmentTransaction transaction = manager.beginTransaction();
+				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+				Fragment fragment = new LearningFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("learningType", "help");
+				fragment.setArguments(bundle);
+				transaction.replace(R.id.nav_host_fragment, fragment);
+				transaction.commit();
+				transaction.addToBackStack(null);
 			}
 		});
 

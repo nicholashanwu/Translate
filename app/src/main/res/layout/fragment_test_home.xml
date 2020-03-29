@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.test.TestHomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:fadingEdgeLength="100dp"
                 android:requiresFadingEdge="none"
                 android:scaleType="fitXY"
-                android:src="@drawable/forbidden_city_small" />
+                android:src="@drawable/pearl_tower" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:fontFamily="@font/quicksand_bold"
-                    android:text="Learning"
+                    android:text="Testing"
                     android:textColor="#FFFFFF"
                     android:textSize="24sp" />
 

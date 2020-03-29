@@ -65,16 +65,16 @@ public class Achievement {
 
         ArrayList<Achievement> achievementList = new ArrayList<>();
 
-        achievementList.add(new Achievement("one", "do something", 1, 10, false));
-        achievementList.add(new Achievement("two", "do something", 2, 10, false));
-        achievementList.add(new Achievement("three", "do something", 3, 10, false));
-        achievementList.add(new Achievement("four", "do something", 4, 10, false));
-        achievementList.add(new Achievement("five", "do something", 5, 10, false));
-        achievementList.add(new Achievement("six", "do something", 6, 10, false));
-        achievementList.add(new Achievement("seven", "do something", 7, 10, false));
-        achievementList.add(new Achievement("eight", "do something", 8, 10, false));
-        achievementList.add(new Achievement("nine", "do something", 9, 10, false));
-        achievementList.add(new Achievement("ten", "do something", 10, 10, false));
+        achievementList.add(new Achievement("Number Novice", "Complete the first level: Numbers", 1, 1, false));
+        achievementList.add(new Achievement("Good Greeter", "Complete the second level: Essentials", 2, 10, false));
+        achievementList.add(new Achievement("Food Fighter", "Complete the third level: Food", 3, 10, false));
+        achievementList.add(new Achievement("Helping Hand", "Complete the fourth level: Help", 4, 10, false));
+        achievementList.add(new Achievement("Perseverance", "Revise your saved words" , 5, 10, false));
+        achievementList.add(new Achievement("Dedicated", "Revise your mastered words", 6, 10, false));
+        achievementList.add(new Achievement("Quick Quick Quick", "Complete a test in under 30 seconds", 7, 10, false));
+        achievementList.add(new Achievement("Self-improver", "Check out all components in your profile", 9, 10, false));
+        achievementList.add(new Achievement("Lingo Learner", "Complete all learning tasks", 8, 10, false));
+        achievementList.add(new Achievement("Lingo Legend", "Complete a level without any mistakes", 10, 10, false));
 
         return achievementList;
     }

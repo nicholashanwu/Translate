@@ -1,5 +1,7 @@
 package com.example.translate.ui.profile;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             progressBar = v.findViewById(R.id.pbAchievement);
             description = v.findViewById(R.id.txtAchievementDescription);
             isAchieved = v.findViewById(R.id.txtIsAchieved);
-            //subItem = v.findViewById(
+
 
         }
 
@@ -70,6 +72,16 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         }
 
 
+        //holder.progressBar.setProgress(100 * (achievement.getCurrentProgress()/achievement.getTotalProgress()));
+
+        double progressDouble = (double) 100 * (achievement.getCurrentProgress())/achievement.getTotalProgress();
+        int progressInt = (int) progressDouble;
+        holder.progressBar.setProgress(progressInt, true);
+        holder.isAchieved.setText(achievement.getCurrentProgress() + "/" + achievement.getTotalProgress());
+        if(progressInt == 100){
+            holder.isAchieved.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.isAchieved.setTextColor(Color.parseColor("#8BC34A"));
+        }
 
     }
 

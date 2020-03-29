@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:transitionGroup="true"
     tools:targetApi="lollipop"
-    tools:context=".ui.home.LearningFragment" >
+    tools:context=".ui.test.TestFragment" >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -149,13 +149,6 @@
                     app:rippleColor="@android:color/holo_orange_dark" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -214,7 +207,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
         android:letterSpacing="0.1"
-        android:text="@string/assessment_learning"
+        android:text="TESTING"
         android:textAlignment="center"
         android:textSize="14sp"
         android:textStyle="bold"

@@ -1,4 +1,14 @@
-package com.example.translate.ui.home;
+package com.example.translate.ui.test;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.example.translate.R;
 
 import android.app.AlertDialog;
 import android.database.Cursor;
@@ -31,7 +41,8 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOption
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class LearningFragment extends Fragment {
+
+public class TestFragment extends Fragment {
 
     private FloatingActionButton mFabDone;
     private FloatingActionButton mFabSave;
@@ -49,7 +60,6 @@ public class LearningFragment extends Fragment {
     private TextView mTxtProgress;
     private TextView mTxtLevelTitle;
 
-
     private DatabaseHelper myDb;
 
     private int currentCardNumber = 0;
@@ -60,11 +70,12 @@ public class LearningFragment extends Fragment {
     ArrayList<String> categoryListCn = new ArrayList<>();
     ArrayList<String> categoryListPinyin = new ArrayList<>();
 
-    public LearningFragment() {
+    public TestFragment() {
     }
 
-    public static LearningFragment newInstance(String param1, String param2) {
-        LearningFragment fragment = new LearningFragment();
+
+    public static TestFragment newInstance(String param1, String param2) {
+        TestFragment fragment = new TestFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -77,16 +88,15 @@ public class LearningFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_learning, container, false);
+        View view = inflater.inflate(R.layout.fragment_test, container, false);
 
 
         Translater translater = new Translater();
         translater.checkModelExists(translater.configure());
-//        translate stuff here
+        //translate stuff here
 //        translater.configure().translate("bye")
 //                .addOnSuccessListener(
 //                        new OnSuccessListener<String>() {
@@ -123,9 +133,9 @@ public class LearningFragment extends Fragment {
         mTxtLevelTitle = view.findViewById(R.id.txtLevelTitle);
 
         insertSampleData();
-        final String learningType = getArguments().getString("learningType");
-        getData(learningType);
-        setTitle(learningType);
+        final String testingType = getArguments().getString("testingType");
+        getData(testingType);
+        setTitle(testingType);
 
 
         // Set Text Progress Indicator and advance it
@@ -207,7 +217,7 @@ public class LearningFragment extends Fragment {
                     mTxtProgress.setText("");
                     mProgressBar.setProgress(100, true);
 
-                    showMessage("You're Finished!", "You completed the " + learningType + " learning module!");
+                    showMessage("You're Finished!", "You completed the " + testingType + " learning module!");
 
                     FragmentManager fm = getFragmentManager();
 
@@ -249,11 +259,11 @@ public class LearningFragment extends Fragment {
     }
 
     public void setTitle(String learningType) {
-        if (learningType.equals("numbers")) {
+        if(learningType.equals("numbers")){
             mTxtLevelTitle.setText("Level 1 : Numbers");
-        } else if (learningType.equals("essentials")) {
+        } else if (learningType.equals("essentials")){
             mTxtLevelTitle.setText("Level 2 : Essentials");
-        } else if (learningType.equals("food")) {
+        } else if (learningType.equals("food")){
             mTxtLevelTitle.setText("Level 3 : Food");
         } else {
             mTxtLevelTitle.setText("Level 4: Help");
@@ -261,14 +271,14 @@ public class LearningFragment extends Fragment {
 
     }
 
-    public void getData(String learningType) {
+    public void getData(String testingType) {
         Cursor res;
-        if (learningType.equals("saved")) {
+        if (testingType.equals("saved")) {
             res = myDb.getSaved();
-        } else if (learningType.equals("learned")) {
+        } else if (testingType.equals("learned")) {
             res = myDb.getLearned();
         } else {
-            res = myDb.getCategory(learningType);
+            res = myDb.getCategory(testingType);
         }
 
         while (res.moveToNext()) {
@@ -342,5 +352,4 @@ public class LearningFragment extends Fragment {
         builder.setMessage(message);
         builder.show();
     }
-
 }

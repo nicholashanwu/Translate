@@ -15,9 +15,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_1 = "id_pk";
     private static final String COL_2 = "phraseEn";
     private static final String COL_3 = "phraseCn";
-    private static final String COL_4 = "category";
-    private static final String COL_5 = "learned";
-    private static final String COL_6 = "saved";
+    private static final String COL_4 = "pinyin";
+    private static final String COL_5 = "category";
+    private static final String COL_6 = "learned";
+    private static final String COL_7 = "saved";
 
 
     public DatabaseHelper(Context context) {
@@ -30,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "PHRASEEN TEXT, " +
                 "PHRASECN TEXT, " +
+                "PINYIN TEXT, " +
                 "CATEGORY TEXT, " +
                 "LEARNED BOOLEAN, " +
                 "SAVED BOOLEAN)");
@@ -41,14 +43,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String phraseEn, String phraseCn, String category, Boolean learned, Boolean saved) {
+    public boolean insertData(String phraseEn, String phraseCn, String pinyin, String category, Boolean learned, Boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, phraseEn);
         contentValues.put(COL_3, phraseCn);
-        contentValues.put(COL_4, category);
-        contentValues.put(COL_5, learned);
-        contentValues.put(COL_6, saved);
+        contentValues.put(COL_4, pinyin);
+        contentValues.put(COL_5, category);
+        contentValues.put(COL_6, learned);
+        contentValues.put(COL_7, saved);
         long result = db.insert(TABLE_NAME, null, contentValues);
         return result != -1;
 
@@ -93,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         System.out.println(phraseEn);
-        contentValues.put(COL_6, saved);
+        contentValues.put(COL_7, saved);
         db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
     }
 
@@ -110,7 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         System.out.println(phraseEn);
-        contentValues.put(COL_5, learned);
+        contentValues.put(COL_6, learned);
         db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
     }
 

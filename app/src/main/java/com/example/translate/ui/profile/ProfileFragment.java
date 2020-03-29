@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ public class ProfileFragment extends Fragment {
     private Button mBtnStartLearned;
     private DatabaseHelper myDb;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -50,6 +52,8 @@ public class ProfileFragment extends Fragment {
 
         mBtnStartSaved = (Button) view.findViewById(R.id.btnStartSaved);
         mBtnStartLearned = (Button) view.findViewById(R.id.btnStartLearned);
+
+
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +103,6 @@ public class ProfileFragment extends Fragment {
                 //launch learning_fragmenet with learned
             }
         });
-
-
 
         mAdapter = new AchievementAdapter(Achievement.getAchievements(), listener);
         mRecyclerView.setAdapter(mAdapter);

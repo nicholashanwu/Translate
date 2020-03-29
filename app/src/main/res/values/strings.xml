@@ -13,10 +13,10 @@
     <string name="numbers_title">Numbers</string>
     <string name="numbers_description">"Learn how to count. 3, 2, 1, let's go!"</string>
 
-    <!-- TODO: cardView greetings -->
-    <string name="greetings_level">LEVEL 2</string>
-    <string name="greetings_title">Greetings</string>
-    <string name="greetings_description">"Learn how to meet and greet your new friends!"</string>
+    <!-- TODO: cardView essentials -->
+    <string name="essentials_level">LEVEL 2</string>
+    <string name="essentials_title">Essentials</string>
+    <string name="essentials_description">"Learn how to meet and greet your new friends!"</string>
 
     <!-- TODO: cardView food -->
     <string name="food_level">LEVEL 3</string>

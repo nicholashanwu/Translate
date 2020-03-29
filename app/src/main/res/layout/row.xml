@@ -33,13 +33,15 @@
         <ProgressBar
             android:id="@+id/pbAchievement"
             style="?android:progressBarStyleHorizontal"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:progress="0"
             android:progressDrawable="@drawable/circle"
             android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,11 +49,12 @@
             android:id="@+id/txtIsAchieved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:text="isAchieved"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/pbAchievement"
+            app:layout_constraintEnd_toEndOf="@+id/pbAchievement"
+            app:layout_constraintStart_toStartOf="@+id/pbAchievement"
+            app:layout_constraintTop_toTopOf="@+id/pbAchievement" />
 
         <TextView
             android:id="@+id/txtAchievementDescription"

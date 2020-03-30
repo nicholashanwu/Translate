@@ -28,7 +28,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="16dp"
                 android:elevation="4dp"
-                android:src="@drawable/outline_perm_identity_black_48dp"
+                android:src="@drawable/tzuyu"
                 app:civ_border_color="#FFFFFF"
                 app:civ_border_width="1dp" />
 
@@ -143,10 +143,11 @@
 
                             <Button
                                 android:id="@+id/btnStartNumbers"
-                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                style="@style/Widget.MaterialComponents.Button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginRight="4dp"
                                 android:text="@string/button_start" />
                         </LinearLayout>
                     </LinearLayout>
@@ -220,10 +221,11 @@
 
                             <Button
                                 android:id="@+id/btnStartGreetings"
-                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                style="@style/Widget.MaterialComponents.Button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginRight="4dp"
                                 android:text="@string/button_start" />
                         </LinearLayout>
                     </LinearLayout>
@@ -297,10 +299,11 @@
 
                             <Button
                                 android:id="@+id/btnStartFood"
-                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                style="@style/Widget.MaterialComponents.Button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginRight="4dp"
                                 android:text="@string/button_start" />
                         </LinearLayout>
                     </LinearLayout>
@@ -374,10 +377,11 @@
 
                             <Button
                                 android:id="@+id/btnStartHelp"
-                                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                                style="@style/Widget.MaterialComponents.Button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginRight="4dp"
                                 android:text="@string/button_start" />
                         </LinearLayout>
                     </LinearLayout>

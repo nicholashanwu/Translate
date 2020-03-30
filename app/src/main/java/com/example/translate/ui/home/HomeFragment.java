@@ -7,15 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.translate.R;
+import com.example.translate.ui.profile.ProfileFragment;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import com.example.translate.R;
-import com.example.translate.ui.profile.ProfileFragment;
 
 public class HomeFragment extends Fragment {
 

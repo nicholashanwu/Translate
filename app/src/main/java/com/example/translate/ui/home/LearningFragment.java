@@ -42,6 +42,7 @@ public class LearningFragment extends Fragment {
 
     private DatabaseHelper myDb;
 
+
     private int currentCardNumber = 0;
     private double progressDouble = 0;
     private int progressInt = 0;

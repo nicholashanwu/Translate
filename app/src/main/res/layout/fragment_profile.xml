@@ -44,7 +44,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:elevation="4dp"
-                    android:src="@drawable/outline_perm_identity_black_48dp"
+                    android:src="@drawable/tzuyu"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -82,9 +82,10 @@
                         android:layout_width="165dp"
                         android:layout_height="165dp"
                         android:layout_margin="8dp"
+                        android:elevation="4dp"
                         app:cardCornerRadius="4dp"
-                        app:cardElevation="4dp"
-                        app:cardMaxElevation="4dp">
+                        app:cardElevation="6dp"
+                        app:cardMaxElevation="8dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/linearLayout"
@@ -134,9 +135,10 @@
                         android:layout_height="165dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:elevation="4dp"
                         app:cardCornerRadius="4dp"
-                        app:cardElevation="4dp"
-                        app:cardMaxElevation="4dp">
+                        app:cardElevation="6dp"
+                        app:cardMaxElevation="8dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/linearLayout2"
@@ -188,9 +190,10 @@
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:elevation="4dp"
                         app:cardCornerRadius="4dp"
-                        app:cardElevation="4dp"
-                        app:cardMaxElevation="4dp">
+                        app:cardElevation="6dp"
+                        app:cardMaxElevation="8dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/linearLayout3"

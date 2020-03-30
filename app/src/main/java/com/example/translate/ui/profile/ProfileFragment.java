@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import com.example.translate.DatabaseHelper;
+import com.example.translate.R;
+import com.example.translate.ui.home.LearningFragment;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,10 +19,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.translate.DatabaseHelper;
-import com.example.translate.R;
-import com.example.translate.ui.home.LearningFragment;
 
 public class ProfileFragment extends Fragment {
 
@@ -38,11 +35,16 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
         mRecyclerView = view.findViewById(R.id.rvAchievement);
         mRecyclerView.setHasFixedSize(true);
-
         mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -60,8 +62,6 @@ public class ProfileFragment extends Fragment {
         mHsvCards = (HorizontalScrollView) view.findViewById(R.id.hsvCards);
 
         mHsvCards.setHorizontalScrollBarEnabled(false);
-
-
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,9 +115,8 @@ public class ProfileFragment extends Fragment {
         mAdapter = new AchievementAdapter(Achievement.getAchievements(), listener);
         mRecyclerView.setAdapter(mAdapter);
 
-
-        return view;
     }
+
 
     private void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

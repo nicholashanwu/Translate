@@ -1,26 +1,15 @@
 package com.example.translate;
 
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 
-import com.example.translate.ui.home.HomeFragment;
-import com.example.translate.ui.home.LearningFragment;
-import com.example.translate.ui.profile.ProfileFragment;
-import com.example.translate.ui.test.TestFragment;
-import com.example.translate.ui.test.TestHomeFragment;
-import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
-import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,6 +19,7 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper myDb;
+    private BottomNavigationView bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +36,22 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        bottomBar = (BottomNavigationView) findViewById(R.id.nav_view);
 
+        //
+        int i = bottomBar.getSelectedItemId();
+        ColorStateList colorTint = bottomBar.getItemIconTintList();
+        System.out.println(colorTint);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_learning, R.id.navigation_test, R.id.navigation_profile)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.setupWithNavController(bottomBar, navController);
+
     }
+
 
     public void initializeDatabase() {
         myDb = new DatabaseHelper(this);
@@ -121,6 +117,12 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertData("Headache", "头痛", "Tóutòng", "help", true, false);
         myDb.insertData("Hot Water", "热水", "Rè shuǐ", "help", true, false);
         myDb.insertData("Go Away!", "走开", "Zǒu kāi", "help", true, false);
+    }
+
+    public void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, fragment);
+        transaction.commit();
     }
 
 }

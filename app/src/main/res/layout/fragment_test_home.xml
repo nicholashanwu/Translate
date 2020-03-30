@@ -22,13 +22,13 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/btnProfileImage"
-                android:elevation="4dp"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="right"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="16dp"
-                android:src="@drawable/tzuyu"
+                android:elevation="4dp"
+                android:src="@drawable/outline_perm_identity_black_48dp"
                 app:civ_border_color="#FFFFFF"
                 app:civ_border_width="1dp" />
 

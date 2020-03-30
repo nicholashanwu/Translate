@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     >
 
+
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -18,60 +20,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-<!--    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView-->
-<!--        android:id="@+id/top_navigation_constraint"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="#FFFFFF"-->
-<!--        android:elevation="4dp"-->
-<!--        android:padding="8dp"-->
-<!--        app:bnc_mode="spread"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent">-->
-
-<!--        <com.gauravk.bubblenavigation.BubbleToggleView-->
-<!--            android:id="@+id/c_item_learn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:bt_active="true"-->
-<!--            app:bt_colorActive="@color/colorBlue"-->
-<!--            app:bt_colorInactive="@color/colorBlue"-->
-<!--            app:bt_icon="@drawable/outline_extension_black_48dp"-->
-<!--            app:bt_padding="8dp"-->
-<!--            app:bt_shape="@drawable/transition_background_drawable"-->
-<!--            app:bt_title="@string/title_learn"-->
-<!--            app:bt_titlePadding="8dp" />-->
-
-<!--        <com.gauravk.bubblenavigation.BubbleToggleView-->
-<!--            android:id="@+id/c_item_test"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:bt_active="true"-->
-<!--            app:bt_colorActive="@color/colorGreen"-->
-<!--            app:bt_colorInactive="@color/colorGreen"-->
-<!--            app:bt_icon="@drawable/outline_format_list_numbered_black_48dp"-->
-<!--            app:bt_padding="8dp"-->
-<!--            app:bt_shape="@drawable/transition_background_drawable"-->
-<!--            app:bt_title="@string/title_test"-->
-<!--            app:bt_titlePadding="8dp" />-->
-
-<!--        <com.gauravk.bubblenavigation.BubbleToggleView-->
-<!--            android:id="@+id/c_item_profile"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:bt_active="true"-->
-<!--            app:bt_colorActive="@color/colorRed"-->
-<!--            app:bt_colorInactive="@color/colorRed"-->
-<!--            app:bt_icon="@drawable/outline_perm_identity_black_48dp"-->
-<!--            app:bt_padding="8dp"-->
-<!--            app:bt_shape="@drawable/transition_background_drawable"-->
-<!--            app:bt_title="@string/title_profile"-->
-<!--            app:bt_titlePadding="8dp" />-->
-
-<!--        &lt;!&ndash; Add more child items here - max upto 5 &ndash;&gt;-->
-
-<!--    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>-->
 
 
     <fragment

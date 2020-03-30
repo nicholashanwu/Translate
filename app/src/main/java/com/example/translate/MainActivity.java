@@ -2,13 +2,24 @@ package com.example.translate;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.translate.ui.home.HomeFragment;
+import com.example.translate.ui.home.LearningFragment;
+import com.example.translate.ui.profile.ProfileFragment;
+import com.example.translate.ui.test.TestFragment;
+import com.example.translate.ui.test.TestHomeFragment;
+import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
+import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,21 +29,43 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper myDb;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
-        if(firstStart){
+        if (firstStart) {
             initializeDatabase();
         }
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_main);
+
+//        BubbleNavigationConstraintView bubbleNavigation;
+//
+//        bubbleNavigation = findViewById(R.id.top_navigation_constraint);
+//
+//        bubbleNavigation.setNavigationChangeListener(new BubbleNavigationChangeListener() {
+//            @Override
+//            public void onNavigationChanged(View view, int position) {
+//
+//                if (position == 0) {
+//                    loadFragment(new HomeFragment());
+//
+//                } else if (position == 1) {
+//                    loadFragment(new TestHomeFragment());
+//                } else {
+//                    loadFragment(new ProfileFragment());
+//                }
+//
+//            }
+//        });
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         findViewById(R.id.nav_view);
@@ -44,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction =
+                getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment, fragment);
+        transaction.commit();
     }
 
 

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    app:itemIconTint="@drawable/bottom_navigation_selector"-->
 
     <item
         android:id="@+id/navigation_learning"
         android:icon="@drawable/outline_extension_black_48dp"
-        android:title="Learn" />
+        android:title="@string/title_learn" />
 
     <item
         android:id="@+id/navigation_test"
         android:icon="@drawable/outline_format_list_numbered_black_48dp"
-        android:title="Test" />
+        android:title="@string/title_test" />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/outline_perm_identity_black_48dp"
-        android:title="Profile" />
+        android:title="@string/title_profile" />
+
+
 
 </menu>

@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
+    app:itemIconTint="@color/colorBlue"
+
     app:startDestination="@id/navigation_learning">
+
+
 
     <fragment
         android:id="@+id/navigation_learning"

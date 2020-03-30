@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,9 +28,11 @@ public class ProfileFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Button mBtnStartSaved;
-    private Button mBtnStartLearned;
+    private CardView mBtnStartSaved;
+    private CardView mBtnStartLearned;
+    private CardView mBtnStartMyList;
     private DatabaseHelper myDb;
+    private HorizontalScrollView mHsvCards;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,8 +54,12 @@ public class ProfileFragment extends Fragment {
             }
         };
 
-        mBtnStartSaved = (Button) view.findViewById(R.id.btnStartSaved);
-        mBtnStartLearned = (Button) view.findViewById(R.id.btnStartLearned);
+        mBtnStartSaved = (CardView) view.findViewById(R.id.btnStartSaved);
+        mBtnStartLearned = (CardView) view.findViewById(R.id.btnStartLearned);
+        mBtnStartMyList = (CardView) view.findViewById(R.id.btnStartMyList);
+        mHsvCards = (HorizontalScrollView) view.findViewById(R.id.hsvCards);
+
+        mHsvCards.setHorizontalScrollBarEnabled(false);
 
 
 

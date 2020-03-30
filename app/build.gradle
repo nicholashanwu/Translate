@@ -57,5 +57,7 @@ dependencies {
 
     implementation 'com.balysv:material-ripple:1.0.2' // for ripple effect
 
+    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
+
 
 }

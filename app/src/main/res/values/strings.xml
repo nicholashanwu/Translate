@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Translate</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_learn">Learn</string>
+    <string name="title_test">Test</string>
+    <string name="title_profile">Profile</string>
 
     <!-- TODO: fragment_home -->
     <string name="home_title">Lingo Pal</string>

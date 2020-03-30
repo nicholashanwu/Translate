@@ -5,25 +5,60 @@
     android:id="@+id/mobile_navigation"
     app:itemIconTint="@color/colorBlue"
 
-    app:startDestination="@id/navigation_learning">
+    app:startDestination="@id/navigation_home">
 
 
 
     <fragment
-        android:id="@+id/navigation_learning"
+        android:id="@+id/navigation_home"
         android:name="com.example.translate.ui.home.HomeFragment"
         android:label="Learn"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_learning"
+            app:destination="@id/navigation_learning" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_test"
+        android:id="@+id/navigation_test_home"
         android:name="com.example.translate.ui.test.TestHomeFragment"
         android:label="Test"
-        tools:layout="@layout/fragment_test_home" />
+        tools:layout="@layout/fragment_test_home">
+        <action
+            android:id="@+id/action_navigation_test_home_to_testFragment"
+            app:destination="@id/navigation_test" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.translate.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_learning"
+        android:name="com.example.translate.ui.home.LearningFragment"
+        android:label="Learn"
+        tools:layout="@layout/fragment_learning">
+        <argument
+            android:name="learningType"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_learning_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_test"
+        android:name="com.example.translate.ui.test.TestFragment"
+        android:label="Test"
+        tools:layout="@layout/fragment_test">
+        <argument
+            android:name="learningType"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_test_to_navigation_test_home"
+            app:destination="@id/navigation_test_home" />
+    </fragment>
 </navigation>

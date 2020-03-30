@@ -13,8 +13,9 @@ import com.example.translate.ui.profile.ProfileFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
@@ -24,6 +25,7 @@ public class HomeFragment extends Fragment {
 	private Button mBtnStartFood;
 	private Button mBtnStartHelp;
 	private CircleImageView mBtnProfileImage;
+    private NavController navController;
 
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
@@ -49,16 +51,9 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 
-				FragmentManager manager = getFragmentManager();
-				FragmentTransaction transaction = manager.beginTransaction();
-				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-				Fragment fragment = new LearningFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("learningType", "numbers");
-				fragment.setArguments(bundle);
-				transaction.replace(R.id.nav_host_fragment, fragment);
-				transaction.commit();
-				transaction.addToBackStack(null);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_home_to_navigation_learning, bundle);
 			}
 		});
 
@@ -67,16 +62,9 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 
-				FragmentManager manager = getFragmentManager();
-				FragmentTransaction transaction = manager.beginTransaction();
-				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-				Fragment fragment = new LearningFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("learningType", "essentials");
-				fragment.setArguments(bundle);
-				transaction.replace(R.id.nav_host_fragment, fragment);
-				transaction.commit();
-				transaction.addToBackStack(null);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_home_to_navigation_learning, bundle);
 			}
 		});
 
@@ -85,16 +73,9 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 
-				FragmentManager manager = getFragmentManager();
-				FragmentTransaction transaction = manager.beginTransaction();
-				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-				Fragment fragment = new LearningFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("learningType", "food");
-				fragment.setArguments(bundle);
-				transaction.replace(R.id.nav_host_fragment, fragment);
-				transaction.commit();
-				transaction.addToBackStack(null);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_home_to_navigation_learning, bundle);
 			}
 		});
 
@@ -103,16 +84,9 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 
-				FragmentManager manager = getFragmentManager();
-				FragmentTransaction transaction = manager.beginTransaction();
-				transaction.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-				Fragment fragment = new LearningFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("learningType", "help");
-				fragment.setArguments(bundle);
-				transaction.replace(R.id.nav_host_fragment, fragment);
-				transaction.commit();
-				transaction.addToBackStack(null);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_home_to_navigation_learning, bundle);
 			}
 		});
 

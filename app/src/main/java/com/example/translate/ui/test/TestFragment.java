@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 public class TestFragment extends Fragment {
 
@@ -271,13 +271,7 @@ public class TestFragment extends Fragment {
 
         showMessage("You're Finished!", "You completed the " + testingType + " test module!");
 
-        FragmentManager fm = getFragmentManager();
-
-        fm.popBackStack();
-        mProgressBar.setProgress(0, true);
-
-
-        //finish
+        Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
     }
 
     private ArrayList<String> getAnswerList(int currentCardNumber) {

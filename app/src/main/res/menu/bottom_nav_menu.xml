@@ -3,12 +3,12 @@
     app:itemIconTint="@drawable/bottom_navigation_selector"
 
     <item
-        android:id="@+id/navigation_learning"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/outline_extension_black_48dp"
         android:title="@string/title_learn" />
 
     <item
-        android:id="@+id/navigation_test"
+        android:id="@+id/navigation_test_home"
         android:icon="@drawable/outline_format_list_numbered_black_48dp"
         android:title="@string/title_test" />
 

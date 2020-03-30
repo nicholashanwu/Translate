@@ -21,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 public class LearningFragment extends Fragment {
 
@@ -41,7 +41,6 @@ public class LearningFragment extends Fragment {
     private TextView mTxtUnsavedMessage;
 
     private DatabaseHelper myDb;
-
 
     private int currentCardNumber = 0;
     private double progressDouble = 0;
@@ -186,10 +185,8 @@ public class LearningFragment extends Fragment {
 
                     showMessage("You're Finished!", "You completed the " + learningType + " learning module!");
 
-                    FragmentManager fm = getFragmentManager();
-
-                    fm.popBackStack();
-                    mProgressBar.setProgress(0, true);
+                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+//
                 }
             }
         });

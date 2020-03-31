@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 
 import com.example.translate.DatabaseHelper;
+import com.example.translate.MainActivity;
 import com.example.translate.R;
 import com.example.translate.ui.home.LearningFragment;
 
@@ -28,7 +29,8 @@ public class ProfileFragment extends Fragment {
     private CardView mBtnStartSaved;
     private CardView mBtnStartLearned;
     private CardView mBtnStartMyList;
-    private DatabaseHelper myDb;
+
+
     private HorizontalScrollView mHsvCards;
 
 
@@ -38,6 +40,8 @@ public class ProfileFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
         return root;
+
+
     }
 
     @Override
@@ -49,12 +53,11 @@ public class ProfileFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        AchievementAdapter.RecyclerViewClickListener listener = new AchievementAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                //launchDetailActivity(position);
-            }
-        };
+
+        mAdapter = new AchievementAdapter(MainActivity.achievementList);
+        mRecyclerView.setAdapter(mAdapter);
+
+
 
         mBtnStartSaved = (CardView) view.findViewById(R.id.btnStartSaved);
         mBtnStartLearned = (CardView) view.findViewById(R.id.btnStartLearned);
@@ -66,7 +69,7 @@ public class ProfileFragment extends Fragment {
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDb = new DatabaseHelper(getContext());
+                DatabaseHelper myDb = new DatabaseHelper(getContext());
 
                 Cursor res = myDb.getSaved();
                 if(res.getCount() == 0){
@@ -91,7 +94,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                myDb = new DatabaseHelper(getContext());
+                DatabaseHelper myDb = new DatabaseHelper(getContext());
 
                 Cursor res = myDb.getLearned();
                 if(res.getCount() == 0){
@@ -108,12 +111,12 @@ public class ProfileFragment extends Fragment {
                     transaction.commit();
                     transaction.addToBackStack(null);
                 }
-                //launch learning_fragmenet with learned
+
+
             }
         });
 
-        mAdapter = new AchievementAdapter(Achievement.getAchievements(), listener);
-        mRecyclerView.setAdapter(mAdapter);
+
 
     }
 
@@ -124,4 +127,6 @@ public class ProfileFragment extends Fragment {
         builder.setMessage(message);
         builder.show();
     }
+
+
 }

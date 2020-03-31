@@ -2,10 +2,14 @@ package com.example.translate;
 
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.example.translate.ui.profile.Achievement;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper myDb;
     private BottomNavigationView bottomBar;
+    public static ArrayList<Achievement> achievementList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +55,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomBar, navController);
 
+        achievementList = getAchievements();
+        System.out.println(achievementList);
+
     }
 
 
     public void initializeDatabase() {
         myDb = new DatabaseHelper(this);
-        insertSampleData();
+        insertWordData();
+        insertAchievementData();
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", false);
@@ -63,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void insertSampleData() {
+    public void insertWordData() {
         myDb.insertData("One", "一", "Yī", "numbers", true, false);
         myDb.insertData("Two", "二", "Èr", "numbers", true, false);
         myDb.insertData("Three", "三", "Sān", "numbers", true, false);
@@ -117,7 +126,48 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertData("Headache", "头痛", "Tóutòng", "help", true, false);
         myDb.insertData("Hot Water", "热水", "Rè shuǐ", "help", true, false);
         myDb.insertData("Go Away!", "走开", "Zǒu kāi", "help", true, false);
+
+
     }
+
+
+    public void insertAchievementData() {
+        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
+        myDb.insertAchievementData("Great Greeter", "Complete the second learning module: Essentials", 0, 1, false);
+        myDb.insertAchievementData("Food Fight", "Complete the third learning module: Food", 0, 1, false);
+        myDb.insertAchievementData("Helping Hand", "Complete the fourth learning module: Help", 0, 1, false);
+        myDb.insertAchievementData("Dedicated", "Revise your saved words", 0, 1, false);
+        myDb.insertAchievementData("Pursuing Perfection", "Revise your mastered words", 0, 1, false);
+        myDb.insertAchievementData("Quick Quick Quick", "Complete a test in under 30 seconds", 0, 1, false);
+        myDb.insertAchievementData("Self-Improver", "Check out all components in your profile", 0, 3, false);
+        myDb.insertAchievementData("Lingo Learner", "Complete all learning modules", 0, 4, false);
+        myDb.insertAchievementData("Lingo Legend", "Complete a test without any mistakes", 0, 1, false);
+        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
+        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
+        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
+
+    }
+
+    public ArrayList<Achievement> getAchievements() {
+
+        DatabaseHelper myDb = new DatabaseHelper(this);
+
+        ArrayList<Achievement> achievementList = new ArrayList<>();
+
+        Cursor res = myDb.getAchievements();
+        while (res.moveToNext()) {
+            achievementList.add(new Achievement(res.getString(0),
+                    res.getString(1),
+                    res.getString(2),
+                    res.getInt(3),
+                    res.getInt(4),
+                    res.getString(5)));
+        }
+
+        return achievementList;
+    }
+
+
 
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

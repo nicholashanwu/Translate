@@ -1,24 +1,34 @@
 package com.example.translate.ui.profile;
 
-import java.util.ArrayList;
-
 public class Achievement {
+
+    private String id;
     private String name;
     private String description;
     private int currentProgress;
     private int totalProgress;
-    private boolean isAchieved;
+    private String complete;
+
 
     public Achievement() {
 
     }
 
-    public Achievement(String name, String description, int currentProgress, int totalProgress, boolean isAchieved) {
+    public Achievement(String id, String name, String description, int currentProgress, int totalProgress, String complete) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.currentProgress = currentProgress;
         this.totalProgress = totalProgress;
-        this.isAchieved = isAchieved;
+        this.complete = complete;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,22 +47,6 @@ public class Achievement {
         this.description = description;
     }
 
-    public boolean isAchieved() {
-        return isAchieved;
-    }
-
-    public void setAchieved(boolean achieved) {
-        isAchieved = achieved;
-    }
-
-    public int getTotalProgress() {
-        return totalProgress;
-    }
-
-    public void setTotalProgress(int totalProgress) {
-        this.totalProgress = totalProgress;
-    }
-
     public int getCurrentProgress() {
         return currentProgress;
     }
@@ -61,23 +55,23 @@ public class Achievement {
         this.currentProgress = currentProgress;
     }
 
-    public static ArrayList<Achievement> getAchievements() {
-
-        ArrayList<Achievement> achievementList = new ArrayList<>();
-
-        achievementList.add(new Achievement("Number Novice", "Complete the first level: Numbers", 1, 1, false));
-        achievementList.add(new Achievement("Good Greeter", "Complete the second level: Essentials", 2, 10, false));
-        achievementList.add(new Achievement("Food Fighter", "Complete the third level: Food", 3, 10, false));
-        achievementList.add(new Achievement("Helping Hand", "Complete the fourth level: Help", 4, 10, false));
-        achievementList.add(new Achievement("Perseverance", "Revise your saved words" , 5, 10, false));
-        achievementList.add(new Achievement("Dedicated", "Revise your mastered words", 6, 10, false));
-        achievementList.add(new Achievement("Quick Quick Quick", "Complete a test in under 30 seconds", 7, 10, false));
-        achievementList.add(new Achievement("Self-improver", "Check out all components in your profile", 9, 10, false));
-        achievementList.add(new Achievement("Lingo Learner", "Complete all learning tasks", 8, 10, false));
-        achievementList.add(new Achievement("Lingo Legend", "Complete a level without any mistakes", 10, 10, false));
-
-        return achievementList;
+    public int getProgressTotal() {
+        return totalProgress;
     }
 
+    public void setProgressTotal(int progressTotal) {
+        this.totalProgress = totalProgress;
+    }
+
+    public String getComplete() {
+        return complete;
+    }
+
+    public void setComplete(String complete) {
+        this.complete = complete;
+    }
+
+
 }
+
 

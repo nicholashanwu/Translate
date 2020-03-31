@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "language.db";
@@ -19,6 +17,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_5 = "category";
     private static final String COL_6 = "learned";
     private static final String COL_7 = "saved";
+
+    private static final String A_TABLE_NAME = "achievement_table";
+    private static final String ATT_1 = "id_pk";
+    private static final String ATT_2 = "name";
+    private static final String ATT_3 = "description";
+    private static final String ATT_4 = "currentProgress";
+    private static final String ATT_5 = "totalProgress";
+    private static final String ATT_6 = "complete";
 
 
     public DatabaseHelper(Context context) {
@@ -35,15 +41,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CATEGORY TEXT, " +
                 "LEARNED BOOLEAN, " +
                 "SAVED BOOLEAN)");
+
+
+        db.execSQL("CREATE TABLE " + A_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "NAME TEXT, " +
+                "DESCRIPTION TEXT, " +
+                "CURRENTPROGRESS TEXT, " +
+                "TOTALPROGRESS TEXT, " +
+                "COMPLETE BOOLEAN)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + A_TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertData(String phraseEn, String phraseCn, String pinyin, String category, Boolean learned, Boolean saved) {
+    public boolean insertData(String phraseEn, String phraseCn, String pinyin, String category, boolean learned, boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, phraseEn);
@@ -54,19 +69,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_7, saved);
         long result = db.insert(TABLE_NAME, null, contentValues);
         return result != -1;
-
-
     }
+
+    public boolean insertAchievementData(String name, String description, int currentProgress, int totalProgress, boolean saved) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ATT_2, name);
+        contentValues.put(ATT_3, description);
+        contentValues.put(ATT_4, currentProgress);
+        contentValues.put(ATT_5, totalProgress);
+        contentValues.put(ATT_6, saved);
+        long result = db.insert(A_TABLE_NAME, null, contentValues);
+        return result != -1;
+    }
+
+
+    public Cursor getAchievements() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + A_TABLE_NAME, null);
+        return res;
+    }
+
+
+    ////////////////////////////////////////////
+
+
+
 
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return res;
-
     }
 
-
-    //data retrieval
     public Cursor getCategory(String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE category = '" + category + "'", null);
@@ -85,14 +120,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-
     public void dropTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
-    public void updateSave (String id, Boolean saved) {
+    public void updateSave(String id, boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         //System.out.println(phraseEn);
@@ -106,10 +140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-
-    //test fragment
-
-    public void updateLearned (String phraseEn, Boolean learned) {
+    public void updateLearned(String phraseEn, boolean learned) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         System.out.println(phraseEn);

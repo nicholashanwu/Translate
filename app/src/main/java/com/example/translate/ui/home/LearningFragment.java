@@ -28,8 +28,7 @@ public class LearningFragment extends Fragment {
     private FloatingActionButton mFabDone;
     private FloatingActionButton mFabSave;
     private FloatingActionButton mFabAnswer;
-    private Button mBtnDropTable;
-    private Button mBtnShowValues;
+    //private Button mBtnShowValues;
     private ProgressBar mProgressBar;
 
     private TextView mTxtChineseCharacter;
@@ -98,9 +97,7 @@ public class LearningFragment extends Fragment {
         mFabAnswer = view.findViewById(R.id.fabAnswer);
         mFabSave = view.findViewById(R.id.fabSave);
         mFabDone = view.findViewById(R.id.fabDone);
-        mBtnDropTable = view.findViewById(R.id.btnDropTable);
-
-        mBtnShowValues = view.findViewById(R.id.btnShowValues);
+        //mBtnShowValues = view.findViewById(R.id.btnShowValues);
         mProgressBar = view.findViewById(R.id.progressBar);
         mTxtProgress = view.findViewById(R.id.txtProgress);
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
@@ -120,7 +117,7 @@ public class LearningFragment extends Fragment {
         mTxtUnsavedMessage.setVisibility(View.GONE);
 
 
-        mBtnShowValues.setOnClickListener(new View.OnClickListener() {
+        /*mBtnShowValues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Cursor res = myDb.getAllData();
@@ -140,14 +137,7 @@ public class LearningFragment extends Fragment {
                     showMessage("Data", buffer.toString());
                 }
             }
-        });
-
-        mBtnDropTable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myDb.dropTable();
-            }
-        });
+        });*/
 
         mFabDone.setOnClickListener(new View.OnClickListener() {
             @Override

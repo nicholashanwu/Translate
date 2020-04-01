@@ -46,7 +46,7 @@ public class TestHomeFragment extends Fragment {
         mBtnStartGreetings = (Button) view.findViewById(R.id.btnStartGreetings);
         mBtnStartFood = (Button) view.findViewById(R.id.btnStartFood);
         mBtnStartHelp = (Button) view.findViewById(R.id.btnStartHelp);
-        mBtnProfileImage = (CircleImageView) view.findViewById(R.id.btnProfileImage);
+        mBtnProfileImage = (CircleImageView) view.findViewById(R.id.btnProfileImageTest);
 
         mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -88,7 +88,7 @@ public class TestHomeFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("testingType", "help");
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_home_to_testFragment, bundle);
+
             }
         });
 
@@ -96,11 +96,8 @@ public class TestHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-                ft.replace(R.id.nav_host_fragment, new ProfileFragment(), "NewFragmentTag");
-                ft.commit();
-                ft.addToBackStack(null);
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_home_to_navigation_profile);
+
             }
         });
 

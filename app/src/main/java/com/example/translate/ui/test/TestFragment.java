@@ -14,19 +14,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
+import com.example.translate.Phrase;
 import com.example.translate.R;
 import com.example.translate.Translater;
-import com.example.translate.ui.Phrase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 public class TestFragment extends Fragment {
 
@@ -40,8 +40,8 @@ public class TestFragment extends Fragment {
 	private RadioButton mRbAnswerOne;
 	private RadioButton mRbAnswerTwo;
 	private RadioButton mRbAnswerThree;
-	private TextView mTxtProgress;
 	private ProgressBar mProgressBar;
+	private TextView mTxtProgress;
 	private TextView mTxtScore;
 
 	private DatabaseHelper myDb;
@@ -52,9 +52,9 @@ public class TestFragment extends Fragment {
 	private int progressInt = 0;
 	private int score = 0;
 	private double percentage;
-    private int learned = 0;
-    private int mastered = 0;
-    private int forgotten = 0;
+	private int learned = 0;
+	private int mastered = 0;
+	private int forgotten = 0;
 
 	private boolean answered;
 	private ArrayList<Phrase> phraseList = new ArrayList<>();
@@ -86,26 +86,6 @@ public class TestFragment extends Fragment {
 
 		Translater translater = new Translater();
 		translater.checkModelExists(translater.configure());
-
-		//translate stuff here
-//        translater.configure().translate("bye")
-//                .addOnSuccessListener(
-//                        new OnSuccessListener<String>() {
-//                            @Override
-//                            public void onSuccess(@NonNull String translatedText) {
-//                                System.out.println(translatedText);
-//
-//                                // Translation successful.
-//                            }
-//                        })
-//                .addOnFailureListener(
-//                        new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                System.out.println("ERROR");// Error.
-//                                // ...
-//                            }
-//                        });
 
 		myDb = new DatabaseHelper(getContext());
 
@@ -148,19 +128,14 @@ public class TestFragment extends Fragment {
 			}
 		});
 
-
-		// Set Text Progress Indicator and advance it
-
 		return view;
 	}
-	//////////////////////////////////////////////////////////////////////////////////////
 
 	public void setParameters() {
 		mProgressBar.setProgress(1);
 		mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
 
 		mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
-
 	}
 
 	public void setTitle(String testingType) {
@@ -203,10 +178,10 @@ public class TestFragment extends Fragment {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog, null);
 		TextView txtTitle = view.findViewById(R.id.title);
 		ImageButton imageButton = view.findViewById(R.id.image);
-        TextView mTxtMessage = view.findViewById(R.id.message);
-        TextView mTxtLearned = view.findViewById(R.id.txtLearned);
-        TextView mTxtMastered = view.findViewById(R.id.txtMastered);
-        TextView mTxtForgot = view.findViewById(R.id.txtForgot);
+		TextView mTxtMessage = view.findViewById(R.id.message);
+		TextView mTxtLearned = view.findViewById(R.id.txtLearned);
+		TextView mTxtMastered = view.findViewById(R.id.txtMastered);
+		TextView mTxtForgot = view.findViewById(R.id.txtForgot);
 
 		if (percentage > 85) {
 			imageButton.setImageResource(R.mipmap.over_95);
@@ -227,15 +202,15 @@ public class TestFragment extends Fragment {
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
+				Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
 			}
 		});
 
 		txtTitle.setText(title);
-        mTxtMessage.setText((int) percentage + "%");
-        mTxtLearned.setText("You learned " + learned + " new words!");
-        mTxtMastered.setText("You mastered " + mastered + " words!");
-        mTxtForgot.setText("You forgot " + forgotten + " words...");
+		mTxtMessage.setText((int) percentage + "%");
+		mTxtLearned.setText("You learned " + learned + " new words!");
+		mTxtMastered.setText("You mastered " + mastered + " words!");
+		mTxtForgot.setText("You forgot " + forgotten + " words...");
 
 		builder.setView(view);
 		builder.show();
@@ -250,18 +225,18 @@ public class TestFragment extends Fragment {
 			score++;
 			mTxtScore.setText(Integer.toString(score));
 
-            if (myDb.getLearnedStatus(phraseList.get(currentCardNumber - 1).getPhraseEn()).equals("true")) {
-                mastered++;
-                myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
-            } else {
-                learned++;
-                myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
-            }
+			if (myDb.getLearnedStatus(phraseList.get(currentCardNumber - 1).getPhraseEn()).equals("true")) {
+				mastered++;
+				myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
+			} else {
+				learned++;
+				myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
+			}
 
 		} else {
 			YoYo.with(Techniques.Shake).duration(500).playOn(mRbGroup.getChildAt(answerIndex - 1));
-            myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), false);
-            forgotten++;
+			myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), false);
+			forgotten++;
 
 		}
 		showSolution(answerIndex);
@@ -325,14 +300,14 @@ public class TestFragment extends Fragment {
 	private void finishTest() {
 		mTxtProgress.setText("");
 		mProgressBar.setProgress(99, true);
-        percentage = 100 * (double) score / phraseList.size();
-        System.out.println(percentage);
-        System.out.println(answerList.size());
+		percentage = 100 * (double) score / phraseList.size();
+		System.out.println(percentage);
+		System.out.println(answerList.size());
 
 		showMessage("You're Finished!");
 
 
-    }
+	}
 
 	private ArrayList<String> getAnswerList(int currentCardNumber) {
 		answerList.clear();

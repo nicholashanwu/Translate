@@ -6,16 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.translate.Phrase;
 import com.example.translate.R;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-
 public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseViewHolder> {
     private ArrayList<Phrase> mPhraseList;
-
 
     public PhraseAdapter(ArrayList<Phrase> mPhraseList) {
         this.mPhraseList = mPhraseList;
@@ -36,13 +35,10 @@ public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseView
             phraseEn = v.findViewById(R.id.txtPhraseEn);
             phraseCn = v.findViewById(R.id.txtPhraseCn);
             phrasePinyin = v.findViewById(R.id.txtPhrasePinyin);
-
         }
 
         @Override
         public void onClick(View view) {
-            //mListener.onClick(view, getAdapterPosition());
-
         }
     }
 
@@ -55,11 +51,9 @@ public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseView
     @Override
     public void onBindViewHolder(PhraseViewHolder holder, int position) {                                         //position determines the list item we are currently creating for the RecyclerView
         Phrase phrase = mPhraseList.get(position);
-
         holder.phraseEn.setText(phrase.getPhraseEn());
         holder.phraseCn.setText(phrase.getPhraseCn());
-        holder.phrasePinyin.setText(phrase.getPhrasePinyin());
-
+        holder.phrasePinyin.setText(phrase.getPinyin());
     }
 
     @Override

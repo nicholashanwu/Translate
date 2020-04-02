@@ -1,4 +1,4 @@
-package com.example.translate.ui;
+package com.example.translate;
 
 public class Phrase {
 
@@ -11,7 +11,6 @@ public class Phrase {
     private String saved;
 
     public Phrase(){
-
     }
 
     public Phrase(String id, String phraseEn, String phraseCn, String pinyin, String category, String learned, String saved) {

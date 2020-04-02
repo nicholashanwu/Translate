@@ -7,7 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.translate.DatabaseHelper;
+import com.example.translate.Phrase;
 import com.example.translate.R;
 import com.example.translate.Translater;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -17,119 +24,115 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import name.pilgr.pipinyin.PiPinyin;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MyListFragment extends Fragment {
 
-    private TextInputLayout mTextInputWord;
-    private FloatingActionButton mBtnAddWord;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Phrase> customPhraseList = new ArrayList<Phrase>();
+	private TextInputLayout mTextInputWord;
+	private FloatingActionButton mBtnAddWord;
+	private RecyclerView mRecyclerView;
+	private RecyclerView.Adapter mAdapter;
+	private RecyclerView.LayoutManager mLayoutManager;
+	private ArrayList<Phrase> customPhraseList = new ArrayList<Phrase>();
 
-    public MyListFragment() {
-        // Required empty public constructor
-    }
+	public MyListFragment() {
 
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_my_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_my_list, container, false);
 
-        mRecyclerView = view.findViewById(R.id.rvMyWords);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setNestedScrollingEnabled(false);
+		DatabaseHelper myDb = new DatabaseHelper(getActivity());
 
-        //getWords
+		Cursor res = myDb.getCategory("custom");
+		if (res.getCount() == 0) {
+			showMessage("No Data", "You haven't added any of your own words yet");
+		} else {
+			while (res.moveToNext()) {
+				customPhraseList.add(new Phrase(
+						res.getString(0),
+						res.getString(1),
+						res.getString(2),
+						res.getString(3),
+						res.getString(4),
+						res.getString(5),
+						res.getString(6)
+				));
+				System.out.println("not empty");
+			}
+		}
 
-        DatabaseHelper myDb = new DatabaseHelper(getActivity());
+		mRecyclerView = view.findViewById(R.id.rvMyWords);
+		mRecyclerView.setHasFixedSize(true);
+		mLayoutManager = new LinearLayoutManager(this.getContext());
+		mRecyclerView.setLayoutManager(mLayoutManager);
+		mRecyclerView.setNestedScrollingEnabled(false);
+		mAdapter = new PhraseAdapter(customPhraseList);
+		mRecyclerView.setAdapter(mAdapter);
 
+		mTextInputWord = view.findViewById(R.id.text_input_phrase);
+		mBtnAddWord = view.findViewById(R.id.btnAddWord);
 
-        Cursor res = myDb.getCategory("custom");
-        if (res.getCount() == 0) {
-            showMessage("No Data", "You haven't added any of your own words yet");
-        } else {
-            while (res.moveToNext()) {
-                customPhraseList.add(new Phrase(res.getString(1),
-                        res.getString(2),
-                        res.getString(3)));
-                System.out.println("not empty");
-            }
-        }
+		mBtnAddWord.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (mTextInputWord.getEditText().getText().toString().trim().isEmpty()) {
+					mTextInputWord.setError("field cannot be empty");
+				} else {
+					mTextInputWord.setError(null);
+					translate(mTextInputWord.getEditText().getText().toString().trim());
+					mAdapter = new PhraseAdapter(customPhraseList);
+					mRecyclerView.setAdapter(mAdapter);
+					mAdapter.notifyDataSetChanged();
+				}
+			}
+		});
 
-        mAdapter = new PhraseAdapter(customPhraseList);
-        mRecyclerView.setAdapter(mAdapter);
+		return view;
+	}
 
-        mTextInputWord = view.findViewById(R.id.text_input_phrase);
-        mBtnAddWord = view.findViewById(R.id.btnAddWord);
+	public void addWord(String phraseEn, String phraseCn) {
+		DatabaseHelper myDb = new DatabaseHelper(getContext());
+		PiPinyin piPinyin = new PiPinyin(getActivity());
+		String phrasePinyin = piPinyin.toPinyin(phraseCn, " ");
 
-        mBtnAddWord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mTextInputWord.getEditText().getText().toString().trim().isEmpty()) {
-                    mTextInputWord.setError("field cannot be empty");
-                } else {
-                    mTextInputWord.setError(null);
-                    translate(mTextInputWord.getEditText().getText().toString().trim());
-                    mAdapter.notifyDataSetChanged();
+		myDb.insertData(phraseEn, phraseCn, phrasePinyin, "custom", false, false);
+		customPhraseList.add(new Phrase("1", phraseEn, phraseCn, phrasePinyin, "custom", "false", "false"));
 
-                }
-            }
-        });
+		FragmentTransaction tr = getFragmentManager().beginTransaction();
+		FragmentTransaction ftr = getFragmentManager().beginTransaction();
+		ftr.detach(MyListFragment.this).attach(MyListFragment.this).commit();
+		// TODO: SHOW A REFRESH ICON
+	}
 
-        return view;
-    }
+	public void translate(final String phrase) {
+		Translater translater = new Translater();
+		translater.checkModelExists(translater.configure());
+		translater.configure().translate(phrase)
+				.addOnSuccessListener(
+						new OnSuccessListener<String>() {
+							@Override
+							public void onSuccess(@NonNull String translatedText) {
+								addWord(phrase, translatedText);
+							}
+						})
+				.addOnFailureListener(
+						new OnFailureListener() {
+							@Override
+							public void onFailure(@NonNull Exception e) {
+								System.out.println("ERROR");// Error.
+							}
+						});
+	}
 
-    public void addWord(String phraseEn, String phraseCn) {
-        DatabaseHelper myDb = new DatabaseHelper(getContext());
-        PiPinyin piPinyin = new PiPinyin(getActivity());
-        String phrasePinyin = piPinyin.toPinyin(phraseCn, " ");
-
-        myDb.insertData(phraseEn, phraseCn, phrasePinyin, "custom", false, false);
-
-    }
-
-    public void translate(final String phrase) {
-        Translater translater = new Translater();
-        translater.checkModelExists(translater.configure());
-        translater.configure().translate(phrase)
-                .addOnSuccessListener(
-                        new OnSuccessListener<String>() {
-                            @Override
-                            public void onSuccess(@NonNull String translatedText) {
-                                addWord(phrase, translatedText);
-                                System.out.println(translatedText);
-
-                                // Translation successful.
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                System.out.println("ERROR");// Error.
-                                // ...
-                            }
-                        });
-    }
-
-    private void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
+	private void showMessage(String title, String message) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setTitle(title);
+		builder.setMessage(message);
+		builder.show();
+	}
 
 }

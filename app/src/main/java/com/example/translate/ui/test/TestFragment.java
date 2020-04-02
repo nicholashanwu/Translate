@@ -52,6 +52,9 @@ public class TestFragment extends Fragment {
 	private int progressInt = 0;
 	private int score = 0;
 	private double percentage;
+    private int learned = 0;
+    private int mastered = 0;
+    private int forgotten = 0;
 
 	private boolean answered;
 	private ArrayList<Phrase> phraseList = new ArrayList<>();
@@ -200,7 +203,10 @@ public class TestFragment extends Fragment {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog, null);
 		TextView txtTitle = view.findViewById(R.id.title);
 		ImageButton imageButton = view.findViewById(R.id.image);
-		TextView txtMessage = view.findViewById(R.id.message);
+        TextView mTxtMessage = view.findViewById(R.id.message);
+        TextView mTxtLearned = view.findViewById(R.id.txtLearned);
+        TextView mTxtMastered = view.findViewById(R.id.txtMastered);
+        TextView mTxtForgot = view.findViewById(R.id.txtForgot);
 
 		if (percentage > 85) {
 			imageButton.setImageResource(R.mipmap.over_95);
@@ -221,12 +227,15 @@ public class TestFragment extends Fragment {
 		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
 			}
 		});
 
 		txtTitle.setText(title);
-		txtMessage.setText("You scored: " + Integer.toString((int)percentage + "%"));
+        mTxtMessage.setText((int) percentage + "%");
+        mTxtLearned.setText("You learned " + learned + " new words!");
+        mTxtMastered.setText("You mastered " + mastered + " words!");
+        mTxtForgot.setText("You forgot " + forgotten + " words...");
 
 		builder.setView(view);
 		builder.show();
@@ -236,15 +245,23 @@ public class TestFragment extends Fragment {
 		answered = true;
 		RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
 		int answerNum = mRbGroup.indexOfChild(rbSelected) + 1;
-		System.out.println(answerNum);
-		System.out.println(answerIndex);
 		if (answerNum == answerIndex) {
 			YoYo.with(Techniques.Bounce).duration(500).playOn(mRbGroup.getChildAt(answerIndex - 1));
 			score++;
 			mTxtScore.setText(Integer.toString(score));
 
+            if (myDb.getLearnedStatus(phraseList.get(currentCardNumber - 1).getPhraseEn()).equals("true")) {
+                mastered++;
+                myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
+            } else {
+                learned++;
+                myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
+            }
+
 		} else {
 			YoYo.with(Techniques.Shake).duration(500).playOn(mRbGroup.getChildAt(answerIndex - 1));
+            myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), false);
+            forgotten++;
 
 		}
 		showSolution(answerIndex);
@@ -308,12 +325,14 @@ public class TestFragment extends Fragment {
 	private void finishTest() {
 		mTxtProgress.setText("");
 		mProgressBar.setProgress(99, true);
-		percentage = (double) score / answerList.size();
+        percentage = 100 * (double) score / phraseList.size();
+        System.out.println(percentage);
+        System.out.println(answerList.size());
 
 		showMessage("You're Finished!");
 
-		Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
-	}
+
+    }
 
 	private ArrayList<String> getAnswerList(int currentCardNumber) {
 		answerList.clear();

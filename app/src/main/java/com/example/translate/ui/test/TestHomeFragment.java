@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.translate.R;
-import com.example.translate.ui.profile.ProfileFragment;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -88,6 +86,7 @@ public class TestHomeFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("testingType", "help");
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_home_to_testFragment, bundle);
 
             }
         });

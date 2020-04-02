@@ -39,7 +39,14 @@
         android:id="@+id/navigation_profile"
         android:name="com.example.translate.ui.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_learning"
+            app:destination="@id/navigation_learning" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_my_list_fragment"
+            app:destination="@id/navigation_my_list_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_learning"
@@ -66,5 +73,16 @@
         <action
             android:id="@+id/action_navigation_test_to_navigation_test_home"
             app:destination="@id/navigation_test_home" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_my_list_fragment"
+        android:name="com.example.translate.ui.profile.MyListFragment"
+        android:label="My List"
+        tools:layout="@layout/fragment_my_list">
+        <action
+            android:id="@+id/action_navigation_my_list_fragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 </navigation>

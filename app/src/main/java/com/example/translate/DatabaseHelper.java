@@ -134,9 +134,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "id = ?", new String[] { id });
     }
 
-    public Cursor getSaveStatus(String phrase){
+    public Cursor getSaveStatus(String phraseEn) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phrase + "'", null);
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phraseEn + "'", null);
         return res;
     }
 
@@ -148,9 +148,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
     }
 
-    public Cursor getLearnedStatus(String phrase){
+    public Cursor getLearnedStatus(String phraseEn) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phrase + "'", null);
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phraseEn + "'", null);
         return res;
     }
 

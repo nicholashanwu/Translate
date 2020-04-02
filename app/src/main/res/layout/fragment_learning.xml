@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
-    tools:targetApi="lollipop"
-    tools:context=".ui.home.LearningFragment" >
+    tools:context=".ui.home.LearningFragment"
+    tools:targetApi="lollipop">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -92,6 +92,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:rippleColor="#80FFFFFF"
                     app:tint="#FFFFFF" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -110,7 +111,6 @@
                     android:elevation="0dp"
                     android:focusable="auto"
                     android:src="@drawable/outline_visibility_off_white_48"
-                    app:tint="@color/colorBlue"
                     app:backgroundTint="@android:color/transparent"
                     app:borderWidth="0dp"
                     app:elevation="0dp"
@@ -121,7 +121,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:maxImageSize="24dp"
                     app:pressedTranslationZ="0dp"
-                    app:rippleColor="@color/colorBlue" />
+                    app:rippleColor="@color/colorBlue"
+                    app:tint="@color/colorBlue" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabSave"
@@ -139,7 +140,6 @@
                     android:elevation="0dp"
                     android:focusable="auto"
                     android:src="@drawable/outline_bookmark_border_white_48"
-                    app:tint="@color/colorYellow"
                     app:backgroundTint="@android:color/transparent"
                     app:borderWidth="0dp"
                     app:elevation="0dp"
@@ -150,7 +150,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:maxImageSize="24dp"
                     app:pressedTranslationZ="0dp"
-                    app:rippleColor="@android:color/holo_orange_dark" />
+                    app:rippleColor="@android:color/holo_orange_dark"
+                    app:tint="@color/colorYellow" />
 
                 <TextView
                     android:id="@+id/txtSavedMessage"

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
-import com.example.translate.Translater;
 import com.example.translate.ui.Phrase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -69,28 +67,6 @@ public class LearningFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
-
-        Translater translater = new Translater();
-        translater.checkModelExists(translater.configure());
-//        translate stuff here
-//        translater.configure().translate("bye")
-//                .addOnSuccessListener(
-//                        new OnSuccessListener<String>() {
-//                            @Override
-//                            public void onSuccess(@NonNull String translatedText) {
-//                                System.out.println(translatedText);
-//
-//                                // Translation successful.
-//                            }
-//                        })
-//                .addOnFailureListener(
-//                        new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                System.out.println("ERROR");// Error.
-//                                // ...
-//                            }
-//                        });
 
         myDb = new DatabaseHelper(getContext());
 
@@ -260,8 +236,12 @@ public class LearningFragment extends Fragment {
             mTxtLevelTitle.setText("Level 2 : Essentials");
         } else if (learningType.equals("food")) {
             mTxtLevelTitle.setText("Level 3 : Food");
-        } else {
+        } else if (learningType.equals("help")) {
             mTxtLevelTitle.setText("Level 4 : Help");
+        } else if (learningType.equals("saved")) {
+            mTxtLevelTitle.setText("Saved Words");
+        } else {
+            mTxtLevelTitle.setText("Mastered Words");
         }
 
     }

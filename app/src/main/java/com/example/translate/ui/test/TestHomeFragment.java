@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.translate.R;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,8 +21,7 @@ public class TestHomeFragment extends Fragment {
     private Button mBtnStartGreetings;
     private Button mBtnStartFood;
     private Button mBtnStartHelp;
-    private CircleImageView mBtnProfileImage;
-    private NavController navController;
+    private CircleImageView mBtnProfileImageTest;
 
     public TestHomeFragment() {
 
@@ -44,7 +43,9 @@ public class TestHomeFragment extends Fragment {
         mBtnStartGreetings = (Button) view.findViewById(R.id.btnStartGreetings);
         mBtnStartFood = (Button) view.findViewById(R.id.btnStartFood);
         mBtnStartHelp = (Button) view.findViewById(R.id.btnStartHelp);
-        mBtnProfileImage = (CircleImageView) view.findViewById(R.id.btnProfileImageTest);
+        mBtnProfileImageTest = (CircleImageView) view.findViewById(R.id.btnProfileImageTest);
+
+        Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImageTest);
 
         mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -91,7 +92,7 @@ public class TestHomeFragment extends Fragment {
             }
         });
 
-        mBtnProfileImage.setOnClickListener(new View.OnClickListener() {
+        mBtnProfileImageTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

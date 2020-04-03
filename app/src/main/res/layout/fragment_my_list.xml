@@ -50,11 +50,10 @@
                     app:layout_constraintTop_toTopOf="@+id/cvBg">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/btnProfileImageMyList"
                         android:layout_width="92dp"
                         android:layout_height="92dp"
-                        android:elevation="16dp"
-                        android:src="@mipmap/tzuyu" />
+                        android:elevation="16dp" />
                 </FrameLayout>
 
                 <androidx.cardview.widget.CardView

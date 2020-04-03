@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.translate.R;
+import com.squareup.picasso.Picasso;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import com.example.translate.R;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
@@ -40,6 +40,8 @@ public class HomeFragment extends Fragment {
 		mBtnStartFood = view.findViewById(R.id.btnStartFood);
 		mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
 		mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
+
+        Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImage);
 
 		mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
 			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -93,5 +95,6 @@ public class HomeFragment extends Fragment {
 		});
 
 	}
+
 
 }

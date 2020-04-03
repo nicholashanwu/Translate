@@ -44,7 +44,6 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:elevation="4dp"
-                    android:src="@mipmap/tzuyu"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -94,9 +93,8 @@
 
                             <ImageView
                                 android:id="@+id/ivSaved"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/envelope" />
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
 
                             <TextView
                                 android:id="@+id/textView7"
@@ -147,9 +145,8 @@
 
                             <ImageView
                                 android:id="@+id/ivMastered"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/tools" />
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
 
                             <TextView
                                 android:id="@+id/textView8"
@@ -201,10 +198,9 @@
                             android:layout_height="match_parent">
 
                             <ImageView
-                                android:id="@+id/imageView4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/exam" />
+                                android:id="@+id/ivMyList"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
 
                             <TextView
                                 android:id="@+id/textView8"

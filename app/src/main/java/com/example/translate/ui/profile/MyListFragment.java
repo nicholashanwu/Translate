@@ -7,12 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.translate.DatabaseHelper;
 import com.example.translate.Phrase;
 import com.example.translate.R;
@@ -21,9 +15,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 import name.pilgr.pipinyin.PiPinyin;
 
 public class MyListFragment extends Fragment {
@@ -33,6 +34,7 @@ public class MyListFragment extends Fragment {
 	private RecyclerView mRecyclerView;
 	private RecyclerView.Adapter mAdapter;
 	private RecyclerView.LayoutManager mLayoutManager;
+	private CircleImageView mBtnProfileImageMyList;
 	private ArrayList<Phrase> customPhraseList = new ArrayList<Phrase>();
 
 	public MyListFragment() {
@@ -75,6 +77,9 @@ public class MyListFragment extends Fragment {
 
 		mTextInputWord = view.findViewById(R.id.text_input_phrase);
 		mBtnAddWord = view.findViewById(R.id.btnAddWord);
+		mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
+
+		Picasso.get().load(R.mipmap.tzuyu).resize(240, 240).into(mBtnProfileImageMyList);
 
 		mBtnAddWord.setOnClickListener(new View.OnClickListener() {
 			@Override

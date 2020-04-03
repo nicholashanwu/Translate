@@ -81,7 +81,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
-                            android:layout_marginTop="64dp"
+                            android:layout_marginTop="32dp"
                             android:layout_marginEnd="32dp"
                             app:boxBackgroundColor="#FFFFFF"
                             app:counterEnabled="true"
@@ -118,20 +118,8 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
-                            android:id="@+id/divider"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="32dp"
-                            android:layout_marginEnd="32dp"
-                            android:background="?android:attr/listDivider"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txtName" />
-
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/btnAddWord"
+                            android:id="@+id/fabAddWord"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -139,14 +127,14 @@
                             android:src="@android:drawable/ic_input_add"
                             android:tint="#FFFFFF"
                             app:backgroundTint="@color/colorBlue"
-                            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton2"
-                            app:layout_constraintStart_toEndOf="@+id/floatingActionButton3"
+                            app:layout_constraintEnd_toStartOf="@+id/fabDeleteAll"
+                            app:layout_constraintStart_toEndOf="@+id/fabLearn"
                             app:layout_constraintTop_toBottomOf="@+id/text_input_phrase"
                             app:rippleColor="#80FFFFFF"
                             app:tint="@color/design_default_color_background" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/floatingActionButton2"
+                            android:id="@+id/fabDeleteAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
@@ -163,7 +151,7 @@
                             app:tint="@color/colorRed" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/floatingActionButton3"
+                            android:id="@+id/fabLearn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
@@ -187,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:elevation="8dp"

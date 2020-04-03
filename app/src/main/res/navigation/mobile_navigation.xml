@@ -84,5 +84,8 @@
         <action
             android:id="@+id/action_navigation_my_list_fragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_my_list_fragment_to_navigation_learning"
+            app:destination="@id/navigation_learning" />
     </fragment>
 </navigation>

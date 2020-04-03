@@ -78,4 +78,9 @@ public class Phrase {
     public void setSaved(String saved) {
         this.saved = saved;
     }
+
+    @Override
+    public String toString() {
+        return phraseEn;
+    }
 }

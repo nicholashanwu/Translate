@@ -129,7 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateSave(String id, boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        //System.out.println(phraseEn);
         contentValues.put(COL_7, saved);
         db.update(TABLE_NAME, contentValues, "id = ?", new String[] { id });
     }
@@ -143,7 +142,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateLearned(String phraseEn, boolean learned) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        System.out.println(phraseEn);
         contentValues.put(COL_6, learned);
         db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[] { phraseEn });
     }
@@ -154,5 +152,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public void clearMyList() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME + " WHERE category = custom");
+    }
 
 }

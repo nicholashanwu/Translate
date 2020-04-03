@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,12 +31,16 @@ import name.pilgr.pipinyin.PiPinyin;
 public class MyListFragment extends Fragment {
 
 	private TextInputLayout mTextInputWord;
-	private FloatingActionButton mBtnAddWord;
 	private RecyclerView mRecyclerView;
 	private RecyclerView.Adapter mAdapter;
 	private RecyclerView.LayoutManager mLayoutManager;
 	private CircleImageView mBtnProfileImageMyList;
 	private ArrayList<Phrase> customPhraseList = new ArrayList<Phrase>();
+
+	private FloatingActionButton mFabAddWord;
+	private FloatingActionButton mFabDeleteAll;
+	private FloatingActionButton mFabDelete;
+	private FloatingActionButton mFabLearn;
 
 	public MyListFragment() {
 
@@ -63,7 +68,6 @@ public class MyListFragment extends Fragment {
 						res.getString(5),
 						res.getString(6)
 				));
-				System.out.println("not empty");
 			}
 		}
 
@@ -76,23 +80,54 @@ public class MyListFragment extends Fragment {
 		mRecyclerView.setAdapter(mAdapter);
 
 		mTextInputWord = view.findViewById(R.id.text_input_phrase);
-		mBtnAddWord = view.findViewById(R.id.btnAddWord);
+		mFabAddWord = view.findViewById(R.id.fabAddWord);
+		mFabDeleteAll = view.findViewById(R.id.fabDeleteAll);
+		mFabLearn = view.findViewById(R.id.fabLearn);
+
 		mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
+
 
 		Picasso.get().load(R.mipmap.tzuyu).resize(240, 240).into(mBtnProfileImageMyList);
 
-		mBtnAddWord.setOnClickListener(new View.OnClickListener() {
+		mFabAddWord.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (mTextInputWord.getEditText().getText().toString().trim().isEmpty()) {
 					mTextInputWord.setError("field cannot be empty");
+				} else if (mTextInputWord.getEditText().getText().toString().length() > 15) {
+					mTextInputWord.setError("too many characters");
 				} else {
 					mTextInputWord.setError(null);
 					translate(mTextInputWord.getEditText().getText().toString().trim());
-					mAdapter = new PhraseAdapter(customPhraseList);
-					mRecyclerView.setAdapter(mAdapter);
-					mAdapter.notifyDataSetChanged();
+//					mAdapter = new PhraseAdapter(customPhraseList);
+//					mAdapter.notifyDataSetChanged();
+//					mRecyclerView.setAdapter(mAdapter);
+					System.out.println(customPhraseList.toString());
+
+
 				}
+			}
+		});
+
+		mFabLearn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Bundle bundle = new Bundle();
+				bundle.putString("learningType", "custom");
+				Navigation.findNavController(getView()).navigate(R.id.action_navigation_my_list_fragment_to_navigation_learning, bundle);
+
+			}
+		});
+
+		mFabDeleteAll.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				DatabaseHelper myDb = new DatabaseHelper(getActivity());
+				myDb.clearMyList();
+				customPhraseList.clear();
+				mAdapter = new PhraseAdapter(customPhraseList);
+				mRecyclerView.setAdapter(mAdapter);
+				mAdapter.notifyDataSetChanged();
 			}
 		});
 
@@ -107,7 +142,6 @@ public class MyListFragment extends Fragment {
 		myDb.insertData(phraseEn, phraseCn, phrasePinyin, "custom", false, false);
 		customPhraseList.add(new Phrase("1", phraseEn, phraseCn, phrasePinyin, "custom", "false", "false"));
 
-		FragmentTransaction tr = getFragmentManager().beginTransaction();
 		FragmentTransaction ftr = getFragmentManager().beginTransaction();
 		ftr.detach(MyListFragment.this).attach(MyListFragment.this).commit();
 		// TODO: SHOW A REFRESH ICON

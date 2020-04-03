@@ -3,6 +3,7 @@ package com.example.translate;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -11,11 +12,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -25,6 +27,19 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper myDb;
     private BottomNavigationView bottomBar;
     public static ArrayList<Achievement> achievementList;
+    int[][] states = new int[][]{
+            new int[]{android.R.attr.state_enabled}, // enabled
+            new int[]{-android.R.attr.state_enabled}, // disabled
+            new int[]{-android.R.attr.state_checked}, // unchecked
+            new int[]{android.R.attr.state_pressed}  // pressed
+    };
+
+    int[] colors = new int[]{
+            Color.WHITE,
+            Color.WHITE,
+            Color.WHITE,
+            Color.WHITE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +58,41 @@ public class MainActivity extends AppCompatActivity {
 
         bottomBar = (BottomNavigationView) findViewById(R.id.nav_view);
 
-        //
-        int i = bottomBar.getSelectedItemId();
-        ColorStateList colorTint = bottomBar.getItemIconTintList();
-        System.out.println(colorTint);
+        achievementList = getAchievements();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
                 .build();
+
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomBar, navController);
 
-        achievementList = getAchievements();
-        System.out.println(achievementList);
+        final ColorStateList colorList = new ColorStateList(states, colors);
+        bottomBar.setItemIconTintList(colorList);
+        bottomBar.setItemTextColor(colorList);
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if (destination.getId() == R.id.navigation_home) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                } else if (destination.getId() == R.id.navigation_test_home) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                } else if (destination.getId() == R.id.navigation_profile) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                } else if (destination.getId() == R.id.navigation_test_home) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                } else if (destination.getId() == R.id.navigation_learning) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                } else if (destination.getId() == R.id.navigation_my_list_fragment) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                }
+
+            }
+        });
 
     }
 
@@ -165,14 +201,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return achievementList;
-    }
-
-
-
-    public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment, fragment);
-        transaction.commit();
     }
 
 }

@@ -113,12 +113,9 @@ public class LearningFragment extends Fragment {
 
                     if (phraseList.get(currentCardNumber).getSaved().equals("1")) {
                         mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-                        System.out.println("saved");
                     } else {
                         mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
-                        System.out.println("not saved");
                     }
-
 
                 } else {
                     mTxtProgress.setText("");
@@ -214,8 +211,10 @@ public class LearningFragment extends Fragment {
             mTxtLevelTitle.setText("Level 4 : Help");
         } else if (learningType.equals("saved")) {
             mTxtLevelTitle.setText("Saved Words");
-        } else {
+        } else if (learningType.equals("learned")) {
             mTxtLevelTitle.setText("Mastered Words");
+        } else if (learningType.equals("custom")) {
+            mTxtLevelTitle.setText("Your Words");
         }
 
     }

@@ -14,9 +14,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
@@ -27,6 +24,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 public class TestFragment extends Fragment {
 
@@ -301,12 +301,8 @@ public class TestFragment extends Fragment {
 		mTxtProgress.setText("");
 		mProgressBar.setProgress(99, true);
 		percentage = 100 * (double) score / phraseList.size();
-		System.out.println(percentage);
-		System.out.println(answerList.size());
 
 		showMessage("You're Finished!");
-
-
 	}
 
 	private ArrayList<String> getAnswerList(int currentCardNumber) {

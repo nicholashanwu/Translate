@@ -4,13 +4,9 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
-
-import com.example.translate.ui.profile.Achievement;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +17,11 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.translate.ui.profile.Achievement;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_main);
 
-        bottomBar = (BottomNavigationView) findViewById(R.id.nav_view);
+        bottomBar = findViewById(R.id.nav_view);
 
         achievementList = getAchievements();
 
@@ -74,26 +75,42 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setItemIconTintList(colorList);
         bottomBar.setItemTextColor(colorList);
 
+
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if (destination.getId() == R.id.navigation_home) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreenDark));
+                    setStatusBarColor(R.color.colorGreenDark);
                 } else if (destination.getId() == R.id.navigation_test_home) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRedDark));
+                    setStatusBarColor(R.color.colorRedDark);
                 } else if (destination.getId() == R.id.navigation_profile) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+                    setStatusBarColor(R.color.colorBlueDark);
                 } else if (destination.getId() == R.id.navigation_test_home) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRedDark));
+                    setStatusBarColor(R.color.colorRedDark);
                 } else if (destination.getId() == R.id.navigation_learning) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreenDark));
+                    setStatusBarColor(R.color.colorGreenDark);
                 } else if (destination.getId() == R.id.navigation_my_list_fragment) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+                    setStatusBarColor(R.color.colorBlueDark);
                 }
+
 
             }
         });
 
+    }
+
+    public void setStatusBarColor(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(id, this.getTheme()));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(id));
+        }
     }
 
 

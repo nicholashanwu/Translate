@@ -86,8 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAchievements() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + A_TABLE_NAME, null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + A_TABLE_NAME, null);
     }
 
 
@@ -98,26 +97,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
     public Cursor getCategory(String category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE category = '" + category + "'", null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE category = '" + category + "'", null);
     }
 
     public Cursor getSaved() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE saved = 1", null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE saved = 1", null);
     }
 
     public Cursor getLearned() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE learned = 1", null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE learned = 1", null);
     }
 
     public void dropTable() {
@@ -135,8 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getSaveStatus(String phraseEn) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phraseEn + "'", null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phraseEn + "'", null);
     }
 
     public void updateLearned(String phraseEn, boolean learned) {
@@ -148,8 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getLearnedStatus(String phraseEn) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phraseEn + "'", null);
-        return res;
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE phraseEn = '" + phraseEn + "'", null);
     }
 
     public void clearMyList() {

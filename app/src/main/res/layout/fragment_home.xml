@@ -28,7 +28,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="16dp"
                 android:elevation="4dp"
-                app:civ_border_color="#FFFFFF"
+                app:civ_border_color="@color/colorGreen"
                 app:civ_border_width="1dp" />
 
 
@@ -103,11 +103,11 @@
                                 android:lineSpacingExtra="0dp"
                                 android:padding="0dp"
                                 android:text="@string/numbers_level"
-                                android:textSize="10dp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/textView5"
+                                android:id="@+id/txtNumbers"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -117,7 +117,7 @@
                                 android:textSize="24sp" />
 
                             <TextView
-                                android:id="@+id/textView6"
+                                android:id="@+id/txtNumbersDescription"
                                 android:layout_width="192dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -142,14 +142,15 @@
 
                             <Button
                                 android:id="@+id/btnStartNumbers"
-                                style="@style/Widget.MaterialComponents.Button"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginRight="4dp"
                                 android:background="#FFFFFF"
                                 android:text="@string/button_start"
-                                android:textAlignment="center" />
+                                android:textAlignment="center"
+                                android:textColor="@color/colorGreen" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -183,11 +184,11 @@
                                 android:lineSpacingExtra="0dp"
                                 android:padding="0dp"
                                 android:text="@string/essentials_level"
-                                android:textSize="10dp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/textView5"
+                                android:id="@+id/txtEssentials"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -197,7 +198,7 @@
                                 android:textSize="24sp" />
 
                             <TextView
-                                android:id="@+id/textView6"
+                                android:id="@+id/txtEssentialsDescription"
                                 android:layout_width="192dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -222,13 +223,14 @@
 
                             <Button
                                 android:id="@+id/btnStartGreetings"
-                                style="@style/Widget.MaterialComponents.Button"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginRight="4dp"
                                 android:text="@string/button_start"
-                                android:textAlignment="center" />
+                                android:textAlignment="center"
+                                android:textColor="@color/colorGreen" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -262,11 +264,11 @@
                                 android:lineSpacingExtra="0dp"
                                 android:padding="0dp"
                                 android:text="@string/food_level"
-                                android:textSize="10dp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/textView5"
+                                android:id="@+id/txtFood"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -276,7 +278,7 @@
                                 android:textSize="24sp" />
 
                             <TextView
-                                android:id="@+id/textView6"
+                                android:id="@+id/txtFoodDescription"
                                 android:layout_width="192dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -301,13 +303,14 @@
 
                             <Button
                                 android:id="@+id/btnStartFood"
-                                style="@style/Widget.MaterialComponents.Button"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginRight="4dp"
                                 android:text="@string/button_start"
-                                android:textAlignment="center" />
+                                android:textAlignment="center"
+                                android:textColor="@color/colorGreen" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -332,7 +335,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/txtLevelThree"
+                                android:id="@+id/txtLevelFour"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -341,11 +344,11 @@
                                 android:lineSpacingExtra="0dp"
                                 android:padding="0dp"
                                 android:text="@string/emergency_level"
-                                android:textSize="10dp"
+                                android:textSize="10sp"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/textView5"
+                                android:id="@+id/txtHelp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -355,7 +358,7 @@
                                 android:textSize="24sp" />
 
                             <TextView
-                                android:id="@+id/textView6"
+                                android:id="@+id/txtHelpDescription"
                                 android:layout_width="192dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
@@ -371,7 +374,7 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/ivFood"
+                                android:id="@+id/ivHelp"
                                 android:layout_width="72dp"
                                 android:layout_height="72dp"
                                 android:layout_marginLeft="0dp"
@@ -380,13 +383,14 @@
 
                             <Button
                                 android:id="@+id/btnStartHelp"
-                                style="@style/Widget.MaterialComponents.Button"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="16dp"
                                 android:layout_marginRight="4dp"
                                 android:text="@string/button_start"
-                                android:textAlignment="center" />
+                                android:textAlignment="center"
+                                android:textColor="@color/colorGreen" />
                         </LinearLayout>
                     </LinearLayout>
 

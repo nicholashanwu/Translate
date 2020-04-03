@@ -15,7 +15,7 @@
             android:pivotX="50%"
             android:pivotY="50%"
             android:toDegrees="270">
-            >
+
             <shape
                 android:elevation="16dp"
                 android:shape="ring"

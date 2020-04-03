@@ -41,7 +41,7 @@
                     android:gravity="center|center_horizontal|center_vertical"
                     android:text="@string/phrase_placeholder"
                     android:textAlignment="center"
-                    android:textSize="64dp"
+                    android:textSize="64sp"
                     app:layout_constraintBottom_toTopOf="@+id/txtProgress"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -238,15 +238,15 @@
         android:elevation="8dp"
         android:focusable="auto"
         android:src="@drawable/baseline_done_white_48"
-        app:tint="#FFFFFF"
-        app:backgroundTint="@color/colorGreen"
+        app:backgroundTint="@color/colorRed"
         app:elevation="8dp"
         app:fabCustomSize="64dp"
         app:layout_constraintBottom_toBottomOf="@+id/pbTest"
         app:layout_constraintEnd_toEndOf="@+id/pbTest"
         app:layout_constraintStart_toStartOf="@+id/pbTest"
         app:layout_constraintTop_toTopOf="@+id/pbTest"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.25"
+        app:tint="#FFFFFF" />
 
     <ProgressBar
         android:id="@+id/pbTest"

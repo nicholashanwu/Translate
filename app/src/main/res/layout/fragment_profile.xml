@@ -44,7 +44,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
                     android:elevation="4dp"
-                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_color="@color/colorBlue"
                     app:civ_border_width="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -149,7 +149,7 @@
                                 android:layout_height="match_parent" />
 
                             <TextView
-                                android:id="@+id/textView8"
+                                android:id="@+id/txtMastered"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
@@ -162,7 +162,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/textView12"
+                                android:id="@+id/txtMasteredDescription"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
@@ -174,7 +174,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                                app:layout_constraintTop_toBottomOf="@+id/txtMastered" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -203,7 +203,7 @@
                                 android:layout_height="match_parent" />
 
                             <TextView
-                                android:id="@+id/textView8"
+                                android:id="@+id/txtMyWords"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
@@ -212,12 +212,11 @@
                                 android:text="My Words"
                                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                                 android:textSize="20sp"
-                                app:layout_constraintBottom_toTopOf="@+id/textView12"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/textView12"
+                                android:id="@+id/txtMyWordsDescription"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="16dp"
@@ -229,7 +228,7 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                                app:layout_constraintTop_toBottomOf="@+id/txtMyWords" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>

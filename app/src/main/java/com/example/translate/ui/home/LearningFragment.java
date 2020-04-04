@@ -23,7 +23,6 @@ import androidx.navigation.Navigation;
 
 public class LearningFragment extends Fragment {
 
-    private FloatingActionButton mFabDone;
     private FloatingActionButton mFabSave;
     private FloatingActionButton mFabAnswer;
 
@@ -71,7 +70,7 @@ public class LearningFragment extends Fragment {
 
         mFabAnswer = view.findViewById(R.id.fabAnswer);
         mFabSave = view.findViewById(R.id.fabSave);
-        mFabDone = view.findViewById(R.id.fabDone);
+        FloatingActionButton mFabDone = view.findViewById(R.id.fabDone);
         mProgressBar = view.findViewById(R.id.progressBar);
         mTxtProgress = view.findViewById(R.id.txtProgress);
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
@@ -238,6 +237,7 @@ public class LearningFragment extends Fragment {
                     res.getString(5),
                     res.getString(6)));
         }
+        res.close();
     }
 
     private void showMessage(String title, String message) {

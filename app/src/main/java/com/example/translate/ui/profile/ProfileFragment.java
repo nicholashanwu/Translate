@@ -27,19 +27,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private CardView mBtnStartSaved;
-    private CardView mBtnStartLearned;
-    private CardView mBtnStartMyList;
-    private CircleImageView mBtnProfileImageProfile;
-    private ImageView mIvSaved;
-    private ImageView mIvMastered;
-    private ImageView mIvMyList;
-
-    private HorizontalScrollView mHsvCards;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,23 +38,23 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        mRecyclerView = view.findViewById(R.id.rvAchievement);
+        RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this.getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        mAdapter = new AchievementAdapter(MainActivity.achievementList);
+        RecyclerView.Adapter mAdapter = new AchievementAdapter(MainActivity.achievementList);
         mRecyclerView.setAdapter(mAdapter);
 
-        mBtnStartSaved = view.findViewById(R.id.btnStartSaved);
-        mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
-        mBtnStartMyList = view.findViewById(R.id.btnStartMyList);
-        mHsvCards = view.findViewById(R.id.hsvCards);
-        mBtnProfileImageProfile = view.findViewById(R.id.btnProfileImageProfile);
-        mIvSaved = view.findViewById(R.id.ivSaved);
-        mIvMastered = view.findViewById(R.id.ivMastered);
-        mIvMyList = view.findViewById(R.id.ivMyList);
+        CardView mBtnStartSaved = view.findViewById(R.id.btnStartSaved);
+        CardView mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
+        CardView mBtnStartMyList = view.findViewById(R.id.btnStartMyList);
+        HorizontalScrollView mHsvCards = view.findViewById(R.id.hsvCards);
+        CircleImageView mBtnProfileImageProfile = view.findViewById(R.id.btnProfileImageProfile);
+        ImageView mIvSaved = view.findViewById(R.id.ivSaved);
+        ImageView mIvMastered = view.findViewById(R.id.ivMastered);
+        ImageView mIvMyList = view.findViewById(R.id.ivMyList);
 
         Picasso.get().load(R.drawable.envelope).resize(360, 360).into(mIvSaved);
         Picasso.get().load(R.drawable.tools).resize(360, 360).into(mIvMastered);
@@ -76,7 +63,7 @@ public class ProfileFragment extends Fragment {
 
         final DatabaseHelper myDb = new DatabaseHelper(getContext());
 
-        mHsvCards.setHorizontalScrollBarEnabled(false);
+        //mHsvCards.setHorizontalScrollBarEnabled(false);
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +76,7 @@ public class ProfileFragment extends Fragment {
                     bundle.putString("learningType", "saved");
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_navigation_learning, bundle);
                 }
+                res.close();
             }
         });
 
@@ -103,6 +91,7 @@ public class ProfileFragment extends Fragment {
                     bundle.putString("learningType", "learned");
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_navigation_learning, bundle);
                 }
+                res.close();
             }
         });
 

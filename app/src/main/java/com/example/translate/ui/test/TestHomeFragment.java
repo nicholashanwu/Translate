@@ -7,22 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.example.translate.R;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TestHomeFragment extends Fragment {
-
-    private Button mBtnStartNumbers;
-    private Button mBtnStartGreetings;
-    private Button mBtnStartFood;
-    private Button mBtnStartHelp;
-    private CircleImageView mBtnProfileImageTest;
 
     public TestHomeFragment() {
 
@@ -40,11 +33,11 @@ public class TestHomeFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-		mBtnStartNumbers = view.findViewById(R.id.btnStartNumbers);
-		mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
-		mBtnStartFood = view.findViewById(R.id.btnStartFood);
-		mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
-		mBtnProfileImageTest = view.findViewById(R.id.btnProfileImageTest);
+        Button mBtnStartNumbers = view.findViewById(R.id.btnStartNumbers);
+        Button mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
+        Button mBtnStartFood = view.findViewById(R.id.btnStartFood);
+        Button mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
+        CircleImageView mBtnProfileImageTest = view.findViewById(R.id.btnProfileImageTest);
 
         Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImageTest);
 

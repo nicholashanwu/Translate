@@ -30,8 +30,6 @@ import androidx.navigation.Navigation;
 
 public class TestFragment extends Fragment {
 
-	private FloatingActionButton mFabSubmit;
-
 	private TextView mTxtChineseCharacter;
 	private TextView mTxtLevelTitle;
 	private TextView mTxtMessage;
@@ -46,10 +44,7 @@ public class TestFragment extends Fragment {
 
 	private DatabaseHelper myDb;
 
-	private String testingType;
 	private int currentCardNumber = 0;
-	private double progressDouble = 0;
-	private int progressInt = 0;
 	private int score = 0;
 	private double percentage;
 	private int learned = 0;
@@ -99,10 +94,10 @@ public class TestFragment extends Fragment {
 		mRbAnswerOne = view.findViewById(R.id.rbAnswerOne);
 		mRbAnswerTwo = view.findViewById(R.id.rbAnswerTwo);
 		mRbAnswerThree = view.findViewById(R.id.rbAnswerThree);
-		mFabSubmit = view.findViewById(R.id.fabSubmitAnswer);
+		FloatingActionButton mFabSubmit = view.findViewById(R.id.fabSubmitAnswer);
 		mTxtScore = view.findViewById(R.id.txtScore);
 
-		testingType = getArguments().getString("testingType");
+		String testingType = getArguments().getString("testingType");
 		getData(testingType);
 		setTitle(testingType);
 		setParameters();
@@ -117,6 +112,7 @@ public class TestFragment extends Fragment {
 					if (mRbAnswerOne.isChecked() || mRbAnswerTwo.isChecked() || mRbAnswerThree.isChecked()) {
 						YoYo.with(Techniques.FadeOutUp).duration(300).playOn(mTxtMessage);
 						checkAnswer(answerIndex);
+
 					} else {
 						mTxtMessage.setText("Please choose an answer");
 						YoYo.with(Techniques.FadeInDown).duration(300).playOn(mTxtMessage);
@@ -170,8 +166,8 @@ public class TestFragment extends Fragment {
 					res.getString(5),
 					res.getString(6)));
 		}
+		res.close();
 	}
-
 
 	private void showMessage(String title) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -244,26 +240,24 @@ public class TestFragment extends Fragment {
 
 	private void showSolution(int answerIndex) {
 		RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
-		//answerIndex = mRbGroup.indexOfChild(rbSelected) + 1;
-		mRbAnswerOne.setTextColor(Color.RED);
-		mRbAnswerTwo.setTextColor(Color.RED);
-		mRbAnswerThree.setTextColor(Color.RED);
+
+		mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
+		mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
+		mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
 
 		switch (answerIndex) {
 			case 1:
-				mRbAnswerOne.setTextColor(Color.GREEN);
+				mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorGreen));
 				break;
 			case 2:
-				mRbAnswerTwo.setTextColor(Color.GREEN);
+				mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorGreen));
 				break;
 			case 3:
-				mRbAnswerThree.setTextColor(Color.GREEN);
+				mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorGreen));
 				break;
 		}
 
-
 	}
-
 
 	private void showNextQuestion() {
 
@@ -273,8 +267,8 @@ public class TestFragment extends Fragment {
 
 			mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
 
-			progressDouble = (double) 100 * (currentCardNumber) / phraseList.size();
-			progressInt = (int) progressDouble;
+			double progressDouble = (double) 100 * (currentCardNumber) / phraseList.size();
+			int progressInt = (int) progressDouble;
 			mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
 			mProgressBar.setProgress(progressInt, true);
 
@@ -312,7 +306,7 @@ public class TestFragment extends Fragment {
 		int numOne = (int) (Math.random() * phraseList.size());
 		int numTwo = (int) (Math.random() * phraseList.size());
 
-		while (unique == false) {
+		while (!unique) {
 			numOne = (int) (Math.random() * phraseList.size());
 			numTwo = (int) (Math.random() * phraseList.size());
 			if (currentCardNumber == numOne) {

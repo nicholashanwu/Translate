@@ -18,12 +18,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
 
-	private Button mBtnStartNumbers;
-	private Button mBtnStartGreetings;
-	private Button mBtnStartFood;
-	private Button mBtnStartHelp;
-	private CircleImageView mBtnProfileImage;
-
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
 
@@ -35,11 +29,11 @@ public class HomeFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		mBtnStartNumbers = view.findViewById(R.id.btnStartNumbers);
-		mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
-		mBtnStartFood = view.findViewById(R.id.btnStartFood);
-		mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
-		mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
+        Button mBtnStartNumbers = view.findViewById(R.id.btnStartNumbers);
+        Button mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
+        Button mBtnStartFood = view.findViewById(R.id.btnStartFood);
+        Button mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
+        CircleImageView mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
 
         Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImage);
 

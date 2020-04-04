@@ -147,7 +147,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void clearMyList() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from " + TABLE_NAME + " WHERE category = custom");
+        db.execSQL("delete from " + TABLE_NAME + " WHERE category = 'custom'");
+    }
+
+    public void deletePhrase(String phraseEn) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_NAME + " WHERE category = 'custom' AND phraseEn = '" + phraseEn + "' ");
     }
 
 }

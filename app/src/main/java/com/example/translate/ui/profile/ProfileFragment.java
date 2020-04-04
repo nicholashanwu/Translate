@@ -12,17 +12,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.translate.DatabaseHelper;
-import com.example.translate.MainActivity;
-import com.example.translate.R;
-import com.squareup.picasso.Picasso;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.translate.DatabaseHelper;
+import com.example.translate.MainActivity;
+import com.example.translate.R;
+import com.squareup.picasso.Picasso;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
@@ -62,8 +63,6 @@ public class ProfileFragment extends Fragment {
         Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImageProfile);
 
         final DatabaseHelper myDb = new DatabaseHelper(getContext());
-
-        //mHsvCards.setHorizontalScrollBarEnabled(false);
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override

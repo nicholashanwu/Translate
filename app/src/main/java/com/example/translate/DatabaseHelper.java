@@ -121,11 +121,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void updateSave(String id, boolean saved) {
+    public void updateSave(String phraseEn, boolean saved) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_7, saved);
-        db.update(TABLE_NAME, contentValues, "id = ?", new String[] { id });
+        db.update(TABLE_NAME, contentValues, "phraseEn = ?", new String[]{phraseEn});
     }
 
     public Cursor getSaveStatus(String phraseEn) {

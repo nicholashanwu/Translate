@@ -9,15 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
-import com.example.translate.Phrase;
 import com.example.translate.R;
 import com.example.translate.Translater;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,14 +28,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 public class TestFragment extends Fragment {
 
 	private TextView mTxtChineseCharacter;
 	private TextView mTxtLevelTitle;
 	private TextView mTxtMessage;
+	private ImageView mIvReaction;
 
 	private RadioGroup mRbGroup;
 	private RadioButton mRbAnswerOne;
@@ -44,7 +45,6 @@ public class TestFragment extends Fragment {
 
 	private DatabaseHelper myDb;
 
-	private int currentCardNumber = 0;
 	private int score = 0;
 	private double percentage;
 	private int learned = 0;
@@ -52,7 +52,6 @@ public class TestFragment extends Fragment {
 	private int forgotten = 0;
 
 	private boolean answered;
-	private ArrayList<Phrase> phraseList = new ArrayList<>();
 	private int answerIndex;
 
 	private ArrayList<String> answerList = new ArrayList<>();
@@ -96,14 +95,19 @@ public class TestFragment extends Fragment {
 		mRbAnswerThree = view.findViewById(R.id.rbAnswerThree);
 		FloatingActionButton mFabSubmit = view.findViewById(R.id.fabSubmitAnswer);
 		mTxtScore = view.findViewById(R.id.txtScore);
+		mIvReaction = view.findViewById(R.id.ivReaction);
 
-		String testingType = getArguments().getString("testingType");
+
+		final String testingType = getArguments().getString("testingType");
+
+		final Cursor res = getData(testingType);
+
 		getData(testingType);
 		setTitle(testingType);
-		setParameters();
+		setParameters(res);
 
 		mTxtMessage.setText("");
-		showNextQuestion();
+		showNextQuestion(res);
 
 		mFabSubmit.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -111,7 +115,7 @@ public class TestFragment extends Fragment {
 				if (!answered) {
 					if (mRbAnswerOne.isChecked() || mRbAnswerTwo.isChecked() || mRbAnswerThree.isChecked()) {
 						YoYo.with(Techniques.FadeOutUp).duration(300).playOn(mTxtMessage);
-						checkAnswer(answerIndex);
+						checkAnswer(answerIndex, res);
 
 					} else {
 						mTxtMessage.setText("Please choose an answer");
@@ -119,7 +123,7 @@ public class TestFragment extends Fragment {
 
 					}
 				} else {
-					showNextQuestion();
+					showNextQuestion(res);
 				}
 			}
 		});
@@ -127,27 +131,138 @@ public class TestFragment extends Fragment {
 		return view;
 	}
 
-	public void setParameters() {
-		mProgressBar.setProgress(1);
-		mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
+	private void checkAnswer(int answerIndex, Cursor res) {
+		answered = true;
+		RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
+		int answerNum = mRbGroup.indexOfChild(rbSelected) + 1;
 
-		mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
+		if (answerNum == answerIndex) {
+
+			showReaction(true);
+
+			score++;
+			mTxtScore.setText(Integer.toString(score));
+			System.out.println(res.getPosition());
+
+			if (myDb.getLearnedStatus(res.getString(1)).equals("1")) {
+				mastered++;
+				myDb.updateLearned(res.getString(1), true);
+			} else {
+				learned++;
+				myDb.updateLearned(res.getString(1), true);
+			}
+
+		} else {
+
+			showReaction(false);
+
+
+			myDb.updateLearned(res.getString(1), false);
+			forgotten++;
+
+		}
+		showSolution(answerIndex, res);
 	}
 
-	public void setTitle(String testingType) {
-		if (testingType.equals("numbers")) {
-			mTxtLevelTitle.setText("Level 1 : Numbers");
-		} else if (testingType.equals("essentials")) {
-			mTxtLevelTitle.setText("Level 2 : Essentials");
-		} else if (testingType.equals("food")) {
-			mTxtLevelTitle.setText("Level 3 : Food");
+	private void showSolution(int answerIndex, Cursor res) {
+		RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
+
+		mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
+		mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
+		mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
+
+		switch (answerIndex) {
+			case 1:
+				mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorGreen));
+				break;
+			case 2:
+				mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorGreen));
+				break;
+			case 3:
+				mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorGreen));
+				break;
+		}
+		res.move(1);
+	}
+
+	private void showNextQuestion(Cursor res) {
+
+		mRbGroup.clearCheck();
+
+		if (res.getPosition() < res.getCount()) {
+
+			mTxtChineseCharacter.setText(res.getString(2));
+
+			double progressDouble = (double) 100 * res.getPosition() / res.getCount();
+			int progressInt = (int) progressDouble;
+			mTxtProgress.setText((res.getPosition() + 1) + "/" + res.getCount());
+			mProgressBar.setProgress(progressInt, true);
+
+			answerList = (ArrayList<String>) getAnswerList(res.getPosition(), res).clone();
+
+			mRbAnswerOne.setText(answerList.get(0));
+			mRbAnswerTwo.setText(answerList.get(1));
+			mRbAnswerThree.setText(answerList.get(2));
+			mRbAnswerOne.setTextColor(Color.parseColor("#444444"));
+			mRbAnswerTwo.setTextColor(Color.parseColor("#444444"));
+			mRbAnswerThree.setTextColor(Color.parseColor("#444444"));
+
+			answered = false;
+
+
 		} else {
-			mTxtLevelTitle.setText("Level 4 : Help");
+			finishTest(res);
 		}
 
 	}
 
-	public void getData(String testingType) {
+	private void finishTest(Cursor res) {
+		mTxtProgress.setText("");
+		mProgressBar.setProgress(99, true);
+		percentage = 100 * (double) score / res.getCount();
+
+		showMessage("You're Finished!");
+		res.close();
+	}
+
+	private ArrayList<String> getAnswerList(int currentCardNumber, Cursor res) {
+		answerList.clear();
+		answerList.add(res.getString(1));
+		boolean unique = false;
+		int numOne = (int) (Math.random() * res.getCount());
+		int numTwo = (int) (Math.random() * res.getCount());
+
+		while (!unique) {
+			numOne = (int) (Math.random() * res.getCount());
+			numTwo = (int) (Math.random() * res.getCount());
+			if (currentCardNumber == numOne) {
+				numOne = (int) (Math.random() * res.getCount());
+			} else if (currentCardNumber == numTwo) {
+				numTwo = (int) (Math.random() * res.getCount());
+			} else if (numOne == numTwo) {
+				numTwo = (int) (Math.random() * res.getCount());
+			} else {
+				unique = true;
+			}
+
+		}
+		currentCardNumber = res.getPosition();
+
+		System.out.println("ccn " + res.getPosition());
+		res.moveToPosition(numOne);
+		answerList.add(res.getString(1));
+		res.moveToPosition(numTwo);
+		answerList.add(res.getString(1));
+		res.moveToPosition(currentCardNumber);
+		System.out.println(res.getPosition());
+
+		Collections.shuffle(answerList);
+
+		answerIndex = answerList.indexOf(res.getString(1)) + 1;
+		return answerList;
+	}
+
+	public Cursor getData(String testingType) {
 		Cursor res;
 		if (testingType.equals("saved")) {
 			res = myDb.getSaved();
@@ -157,16 +272,19 @@ public class TestFragment extends Fragment {
 			res = myDb.getCategory(testingType);
 		}
 
-		while (res.moveToNext()) {
-			phraseList.add(new Phrase(res.getString(0),
-					res.getString(1),
-					res.getString(2),
-					res.getString(3),
-					res.getString(4),
-					res.getString(5),
-					res.getString(6)));
-		}
-		res.close();
+		return res;
+
+//		while (res.moveToNext()) {
+//			phraseList.add(new Phrase(res.getString(0),
+//					res.getString(1),
+//					res.getString(2),
+//					res.getString(3),
+//					res.getString(4),
+//					res.getString(5),
+//					res.getString(6)));
+//		}
+
+
 	}
 
 	private void showMessage(String title) {
@@ -212,120 +330,54 @@ public class TestFragment extends Fragment {
 		builder.show();
 	}
 
-	private void checkAnswer(int answerIndex) {
-		answered = true;
-		RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
-		int answerNum = mRbGroup.indexOfChild(rbSelected) + 1;
-		if (answerNum == answerIndex) {
-			YoYo.with(Techniques.Bounce).duration(500).playOn(mRbGroup.getChildAt(answerIndex - 1));
-			score++;
-			mTxtScore.setText(Integer.toString(score));
-
-			if (myDb.getLearnedStatus(phraseList.get(currentCardNumber - 1).getPhraseEn()).equals("true")) {
-				mastered++;
-				myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
-			} else {
-				learned++;
-				myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), true);
-			}
-
+	public void setTitle(String testingType) {
+		if (testingType.equals("numbers")) {
+			mTxtLevelTitle.setText("Level 1 : Numbers");
+		} else if (testingType.equals("essentials")) {
+			mTxtLevelTitle.setText("Level 2 : Essentials");
+		} else if (testingType.equals("food")) {
+			mTxtLevelTitle.setText("Level 3 : Food");
 		} else {
-			YoYo.with(Techniques.Shake).duration(500).playOn(mRbGroup.getChildAt(answerIndex - 1));
-			myDb.updateLearned(phraseList.get(currentCardNumber - 1).getPhraseEn(), false);
-			forgotten++;
-
-		}
-		showSolution(answerIndex);
-	}
-
-	private void showSolution(int answerIndex) {
-		RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
-
-		mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
-		mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
-		mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
-
-		switch (answerIndex) {
-			case 1:
-				mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorGreen));
-				break;
-			case 2:
-				mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorGreen));
-				break;
-			case 3:
-				mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorGreen));
-				break;
+			mTxtLevelTitle.setText("Level 4 : Help");
 		}
 
 	}
 
-	private void showNextQuestion() {
+	public void setParameters(Cursor res) {
+		mProgressBar.setProgress(1);
+		mTxtProgress.setText("1/" + res.getCount());
+		res.moveToFirst();
+		mIvReaction.setVisibility(View.GONE);
 
-		mRbGroup.clearCheck();
+		mTxtChineseCharacter.setText(res.getString(2));
+	}
 
-		if (currentCardNumber < phraseList.size()) {
+	public void showReaction(boolean correct) {
 
-			mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
+		ArrayList<Integer> goodList = new ArrayList<>();
+		goodList.add(R.mipmap.over_95);
+		goodList.add(R.mipmap.over_75);
+		goodList.add(R.mipmap.over_65);
+		ArrayList<Integer> badList = new ArrayList<>();
+		badList.add(R.mipmap.over_30);
+		badList.add(R.mipmap.over_40);
+		badList.add(R.mipmap.under_30);
+		Collections.shuffle(goodList);
+		Collections.shuffle(badList);
 
-			double progressDouble = (double) 100 * (currentCardNumber) / phraseList.size();
-			int progressInt = (int) progressDouble;
-			mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
-			mProgressBar.setProgress(progressInt, true);
-
-			answerList = (ArrayList<String>) getAnswerList(currentCardNumber).clone();
-
-
-			mRbAnswerOne.setText(answerList.get(0));
-			mRbAnswerTwo.setText(answerList.get(1));
-			mRbAnswerThree.setText(answerList.get(2));
-			mRbAnswerOne.setTextColor(Color.parseColor("#444444"));
-			mRbAnswerTwo.setTextColor(Color.parseColor("#444444"));
-			mRbAnswerThree.setTextColor(Color.parseColor("#444444"));
-
-			answered = false;
-			currentCardNumber++;
-
+		if (correct) {
+			mIvReaction.setImageResource(goodList.get(0));
+			mIvReaction.setVisibility(View.VISIBLE);
+			YoYo.with(Techniques.FadeInUp).duration(300).playOn(mIvReaction);
+			YoYo.with(Techniques.FadeOutUp).duration(300).delay(700).playOn(mIvReaction);
+			YoYo.with(Techniques.Bounce).duration(300).playOn(mRbGroup.getChildAt(answerIndex - 1));
 		} else {
-			finishTest();
+			mIvReaction.setImageResource(badList.get(0));
+			mIvReaction.setVisibility(View.VISIBLE);
+			YoYo.with(Techniques.FadeInUp).duration(300).playOn(mIvReaction);
+			YoYo.with(Techniques.FadeOutUp).duration(300).delay(700).playOn(mIvReaction);
+			YoYo.with(Techniques.Shake).duration(300).playOn(mRbGroup.getChildAt(answerIndex - 1));
 		}
 
-	}
-
-	private void finishTest() {
-		mTxtProgress.setText("");
-		mProgressBar.setProgress(99, true);
-		percentage = 100 * (double) score / phraseList.size();
-
-		showMessage("You're Finished!");
-	}
-
-	private ArrayList<String> getAnswerList(int currentCardNumber) {
-		answerList.clear();
-		answerList.add(phraseList.get(currentCardNumber).getPhraseEn());
-		boolean unique = false;
-		int numOne = (int) (Math.random() * phraseList.size());
-		int numTwo = (int) (Math.random() * phraseList.size());
-
-		while (!unique) {
-			numOne = (int) (Math.random() * phraseList.size());
-			numTwo = (int) (Math.random() * phraseList.size());
-			if (currentCardNumber == numOne) {
-				numOne = (int) (Math.random() * phraseList.size());
-			} else if (currentCardNumber == numTwo) {
-				numTwo = (int) (Math.random() * phraseList.size());
-			} else if (numOne == numTwo) {
-				numTwo = (int) (Math.random() * phraseList.size());
-			} else {
-				unique = true;
-			}
-
-		}
-		answerList.add(phraseList.get(numOne).getPhraseEn());
-		answerList.add(phraseList.get(numTwo).getPhraseEn());
-
-		Collections.shuffle(answerList);
-
-		answerIndex = answerList.indexOf(phraseList.get(currentCardNumber).getPhraseEn()) + 1;
-		return answerList;
 	}
 }

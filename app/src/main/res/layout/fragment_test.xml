@@ -185,9 +185,19 @@
                     android:letterSpacing="0.1"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorGreen"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivReaction"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@mipmap/over_95"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtChineseCharacter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtChineseCharacter" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

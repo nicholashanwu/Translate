@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
@@ -17,9 +20,6 @@ import com.example.translate.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 public class LearningFragment extends Fragment {
 
@@ -40,6 +40,7 @@ public class LearningFragment extends Fragment {
 
     private int currentCardNumber = 0;
     private int progressInt = 0;
+
 
     private ArrayList<Phrase> phraseList = new ArrayList<>();
 
@@ -82,9 +83,10 @@ public class LearningFragment extends Fragment {
 
         final String learningType = getArguments().getString("learningType");
 
-        getData(learningType);
+        final Cursor res = getData(learningType);
+
         setTitle(learningType);
-        setParameters();
+        setParameters(res);
         mTxtAnswerMessage.setVisibility(View.GONE);
         mTxtSavedMessage.setVisibility(View.GONE);
         mTxtUnsavedMessage.setVisibility(View.GONE);
@@ -93,12 +95,12 @@ public class LearningFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                currentCardNumber++;
+                res.move(1);
                 mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
 
-                if (currentCardNumber < phraseList.size()) {
-                    mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
-                    mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
+                if (res.getPosition() < res.getCount()) {
+                    mTxtChineseCharacter.setText(res.getString(2));
+                    mTxtPinyin.setText(res.getString(3));
 
                     mTxtSavedMessage.setVisibility(View.GONE);
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
@@ -106,11 +108,11 @@ public class LearningFragment extends Fragment {
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
 
-                    progressInt = (int) 100 * (currentCardNumber) / phraseList.size();
-                    mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
+                    progressInt = (int) 100 * res.getPosition() / res.getCount();
+                    mTxtProgress.setText((res.getPosition() + 1) + "/" + res.getCount());
                     mProgressBar.setProgress(progressInt, true);
 
-                    if (phraseList.get(currentCardNumber).getSaved().equals("1")) {
+                    if (res.getString(6).equals("1")) {
                         mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
                     } else {
                         mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
@@ -121,7 +123,7 @@ public class LearningFragment extends Fragment {
                     mProgressBar.setProgress(100, true);
 
                     showMessage("You're Finished!", "You completed the " + learningType + " learning module!");
-
+                    res.close();
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
                     mProgressBar.setProgress(0, true);
                 }
@@ -131,9 +133,10 @@ public class LearningFragment extends Fragment {
         mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (phraseList.get(currentCardNumber).getSaved().equals("1")) {
-                    myDb.updateSave(phraseList.get(currentCardNumber).getId(), false);
-                    phraseList.get(currentCardNumber).setSaved("0");
+                // TODO: FIX
+
+                if (res.getString(6).equals("1")) {
+                    myDb.updateSave(res.getString(1), false);
 
                     mTxtSavedMessage.setVisibility(View.GONE);
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
@@ -141,18 +144,15 @@ public class LearningFragment extends Fragment {
                     mTxtUnsavedMessage.setVisibility(View.VISIBLE);
                     YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtUnsavedMessage);
 
-
                     mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
                 } else {
-                    myDb.updateSave(phraseList.get(currentCardNumber).getId(), true);
-                    phraseList.get(currentCardNumber).setSaved("1");
+                    myDb.updateSave(res.getString(1), true);
 
                     mTxtUnsavedMessage.setVisibility(View.GONE);
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
 
                     mTxtSavedMessage.setVisibility(View.VISIBLE);
                     YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtSavedMessage);
-
 
                     mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
                 }
@@ -162,19 +162,17 @@ public class LearningFragment extends Fragment {
         mFabAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mTxtPinyin.getText().equals(phraseList.get(currentCardNumber).getPinyin())) {
-                    mTxtPinyin.setText(phraseList.get(currentCardNumber).getPhraseEn());
+                if (mTxtPinyin.getText().equals(res.getString(3))) {
+                    mTxtPinyin.setText(res.getString(1));
 
                     mTxtAnswerMessage.setVisibility(View.VISIBLE);
                     YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtAnswerMessage);
 
                     mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
                 } else {
-                    mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
-
+                    mTxtPinyin.setText(res.getString(3));
 
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
-                    //mTxtAnswerMessage.setVisibility(View.GONE);
 
                     mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
                 }
@@ -184,19 +182,21 @@ public class LearningFragment extends Fragment {
         return view;
     }
 
-    public void setParameters() {
+    public void setParameters(Cursor res) {
         mProgressBar.setProgress(0, true);
-        mTxtProgress.setText((currentCardNumber + 1) + "/" + phraseList.size());
+        mTxtProgress.setText("1/" + res.getCount());
+        res.moveToFirst();
 
-        mTxtChineseCharacter.setText(phraseList.get(currentCardNumber).getPhraseCn());
-        mTxtPinyin.setText(phraseList.get(currentCardNumber).getPinyin());
+        System.out.println(res.getString(2));
 
-        if (phraseList.get(currentCardNumber).getSaved().equals("true")) {
+        mTxtChineseCharacter.setText(res.getString(2));
+        mTxtPinyin.setText(res.getString(3));
+
+        if (res.getString(6).equals("1")) {
             mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
         } else {
             mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
         }
-
     }
 
     public void setTitle(String learningType) {
@@ -215,10 +215,9 @@ public class LearningFragment extends Fragment {
         } else if (learningType.equals("custom")) {
             mTxtLevelTitle.setText("Your Words");
         }
-
     }
 
-    public void getData(String learningType) {
+    public Cursor getData(String learningType) {
         Cursor res;
         if (learningType.equals("saved")) {
             res = myDb.getSaved();
@@ -228,16 +227,7 @@ public class LearningFragment extends Fragment {
             res = myDb.getCategory(learningType);
         }
 
-        while (res.moveToNext()) {
-            phraseList.add(new Phrase(res.getString(0),
-                    res.getString(1),
-                    res.getString(2),
-                    res.getString(3),
-                    res.getString(4),
-                    res.getString(5),
-                    res.getString(6)));
-        }
-        res.close();
+        return res;
     }
 
     private void showMessage(String title, String message) {

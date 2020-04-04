@@ -55,7 +55,7 @@ dependencies {
     // for ripple effect
     implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
     implementation 'com.roughike:bottom-bar:2.3.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
     implementation files('libs/pipinyin-0.9.1.jar')
     implementation 'com.squareup.picasso:picasso:2.71828'
 }

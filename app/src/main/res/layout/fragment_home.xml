@@ -20,17 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/btnProfileImageHome"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:elevation="4dp"
-                app:civ_border_color="@color/colorGreen"
-                app:civ_border_width="1dp" />
-
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -43,6 +32,17 @@
                 android:requiresFadingEdge="none"
                 android:scaleType="fitXY"
                 android:src="@drawable/forbidden_city_small" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/btnProfileImageHome"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="16dp"
+                android:elevation="4dp"
+                app:civ_border_color="@color/colorGreen"
+                app:civ_border_width="2dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

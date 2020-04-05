@@ -180,8 +180,6 @@ public class LearningFragment extends Fragment {
         mTxtProgress.setText("1/" + res.getCount());
         res.moveToFirst();
 
-        System.out.println(res.getString(2));
-
         mTxtChineseCharacter.setText(res.getString(2));
         mTxtPinyin.setText(res.getString(3));
 

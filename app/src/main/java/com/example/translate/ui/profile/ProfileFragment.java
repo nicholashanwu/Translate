@@ -12,22 +12,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.translate.DatabaseHelper;
+import com.example.translate.R;
+import com.squareup.picasso.Picasso;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.translate.DatabaseHelper;
-import com.example.translate.MainActivity;
-import com.example.translate.R;
-import com.squareup.picasso.Picasso;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
+    private AchievementAdapter mAdapter;
+    private DatabaseHelper myDb;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,15 +38,22 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        myDb = new DatabaseHelper(getActivity());
+
 
         RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new AchievementAdapter(getContext(), getAllAchievements());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+//        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
 
-        RecyclerView.Adapter mAdapter = new AchievementAdapter(MainActivity.achievementList);
-        mRecyclerView.setAdapter(mAdapter);
+//        RecyclerView.Adapter mAdapter = new AchievementAdapter(MainActivity.achievementList);
+//        mRecyclerView.setAdapter(mAdapter);
 
         CardView mBtnStartSaved = view.findViewById(R.id.btnStartSaved);
         CardView mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
@@ -62,7 +69,7 @@ public class ProfileFragment extends Fragment {
         Picasso.get().load(R.drawable.exam).resize(360, 360).into(mIvMyList);
         Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImageProfile);
 
-        final DatabaseHelper myDb = new DatabaseHelper(getContext());
+
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +136,10 @@ public class ProfileFragment extends Fragment {
         builder.setMessage(message);
         builder.setView(view);
         builder.show();
+    }
+
+    private Cursor getAllAchievements() {
+        return myDb.getAchievements();
     }
 
 

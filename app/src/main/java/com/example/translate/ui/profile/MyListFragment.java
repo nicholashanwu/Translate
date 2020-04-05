@@ -11,8 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.Phrase;
 import com.example.translate.R;
@@ -54,7 +52,7 @@ public class MyListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_my_list, container, false);
 
         final RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
-        mRecyclerView.setHasFixedSize(true);
+        //mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -181,7 +179,6 @@ public class MyListFragment extends Fragment {
                 if (customPhraseList.isEmpty()) {
                     showMessage("No Data", "You haven't added any of your own words yet");
                 } else {
-                    YoYo.with(Techniques.SlideOutLeft).duration(300).playOn(mRecyclerView);
                     DatabaseHelper myDb = new DatabaseHelper(getActivity());
                     myDb.clearMyList();
                     rebuildArrayList();
@@ -207,7 +204,6 @@ public class MyListFragment extends Fragment {
 
         if (customPhraseList.isEmpty()) {
             mTxtPlaceholder.setVisibility(view.VISIBLE);
-            System.out.println("HI");
         } else {
             mTxtPlaceholder.setVisibility(view.GONE);
 
@@ -270,8 +266,6 @@ public class MyListFragment extends Fragment {
             );
         }
 
-        System.out.println("customPhraseList length = " + customPhraseList.size());
-        System.out.println("mAdapterList length = " + mAdapter.getPhraseList().size());
         res.close();
     }
 

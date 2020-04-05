@@ -2,16 +2,12 @@ package com.example.translate;
 
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.example.translate.ui.profile.Achievement;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper myDb;
     private BottomNavigationView bottomBar;
-    public static ArrayList<Achievement> achievementList;
     int[][] states = new int[][]{
             new int[]{android.R.attr.state_enabled}, // enabled
             new int[]{-android.R.attr.state_enabled}, // disabled
@@ -58,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomBar = findViewById(R.id.nav_view);
-
-        achievementList = getAchievements();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
@@ -95,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                     bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
                     setStatusBarColor(R.color.colorBlueDark);
                 }
-
 
             }
         });
@@ -182,40 +174,40 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void insertAchievementData() {
-        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
-        myDb.insertAchievementData("Great Greeter", "Complete the second learning module: Essentials", 0, 1, false);
-        myDb.insertAchievementData("Food Fight", "Complete the third learning module: Food", 0, 1, false);
-        myDb.insertAchievementData("Helping Hand", "Complete the fourth learning module: Help", 0, 1, false);
+        myDb.insertAchievementData("Number Novice", "Complete the Numbers learning module", 0, 1, false);
+        myDb.insertAchievementData("Great Greeter", "Complete the Essentials learning module", 0, 1, false);
+        myDb.insertAchievementData("Food Fight", "Complete the Food learning module", 0, 1, false);
+        myDb.insertAchievementData("Helping Hand", "Complete the Help learning module", 0, 1, false);
         myDb.insertAchievementData("Dedicated", "Revise your saved words", 0, 1, false);
         myDb.insertAchievementData("Pursuing Perfection", "Revise your mastered words", 0, 1, false);
         myDb.insertAchievementData("Quick Quick Quick", "Complete a test in under 30 seconds", 0, 1, false);
         myDb.insertAchievementData("Self-Improver", "Check out all components in your profile", 0, 3, false);
         myDb.insertAchievementData("Lingo Learner", "Complete all learning modules", 0, 4, false);
         myDb.insertAchievementData("Lingo Legend", "Complete a test without any mistakes", 0, 1, false);
-        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
-        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
-        myDb.insertAchievementData("Number Novice", "Complete the first learning module: Numbers", 0, 1, false);
+        myDb.insertAchievementData("Lingo Lord", "Complete all test modules", 0, 4, false);
+        myDb.insertAchievementData("Nice Nine", "Achieve over 90% for any test", 0, 1, false);
+        myDb.insertAchievementData("Excellent Eight", "Achieve over 80% for any test", 0, 1, false);
+        myDb.insertAchievementData("Sensational Seven", "Achieve over 70% for any test", 0, 1, false);
+        myDb.insertAchievementData("Sexy Six", "Achieve over 60% for any test", 0, 1, false);
+        myDb.insertAchievementData("Did you even try?", "Achieve under 30% for any test", 0, 1, false);
+        myDb.insertAchievementData("Slick Speedster", "Get an answer correct in less than 2 seconds", 0, 1, false);
+        myDb.insertAchievementData("Instant Noodles", "Get an answer correct in less than 1 second", 0, 1, false);
+        myDb.insertAchievementData("Off to a Great Start", "Get the first answer wrong", 0, 1, false);
+        myDb.insertAchievementData("Abort?", "Get 3 answers wrong in a row", 0, 1, false);
+        myDb.insertAchievementData("Abandon Ship!", "Get 5 answers incorrect in a row", 0, 1, false);
+        myDb.insertAchievementData("Oh baby a Triple!", "Get 3 answers correct in a row", 0, 1, false);
+        myDb.insertAchievementData("Pentakill!", "Get 5 answers correct in a row", 0, 1, false);
+        myDb.insertAchievementData("Instant Noodles", "Get an answer correct in less than 1 second", 0, 1, false);
+        myDb.insertAchievementData("Addition", "Add 1 word to the My Words section", 0, 10, false);
+        myDb.insertAchievementData("Avid Addition", "Add 10 words to the My Words section", 0, 10, false);
+        myDb.insertAchievementData("Awesome Addition", "Add 50 words to the My Words section", 0, 50, false);
+        myDb.insertAchievementData("Ambitious Addition", "Add 500 words to the My Words section", 0, 500, false);
+        myDb.insertAchievementData("Smart Saver", "Save 5 words", 0, 5, false);
+        myDb.insertAchievementData("Sophisticated Saver", "Save 20 words", 0, 20, false);
+        myDb.insertAchievementData("Foolish Forgetter", "Forget 10 words", 0, 10, false);
 
     }
 
-    public ArrayList<Achievement> getAchievements() {
 
-        DatabaseHelper myDb = new DatabaseHelper(this);
-
-        ArrayList<Achievement> achievementList = new ArrayList<>();
-
-        Cursor res = myDb.getAchievements();
-        while (res.moveToNext()) {
-            achievementList.add(new Achievement(res.getString(0),
-                    res.getString(1),
-                    res.getString(2),
-                    res.getInt(3),
-                    res.getInt(4),
-                    res.getString(5)));
-        }
-        res.close();
-
-        return achievementList;
-    }
 
 }

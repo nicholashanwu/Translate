@@ -11,7 +11,6 @@ public class Achievement {
 
 
     public Achievement() {
-
     }
 
     public Achievement(String id, String name, String description, int currentProgress, int totalProgress, String complete) {

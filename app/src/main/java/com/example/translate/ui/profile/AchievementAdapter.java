@@ -1,5 +1,7 @@
 package com.example.translate.ui.profile;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -8,79 +10,89 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.translate.MainActivity;
 import com.example.translate.R;
-
-import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> {
-    private ArrayList<Achievement> mAchievementsList;
+    private Context mContext;
+    private Cursor mCursor;
 
-
-    public AchievementAdapter(ArrayList<Achievement> mAchievementsList) {
-        this.mAchievementsList = mAchievementsList;
+    public AchievementAdapter(Context context, Cursor cursor) {
+        mContext = context;
+        mCursor = cursor;
     }
 
     public interface RecyclerViewClickListener {
         void onClick(View view, int position);
     }
 
-    public static class AchievementViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {        //inner class CoinViewHolder that contains the content of each row
-        public TextView name, isAchieved, description;
-        public ProgressBar progressBar;
-        private View subItem;
+    public static class AchievementViewHolder extends RecyclerView.ViewHolder {
+        public TextView mName, mIsAchieved, mDescription;
+        public ProgressBar mProgressBar;
 
-        public AchievementViewHolder(View v) {                                     //constructor for the CoinViewHolder
-            super(v);                                                                                           //the more TextViews required, the more stuff here
-            v.setOnClickListener(this);
-            name = v.findViewById(R.id.txtAchievementName);
-            progressBar = v.findViewById(R.id.pbAchievement);
-            description = v.findViewById(R.id.txtAchievementDescription);
-            isAchieved = v.findViewById(R.id.txtIsAchieved);
-
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            //mListener.onClick(view, getAdapterPosition());
-
+        public AchievementViewHolder(View itemView) {
+            super(itemView);
+            mName = itemView.findViewById(R.id.txtAchievementName);
+            mProgressBar = itemView.findViewById(R.id.pbAchievement);
+            mDescription = itemView.findViewById(R.id.txtAchievementDescription);
+            mIsAchieved = itemView.findViewById(R.id.txtIsAchieved);
         }
     }
 
     @Override
     public AchievementAdapter.AchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
-        return new AchievementViewHolder(v);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.row, parent, false);
+        return new AchievementViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AchievementViewHolder holder, int position) {                                         //position determines the list item we are currently creating for the RecyclerView
-        Achievement achievement = mAchievementsList.get(position);
-
-        holder.name.setText(MainActivity.achievementList.get(position).getName());
-        holder.description.setText(MainActivity.achievementList.get(position).getDescription());
-        if (MainActivity.achievementList.get(position).getComplete().equals("true")) {
-            holder.isAchieved.setText("yes");
-        } else {
-            holder.isAchieved.setText("no");
+    public void onBindViewHolder(AchievementViewHolder holder, int position) {
+        if (!mCursor.moveToPosition(position)) {
+            return;
         }
 
-        double progressDouble = (double) 100 * (MainActivity.achievementList.get(position).getCurrentProgress()) / MainActivity.achievementList.get(position).getProgressTotal();
+        String name = mCursor.getString(1);
+        String description = mCursor.getString(2);
+        String currentProgress = mCursor.getString(3);
+        String totalProgress = mCursor.getString(4);
+        String complete = mCursor.getString(5);
+
+        double progressDouble = 100 * (Double.valueOf(currentProgress) / Double.valueOf(totalProgress));
         int progressInt = (int) progressDouble;
-        holder.progressBar.setProgress(progressInt, true);
-        holder.isAchieved.setText(achievement.getCurrentProgress() + "/" + MainActivity.achievementList.get(position).getProgressTotal());
-        if(progressInt == 100){
-            holder.isAchieved.setTypeface(Typeface.DEFAULT_BOLD);
-            holder.isAchieved.setTextColor(Color.parseColor("#D4E157"));
+
+        holder.mProgressBar.setProgress(progressInt, true);
+
+        holder.mName.setText(name);
+        holder.mDescription.setText(description);
+
+        if (complete.equals("1")) {
+            holder.mIsAchieved.setText("yes");
+        } else {
+            holder.mIsAchieved.setText("no");
         }
 
+        holder.mIsAchieved.setText(Integer.valueOf(currentProgress) + "/" + Integer.valueOf(totalProgress));
+        if (progressInt == 100) {
+            holder.mIsAchieved.setTypeface(Typeface.DEFAULT_BOLD);
+            holder.mIsAchieved.setTextColor(Color.parseColor("#29B6F6"));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mAchievementsList.size();
+        return mCursor.getCount();
+    }
+
+    public void swapCursor(Cursor newCursor) {
+        if (mCursor != null) {
+            mCursor.close();
+        }
+
+        mCursor = newCursor;
+        if (newCursor != null) {
+            notifyDataSetChanged();
+        }
     }
 }

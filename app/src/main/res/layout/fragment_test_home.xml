@@ -20,18 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/btnProfileImageTest"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="16dp"
-                android:elevation="4dp"
-                app:civ_border_color="@color/colorRed"
-                app:civ_border_width="1dp" />
-
-
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
@@ -43,6 +31,18 @@
                 android:requiresFadingEdge="none"
                 android:scaleType="fitXY"
                 android:src="@drawable/pearl_tower" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/btnProfileImageTest"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="16dp"
+                android:elevation="4dp"
+                app:civ_border_color="@color/colorRed"
+                app:civ_border_width="2dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"

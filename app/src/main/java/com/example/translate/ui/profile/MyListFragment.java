@@ -11,6 +11,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.Phrase;
 import com.example.translate.R;
@@ -51,7 +53,7 @@ public class MyListFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_my_list, container, false);
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
+        final RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -89,6 +91,7 @@ public class MyListFragment extends Fragment {
                 DatabaseHelper myDb = new DatabaseHelper(getActivity());
                 myDb.deletePhrase(customPhraseList.get(position).getPhraseEn());
                 mAdapter.deleteItem(position);
+
                 if (customPhraseList.isEmpty()) {
                     mTxtPlaceholder.setVisibility(view.VISIBLE);
                 } else {
@@ -96,7 +99,6 @@ public class MyListFragment extends Fragment {
                 }
             }
         });
-
 
         mBtnAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +130,6 @@ public class MyListFragment extends Fragment {
             }
         });
 
-
         mFabAddWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,12 +149,9 @@ public class MyListFragment extends Fragment {
                             break;
                         }
                     }
-
                     if (!exists) {
                         mTextInputWord.setError(null);
                         translate(mTextInputWord.getEditText().getText().toString().trim(), view);
-
-
                     }
                 }
             }
@@ -183,12 +181,11 @@ public class MyListFragment extends Fragment {
                 if (customPhraseList.isEmpty()) {
                     showMessage("No Data", "You haven't added any of your own words yet");
                 } else {
-                    //YoYo.with(Techniques.SlideOutLeft).duration(300).playOn(mRecyclerView);
+                    YoYo.with(Techniques.SlideOutLeft).duration(300).playOn(mRecyclerView);
                     DatabaseHelper myDb = new DatabaseHelper(getActivity());
                     myDb.clearMyList();
                     rebuildArrayList();
-//                    mAdapter = new PhraseAdapter(customPhraseList);
-//                    mRecyclerView.setAdapter(mAdapter);
+//
                     mAdapter.deleteAll();
                     mTxtPlaceholder.setVisibility(view.VISIBLE);
 

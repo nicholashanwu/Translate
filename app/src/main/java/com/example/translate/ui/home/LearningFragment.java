@@ -9,17 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
-import com.example.translate.Phrase;
 import com.example.translate.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 public class LearningFragment extends Fragment {
 
@@ -38,11 +35,7 @@ public class LearningFragment extends Fragment {
 
     private DatabaseHelper myDb;
 
-    private int currentCardNumber = 0;
     private int progressInt = 0;
-
-
-    private ArrayList<Phrase> phraseList = new ArrayList<>();
 
     public LearningFragment() {
     }

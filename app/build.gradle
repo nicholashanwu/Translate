@@ -52,9 +52,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-natural-language-translate-model:20.0.7'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.balysv:material-ripple:1.0.2'
-    // for ripple effect
     implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
-    implementation 'com.roughike:bottom-bar:2.3.1'
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
     implementation files('libs/pipinyin-0.9.1.jar')
     implementation 'com.squareup.picasso:picasso:2.71828'

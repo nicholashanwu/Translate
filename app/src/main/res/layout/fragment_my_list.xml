@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:elevation="10dp"
                     android:text="your words will appear here"
-                    android:textColor="@color/bb_inActiveBottomBarItemColor"
+                    android:textColor="@color/default_inactive_shape_color"
                     android:translationZ="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/rvMyWords"
                     app:layout_constraintEnd_toEndOf="@+id/rvMyWords"

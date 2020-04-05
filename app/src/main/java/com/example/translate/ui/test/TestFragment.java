@@ -15,9 +15,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
@@ -27,6 +24,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 public class TestFragment extends Fragment {
 
@@ -273,17 +273,6 @@ public class TestFragment extends Fragment {
 		}
 
 		return res;
-
-//		while (res.moveToNext()) {
-//			phraseList.add(new Phrase(res.getString(0),
-//					res.getString(1),
-//					res.getString(2),
-//					res.getString(3),
-//					res.getString(4),
-//					res.getString(5),
-//					res.getString(6)));
-//		}
-
 
 	}
 

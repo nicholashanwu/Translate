@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
             Color.WHITE
     };
 
+    boolean isTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +71,12 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setItemTextColor(colorList);
 
 
+
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                enableBottomBar(true);
+                isTest = false;
                 if (destination.getId() == R.id.navigation_home) {
                     bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreenDark));
                     setStatusBarColor(R.color.colorGreenDark);
@@ -82,8 +87,14 @@ public class MainActivity extends AppCompatActivity {
                     bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
                     setStatusBarColor(R.color.colorBlueDark);
                 } else if (destination.getId() == R.id.navigation_learning) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreenDark));
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
                     setStatusBarColor(R.color.colorGreenDark);
+                    enableBottomBar(false);
+                } else if (destination.getId() == R.id.navigation_test) {
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    enableBottomBar(false);
                 } else if (destination.getId() == R.id.navigation_my_list_fragment) {
                     bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
                     setStatusBarColor(R.color.colorBlueDark);
@@ -94,6 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isTest) {
+
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void setStatusBarColor(int id) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(id, this.getTheme()));
@@ -101,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(id));
         }
     }
-
 
     public void initializeDatabase() {
         myDb = new DatabaseHelper(this);
@@ -112,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("firstStart", false);
         editor.apply();
     }
-
 
     public void insertWordData() {
         myDb.insertData("One", "一", "Yī", "numbers", false, false);
@@ -172,6 +190,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void enableBottomBar(boolean enable) {
+        for (int i = 0; i < bottomBar.getMenu().size(); i++) {
+            bottomBar.getMenu().getItem(i).setEnabled(enable);
+        }
+    }
 
     public void insertAchievementData() {
         myDb.insertAchievementData("Number Novice", "Complete the Numbers learning module", 0, 1, false);
@@ -207,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertAchievementData("Foolish Forgetter", "Forget 10 words", 0, 10, false);
 
     }
-
 
 
 }

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.Phrase;
 import com.example.translate.R;
@@ -19,7 +20,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -68,7 +68,8 @@ public class MyListFragment extends Fragment {
         CircleImageView mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
         mTxtPlaceholder = view.findViewById(R.id.txtPlaceholder);
 
-        Picasso.get().load(R.mipmap.tzuyu).resize(240, 240).into(mBtnProfileImageMyList);
+        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImageMyList);
+
 
         DatabaseHelper myDb = new DatabaseHelper(getActivity());
 
@@ -150,6 +151,7 @@ public class MyListFragment extends Fragment {
                     if (!exists) {
                         mTextInputWord.setError(null);
                         translate(mTextInputWord.getEditText().getText().toString().trim(), view);
+
                     }
                 }
             }
@@ -182,7 +184,6 @@ public class MyListFragment extends Fragment {
                     DatabaseHelper myDb = new DatabaseHelper(getActivity());
                     myDb.clearMyList();
                     rebuildArrayList();
-//
                     mAdapter.deleteAll();
                     mTxtPlaceholder.setVisibility(view.VISIBLE);
 

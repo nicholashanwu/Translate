@@ -82,15 +82,16 @@ public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseView
 
     public void deleteItem(int position) {
         mPhraseList.remove(position);
-        notifyItemRemoved(position);
+        notifyItemRemoved(position + 1);
+
         //return mPhraseList.get(position).getPhraseEn();
     }
 
     public void addItem(String id, String phraseEn, String phraseCn, String phrasePinyin, String category, boolean learned, boolean saved) {
 
         mPhraseList.add(mPhraseList.size(), new Phrase("1", phraseEn, phraseCn, phrasePinyin, category, "false", "false"));
-        notifyItemInserted(mPhraseList.size() - 1);
-        notifyDataSetChanged();
+        notifyItemInserted(mPhraseList.size());
+        //notifyDataSetChanged();
     }
 
     public ArrayList<Phrase> getPhraseList() {
@@ -100,6 +101,7 @@ public class PhraseAdapter extends RecyclerView.Adapter<PhraseAdapter.PhraseView
     public void deleteAll() {
         mPhraseList.clear();
         notifyDataSetChanged();
+
     }
 
 }

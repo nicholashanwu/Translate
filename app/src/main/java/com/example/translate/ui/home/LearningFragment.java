@@ -1,11 +1,14 @@
 package com.example.translate.ui.home;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +28,8 @@ public class LearningFragment extends Fragment {
 
     private ProgressBar mProgressBar;
 
+    private ImageButton mBtnBack;
+
     private TextView mTxtChineseCharacter;
     private TextView mTxtPinyin;
     private TextView mTxtProgress;
@@ -32,6 +37,8 @@ public class LearningFragment extends Fragment {
     private TextView mTxtSavedMessage;
     private TextView mTxtAnswerMessage;
     private TextView mTxtUnsavedMessage;
+
+    private Cursor res;
 
     private DatabaseHelper myDb;
 
@@ -73,16 +80,18 @@ public class LearningFragment extends Fragment {
         mTxtSavedMessage = view.findViewById(R.id.txtSavedMessage);
         mTxtAnswerMessage = view.findViewById(R.id.txtAnswerMessage);
         mTxtUnsavedMessage = view.findViewById(R.id.txtUnsavedMessage);
+        mBtnBack = view.findViewById(R.id.btnBack);
 
         final String learningType = getArguments().getString("learningType");
 
-        final Cursor res = getData(learningType);
+        res = getData(learningType);
 
         setTitle(learningType);
         setParameters(res);
         mTxtAnswerMessage.setVisibility(View.GONE);
         mTxtSavedMessage.setVisibility(View.GONE);
         mTxtUnsavedMessage.setVisibility(View.GONE);
+
 
         mFabDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +126,15 @@ public class LearningFragment extends Fragment {
 
                     showMessage("You're Finished!", "You completed the " + learningType + " learning module!");
                     res.close();
-                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+
+                    if (learningType.equals("custom")) {
+                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_my_list_fragment);
+                    } else if (learningType.equals("saved") || learningType.equals("learned")) {
+                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_profile);
+                    } else {
+                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+                    }
+
                     mProgressBar.setProgress(0, true);
                 }
             }
@@ -169,6 +186,14 @@ public class LearningFragment extends Fragment {
 
                     mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
                 }
+            }
+        });
+
+
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBackConfirmation("Are you sure you want to exit?", "");
             }
         });
 
@@ -226,6 +251,36 @@ public class LearningFragment extends Fragment {
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
+    }
+
+    private void showBackConfirmation(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Green));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_learning, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.over_30);
+
+
+        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+                res.close();
+            }
+        });
+
+
+        txtTitle.setText(title);
+        builder.setView(view);
+        builder.show();
+
     }
 
 }

@@ -12,9 +12,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -48,12 +48,7 @@ public class ProfileFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
 
-//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-//        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
-
-//        RecyclerView.Adapter mAdapter = new AchievementAdapter(MainActivity.achievementList);
-//        mRecyclerView.setAdapter(mAdapter);
 
         CardView mBtnStartSaved = view.findViewById(R.id.btnStartSaved);
         CardView mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
@@ -64,12 +59,10 @@ public class ProfileFragment extends Fragment {
         ImageView mIvMastered = view.findViewById(R.id.ivMastered);
         ImageView mIvMyList = view.findViewById(R.id.ivMyList);
 
-        Picasso.get().load(R.drawable.envelope).resize(360, 360).into(mIvSaved);
-        Picasso.get().load(R.drawable.tools).resize(360, 360).into(mIvMastered);
-        Picasso.get().load(R.drawable.exam).resize(360, 360).into(mIvMyList);
-        Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImageProfile);
-
-
+        Glide.with(getContext()).load(R.drawable.envelope).into(mIvSaved);
+        Glide.with(getContext()).load(R.drawable.tools).into(mIvMastered);
+        Glide.with(getContext()).load(R.drawable.exam).into(mIvMyList);
+        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImageProfile);
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,11 @@ public class TestFragment extends Fragment {
     private TextView mTxtTimer;
     private FloatingActionButton mFabSubmit;
 
+    private ImageButton mBtnBack;
+
     private DatabaseHelper myDb;
+
+    private Cursor res;
 
     private double percentage;
     private int score = 0;
@@ -113,17 +118,19 @@ public class TestFragment extends Fragment {
         mTxtScore = view.findViewById(R.id.txtScore);
         mIvReaction = view.findViewById(R.id.ivReaction);
         mTxtTimer = view.findViewById(R.id.txtTimer);
-
+        mBtnBack = view.findViewById(R.id.btnBack);
 
         final String testingType = getArguments().getString("testingType");
 
-        final Cursor res = getData(testingType);
+        res = getData(testingType);
 
         getData(testingType);
         setTitle(testingType);
         setParameters(res);
 
         mTxtMessage.setText("");
+
+
         showNextQuestion(res);
 
         /////////////
@@ -160,7 +167,16 @@ public class TestFragment extends Fragment {
             }
         });
 
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBackConfirmation("Are you sure you want to exit?", "");
+            }
+        });
+
         return view;
+
+
     }
 
     private void showNextQuestion(Cursor res) {
@@ -323,7 +339,7 @@ public class TestFragment extends Fragment {
     }
 
     private void showMessage(String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Red));
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog, null);
         TextView txtTitle = view.findViewById(R.id.title);
         ImageButton imageButton = view.findViewById(R.id.image);
@@ -357,9 +373,9 @@ public class TestFragment extends Fragment {
 
         txtTitle.setText(title);
         mTxtMessage.setText((int) percentage + "%");
-        mTxtLearned.setText("You learned " + learned + " new words!");
-        mTxtMastered.setText("You mastered " + mastered + " words!");
-        mTxtForgot.setText("You forgot " + forgotten + " words...");
+        mTxtLearned.setText("Learned " + learned + " new words!");
+        mTxtMastered.setText("Mastered " + mastered + " words!");
+        mTxtForgot.setText("Forgot " + forgotten + " words...");
 
         builder.setView(view);
         builder.show();
@@ -463,6 +479,37 @@ public class TestFragment extends Fragment {
 
         mTextViewCountDown.setText(timeLeftFormatted);
     }
+
+    private void showBackConfirmation(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Red));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_test, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.over_30);
+
+        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
+                pauseTimer();
+                res.close();
+            }
+        });
+
+        txtTitle.setText(title);
+        builder.setView(view);
+        builder.show();
+
+    }
+
+
 
 
 }

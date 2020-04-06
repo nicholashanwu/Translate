@@ -21,7 +21,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/ivTestHome"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:elevation="-90dp"
@@ -29,8 +29,7 @@
 
                 android:fadingEdgeLength="100dp"
                 android:requiresFadingEdge="none"
-                android:scaleType="fitXY"
-                android:src="@drawable/pearl_tower" />
+                android:scaleType="fitXY" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/btnProfileImageTest"
@@ -83,75 +82,63 @@
                     app:cardElevation="4dp"
                     app:contentPadding="8dp">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout8"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent">
 
-                        <LinearLayout
+
+                        <TextView
+                            android:id="@+id/txtLevelOneTest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:letterSpacing="0.1"
+                            android:lineSpacingExtra="0dp"
+                            android:padding="0dp"
+                            android:text="@string/numbers_level"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/txtLevelOneTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:letterSpacing="0.1"
-                                android:lineSpacingExtra="0dp"
-                                android:padding="0dp"
-                                android:text="@string/numbers_level"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtNumbersTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/numbers_title"
-                                android:textSize="24sp" />
-
-                            <TextView
-                                android:id="@+id/txtNumbersDescriptionTest"
-                                android:layout_width="192dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/numbers_description" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/txtNumbersTest"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="vertical">
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/numbers_title"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/txtLevelOneTest"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLevelOneTest" />
 
-                            <ImageView
-                                android:id="@+id/ivNumbers"
-                                android:layout_width="72dp"
-                                android:layout_height="72dp"
-                                android:layout_marginLeft="0dp"
-                                android:layout_marginTop="16dp"
-                                android:src="@android:mipmap/sym_def_app_icon" />
 
-                            <Button
-                                android:id="@+id/btnStartNumbers"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="4dp"
-                                android:text="@string/button_start"
-                                android:textColor="@color/colorRed"
-                                app:iconTint="@color/colorRed" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/ivNumbers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@android:mipmap/sym_def_app_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/btnStartNumbers"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/button_start"
+                            android:textColor="@color/colorRed"
+                            app:iconTint="@color/colorRed"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -163,75 +150,65 @@
                     app:cardElevation="4dp"
                     app:contentPadding="8dp">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout9"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent">
 
-                        <LinearLayout
+
+                        <TextView
+                            android:id="@+id/txtLevelTwoTest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:letterSpacing="0.1"
+                            android:lineSpacingExtra="0dp"
+                            android:padding="0dp"
+                            android:text="@string/essentials_level"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@+id/txtEssentialsTest"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/txtLevelTwoTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:letterSpacing="0.1"
-                                android:lineSpacingExtra="0dp"
-                                android:padding="0dp"
-                                android:text="@string/essentials_level"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtEssentialsTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/essentials_title"
-                                android:textSize="24sp" />
-
-                            <TextView
-                                android:id="@+id/txtEssentialsDescriptionTest"
-                                android:layout_width="192dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/essentials_description" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/txtEssentialsTest"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="vertical">
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/essentials_title"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/txtLevelTwoTest"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLevelTwoTest" />
 
-                            <ImageView
-                                android:id="@+id/ivGreetings"
-                                android:layout_width="72dp"
-                                android:layout_height="72dp"
-                                android:layout_marginLeft="0dp"
-                                android:layout_marginTop="16dp"
-                                android:src="@android:mipmap/sym_def_app_icon" />
 
-                            <Button
-                                android:id="@+id/btnStartGreetings"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="4dp"
-                                android:text="@string/button_start"
-                                android:textColor="@color/colorRed"
-                                app:iconTint="@color/colorRed" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/ivGreetings"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@android:mipmap/sym_def_app_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/btnStartGreetings"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/button_start"
+                            android:textColor="@color/colorRed"
+                            app:iconTint="@color/colorRed"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -243,75 +220,63 @@
                     app:cardElevation="4dp"
                     app:contentPadding="8dp">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout10"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent">
 
-                        <LinearLayout
+
+                        <TextView
+                            android:id="@+id/txtLevelThree"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:letterSpacing="0.1"
+                            android:lineSpacingExtra="0dp"
+                            android:padding="0dp"
+                            android:text="@string/food_level"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/txtLevelThree"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:letterSpacing="0.1"
-                                android:lineSpacingExtra="0dp"
-                                android:padding="0dp"
-                                android:text="@string/food_level"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtFoodTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/food_title"
-                                android:textSize="24sp" />
-
-                            <TextView
-                                android:id="@+id/txtFoodDescriptionTest"
-                                android:layout_width="192dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/food_description" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/txtFoodTest"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="vertical">
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/food_title"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/txtLevelThree"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLevelThree" />
 
-                            <ImageView
-                                android:id="@+id/ivFood"
-                                android:layout_width="72dp"
-                                android:layout_height="72dp"
-                                android:layout_marginLeft="0dp"
-                                android:layout_marginTop="16dp"
-                                android:src="@android:mipmap/sym_def_app_icon" />
 
-                            <Button
-                                android:id="@+id/btnStartFood"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="4dp"
-                                android:text="@string/button_start"
-                                android:textColor="@color/colorRed"
-                                app:iconTint="@color/colorRed" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/ivFood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@android:mipmap/sym_def_app_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/btnStartFood"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/button_start"
+                            android:textColor="@color/colorRed"
+                            app:iconTint="@color/colorRed"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -323,75 +288,63 @@
                     app:cardElevation="4dp"
                     app:contentPadding="8dp">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout11"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent">
 
-                        <LinearLayout
+
+                        <TextView
+                            android:id="@+id/txtLevelFourTest"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:letterSpacing="0.1"
+                            android:lineSpacingExtra="0dp"
+                            android:padding="0dp"
+                            android:text="@string/emergency_level"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/txtLevelFourTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:letterSpacing="0.1"
-                                android:lineSpacingExtra="0dp"
-                                android:padding="0dp"
-                                android:text="@string/emergency_level"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txtHelpTest"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/emergency_title"
-                                android:textSize="24sp" />
-
-                            <TextView
-                                android:id="@+id/txtHelpDescriptionTest"
-                                android:layout_width="192dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:text="@string/emergency_description" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/txtHelpTest"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:orientation="vertical">
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/emergency_title"
+                            android:textSize="24sp"
+                            app:layout_constraintStart_toStartOf="@+id/txtLevelFourTest"
+                            app:layout_constraintTop_toBottomOf="@+id/txtLevelFourTest" />
 
-                            <ImageView
-                                android:id="@+id/ivHelp"
-                                android:layout_width="72dp"
-                                android:layout_height="72dp"
-                                android:layout_marginLeft="0dp"
-                                android:layout_marginTop="16dp"
-                                android:src="@android:mipmap/sym_def_app_icon" />
 
-                            <Button
-                                android:id="@+id/btnStartHelp"
-                                style="@style/Widget.MaterialComponents.Button.TextButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginRight="4dp"
-                                android:text="@string/button_start"
-                                android:textColor="@color/colorRed"
-                                app:iconTint="@color/colorRed" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/ivHelp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="120dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@android:mipmap/sym_def_app_icon"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/btnStartHelp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="64dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/button_start"
+                            android:textColor="@color/colorRed"
+                            app:iconTint="@color/colorRed"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 

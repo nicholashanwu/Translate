@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.translate.R;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -33,9 +34,21 @@ public class HomeFragment extends Fragment {
         Button mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
         Button mBtnStartFood = view.findViewById(R.id.btnStartFood);
         Button mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
+        ImageView mIvHome = view.findViewById(R.id.ivHome);
+        ImageView mIvNumbers = view.findViewById(R.id.ivNumbers);
+        ImageView mIvGreetings = view.findViewById(R.id.ivGreetings);
+        ImageView mIvFood = view.findViewById(R.id.ivFood);
+        ImageView mIvHelp = view.findViewById(R.id.ivHelp);
+
         CircleImageView mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
 
-        Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImage);
+        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImage);
+        Glide.with(getContext()).load(R.drawable.forbidden_city_small).into(mIvHome);
+        Glide.with(getContext()).load(R.drawable.undraw_visual_data).into(mIvNumbers);
+        Glide.with(getContext()).load(R.drawable.undraw_conversation).into(mIvGreetings);
+        Glide.with(getContext()).load(R.drawable.undraw_hamburger).into(mIvFood);
+        Glide.with(getContext()).load(R.drawable.undraw_fatherhood).into(mIvHelp);
+
 
 		mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
 			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

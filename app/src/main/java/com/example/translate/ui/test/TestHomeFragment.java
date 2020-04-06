@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.translate.R;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -37,9 +38,22 @@ public class TestHomeFragment extends Fragment {
         Button mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
         Button mBtnStartFood = view.findViewById(R.id.btnStartFood);
         Button mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
+        ImageView mIvTestHome = view.findViewById(R.id.ivTestHome);
         CircleImageView mBtnProfileImageTest = view.findViewById(R.id.btnProfileImageTest);
+        ImageView mIvNumbers = view.findViewById(R.id.ivNumbers);
+        ImageView mIvGreetings = view.findViewById(R.id.ivGreetings);
+        ImageView mIvFood = view.findViewById(R.id.ivFood);
+        ImageView mIvHelp = view.findViewById(R.id.ivHelp);
 
-        Picasso.get().load(R.mipmap.tzuyu).resize(144, 144).into(mBtnProfileImageTest);
+
+        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImageTest);
+        Glide.with(getContext()).load(R.drawable.pearl_tower).into(mIvTestHome);
+
+        Glide.with(getContext()).load(R.drawable.undraw_visual_data_red).into(mIvNumbers);
+        Glide.with(getContext()).load(R.drawable.undraw_conversation_red).into(mIvGreetings);
+        Glide.with(getContext()).load(R.drawable.undraw_hamburger_red).into(mIvFood);
+        Glide.with(getContext()).load(R.drawable.undraw_fatherhood_red).into(mIvHelp);
+
 
         mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

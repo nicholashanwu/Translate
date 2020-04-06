@@ -28,38 +28,77 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/gridLayout"
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                app:columnCount="2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5"
-                app:rowCount="2">
+                android:layout_height="match_parent"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_margin="8dp"
-                    app:cardElevation="4dp"
-                    app:cardMaxElevation="@dimen/default_nav_item_badge_padding"
-                    app:layout_column="1"
-                    app:layout_columnWeight="1"
-                    app:layout_row="1"
-                    app:layout_rowWeight="1" />
-            </androidx.gridlayout.widget.GridLayout>
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView android:layout_height="20dp">
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView android:layout_height="20dp">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView android:layout_height="20dp">
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+                    </androidx.cardview.widget.CardView>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableLayout>
 
             <Button
                 android:id="@+id/btnAchievements"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="138dp"
-                android:layout_marginTop="168dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginBottom="65dp"
                 android:text="achievements"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+                app:layout_constraintBottom_toTopOf="@+id/btnProgress"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btnProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="59dp"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/btnAchievements" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

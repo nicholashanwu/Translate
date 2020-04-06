@@ -71,14 +71,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public boolean insertAchievementData(String name, String description, int currentProgress, int totalProgress, boolean saved) {
+    public boolean insertAchievementData(String name, String description, int currentProgress, int totalProgress, boolean complete) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ATT_2, name);
         contentValues.put(ATT_3, description);
         contentValues.put(ATT_4, currentProgress);
         contentValues.put(ATT_5, totalProgress);
-        contentValues.put(ATT_6, saved);
+        contentValues.put(ATT_6, complete);
         long result = db.insert(A_TABLE_NAME, null, contentValues);
         return result != -1;
     }
@@ -153,6 +153,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deletePhrase(String phraseEn) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + TABLE_NAME + " WHERE category = 'custom' AND phraseEn = '" + phraseEn + "' ");
+    }
+
+    public boolean progressAchievement(String achievementName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        Cursor res = db.rawQuery("SELECT currentProgress, totalProgress, complete FROM " + A_TABLE_NAME + " WHERE name = '" + achievementName + "' ", null);
+        res.moveToFirst();
+        int curPro = Integer.valueOf(res.getString(0));
+        int totPro = Integer.valueOf(res.getString(1));
+        String com = res.getString(2);
+        res.close();
+        if (com.equals("0")) {                   //if has not been achieved, add 1 to progress
+            curPro++;
+            contentValues.put(ATT_4, curPro);
+            db.update(A_TABLE_NAME, contentValues, "name = ?", new String[]{achievementName});
+
+            if (curPro == totPro) {
+                contentValues.put(ATT_6, "1");
+                db.update(A_TABLE_NAME, contentValues, "name = ?", new String[]{achievementName});
+                return true;
+            } else {
+                System.out.println("hi");
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
 
 }

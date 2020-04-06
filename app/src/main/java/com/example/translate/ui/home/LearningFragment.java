@@ -202,7 +202,7 @@ public class LearningFragment extends Fragment {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showBackConfirmation("Are you sure you want to exit?", "");
+                showBackConfirmation("Are you sure you want to exit?", "", learningType);
             }
         });
 
@@ -261,7 +261,7 @@ public class LearningFragment extends Fragment {
         builder.show();
     }
 
-    private void showBackConfirmation(String title, String message) {
+    private void showBackConfirmation(String title, String message, final String learningType) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Green));
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_learning, null);
         TextView txtTitle = view.findViewById(R.id.title);
@@ -275,11 +275,16 @@ public class LearningFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
+
         });
         builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+                if (learningType.equals("saved") || learningType.equals("learned")) {
+                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_profile);
+                } else {
+                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+                }
                 res.close();
             }
         });

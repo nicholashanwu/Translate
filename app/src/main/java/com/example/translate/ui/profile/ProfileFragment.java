@@ -16,13 +16,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
+import com.example.translate.ui.dashboard.AchievementAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
@@ -41,14 +40,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         myDb = new DatabaseHelper(getActivity());
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new AchievementAdapter(getContext(), getAllAchievements());
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setHasFixedSize(true);
 
-        mRecyclerView.setNestedScrollingEnabled(false);
 
         CardView mBtnStartSaved = view.findViewById(R.id.btnStartSaved);
         CardView mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
@@ -70,7 +62,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Cursor res = myDb.getSaved();
                 if (res.getCount() == 0) {
-                    showMessage("No Data", "No saved!");
+                    showMessage("No Saved Words...", "No saved!");
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("learningType", "saved");
@@ -111,12 +103,7 @@ public class ProfileFragment extends Fragment {
 
         TextView txtTitle = view.findViewById(R.id.title);
         ImageButton imageButton = view.findViewById(R.id.image);
-        TextView mTxtMessage = view.findViewById(R.id.message);
-        TextView mTxtLearned = view.findViewById(R.id.txtLearned);
-        TextView mTxtMastered = view.findViewById(R.id.txtMastered);
-        TextView mTxtForgot = view.findViewById(R.id.txtForgot);
 
-        mTxtMessage.setTextSize(14);
         imageButton.setImageResource(R.mipmap.over_40);
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -126,8 +113,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        builder.setTitle(title);
-        builder.setMessage(message);
+        txtTitle.setText(title);
         builder.setView(view);
         builder.show();
     }

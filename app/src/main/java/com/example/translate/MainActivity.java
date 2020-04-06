@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomBar, navController);
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setItemIconTintList(colorList);
         bottomBar.setItemTextColor(colorList);
 
-        NavOptions navOptions = new NavOptions.Builder()
+        final NavOptions slideLeftNavOptions = new NavOptions.Builder()
                 .setLaunchSingleTop(true)
                 .setEnterAnim(R.anim.slide_in_right)
                 .setExitAnim(R.anim.slide_out_left)
@@ -81,24 +80,38 @@ public class MainActivity extends AppCompatActivity {
                 .setPopUpTo(navController.getGraph().getStartDestination(), false)
                 .build();
 
-        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                boolean handled = false;
-                if (navController.getGraph().findNode(item.getItemId()) != null) {
-                    navController.navigate(item.getItemId(), null, navOptions);
-                    handled = true;
-                } else {
-                    switch (item.getItemId()) {
-                        case R.id.settings:
-                            openSettingsActivity();
-                            break;
-                    }
-                }
+        final NavOptions slideRightNavOptions = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setEnterAnim(R.anim.slide_in_left)
+                .setExitAnim(R.anim.slide_out_right)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .setPopUpTo(navController.getGraph().getStartDestination(), false)
+                .build();
 
-                return handled;
-            }
-        });
+//        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                boolean handled = false;
+//                if (navController.getCurrentDestination().getId() == R.id.navigation_home) {
+//                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+//                    handled = true;
+//                } else if (navController.getCurrentDestination().getId() == R.id.navigation_profile || navController.getCurrentDestination().getId() == R.id.navigation_my_list_fragment) {
+//                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+//                    handled = true;
+//                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_home) {
+//                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+//                    handled = true;
+//                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_profile) {
+//                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+//                    handled = true;
+//                } else {
+//                    System.out.println("something happened");
+//                }
+//
+//                    return handled;
+//            }
+//        });
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -128,14 +141,16 @@ public class MainActivity extends AppCompatActivity {
                     bottomBar.setBackgroundColor(Color.parseColor("#444444"));
                     enableBottomBar(false);
                     setStatusBarColor(R.color.colorBlueDark);
+                } else if (destination.getId() == R.id.navigation_dashboard) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorYellowDark));
+                    setStatusBarColor(R.color.colorYellowDark);
+
                 }
 
             }
         });
 
         /////////////////
-
-
 
 
     }

@@ -16,6 +16,10 @@
         android:icon="@drawable/outline_perm_identity_black_48dp"
         android:title="@string/title_profile" />
 
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/outline_perm_identity_black_48dp"
+        android:title="Dashboard" />"
 
 
 </menu>

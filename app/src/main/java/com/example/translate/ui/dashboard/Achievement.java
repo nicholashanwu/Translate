@@ -1,4 +1,4 @@
-package com.example.translate.ui.profile;
+package com.example.translate.ui.dashboard;
 
 public class Achievement {
 

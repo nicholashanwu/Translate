@@ -94,4 +94,24 @@
             android:id="@+id/action_navigation_my_list_fragment_to_navigation_learning"
             app:destination="@id/navigation_learning" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.translate.ui.dashboard.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_navigation_dashboard_to_achievementFragment"
+            app:destination="@id/achievementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/achievementFragment"
+        android:name="com.example.translate.ui.dashboard.AchievementFragment"
+        android:label="fragment_achievement"
+        tools:layout="@layout/fragment_achievement">
+        <action
+            android:id="@+id/action_achievementFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
 </navigation>

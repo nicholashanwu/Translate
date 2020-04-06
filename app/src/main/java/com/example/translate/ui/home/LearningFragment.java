@@ -18,6 +18,8 @@ import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -66,6 +68,13 @@ public class LearningFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         myDb = new DatabaseHelper(getContext());
 
@@ -197,7 +206,6 @@ public class LearningFragment extends Fragment {
             }
         });
 
-        return view;
     }
 
     public void setParameters(Cursor res) {

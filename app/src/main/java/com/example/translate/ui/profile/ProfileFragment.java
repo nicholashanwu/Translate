@@ -41,7 +41,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         myDb = new DatabaseHelper(getActivity());
 
-
         RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

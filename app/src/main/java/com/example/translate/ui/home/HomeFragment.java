@@ -27,7 +27,6 @@ public class HomeFragment extends Fragment {
 		return root;
 	}
 
-	
     @Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);

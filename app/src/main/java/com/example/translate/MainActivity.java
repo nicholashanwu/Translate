@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -70,7 +72,33 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setItemIconTintList(colorList);
         bottomBar.setItemTextColor(colorList);
 
+        NavOptions navOptions = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_right)
+                .setPopExitAnim(R.anim.slide_out_left)
+                .setPopUpTo(navController.getGraph().getStartDestination(), false)
+                .build();
 
+        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                boolean handled = false;
+                if (navController.getGraph().findNode(item.getItemId()) != null) {
+                    navController.navigate(item.getItemId(), null, navOptions);
+                    handled = true;
+                } else {
+                    switch (item.getItemId()) {
+                        case R.id.settings:
+                            openSettingsActivity();
+                            break;
+                    }
+                }
+
+                return handled;
+            }
+        });
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -105,7 +133,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /////////////////
+
+
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -155,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertData("Thank you", "谢谢", "Xièxiè", "essentials", false, false);
         myDb.insertData("Good", "好", "Hǎo", "essentials", false, false);
         myDb.insertData("Not good", "不好", "Bù hǎo", "essentials", false, false);
-        myDb.insertData("I'm sorry", "对不起", "Duìbùqǐ", "essentials", false, false);
+        myDb.insertData("Sorry", "对不起", "Duìbùqǐ", "essentials", false, false);
         myDb.insertData("Ok!", "好的", "Hǎo de", "essentials", false, false);
         myDb.insertData("Good Morning", "早上好", "Zǎoshang hǎo", "essentials", false, false);
         myDb.insertData("Goodnight", "晚安", "Wǎn'ān", "essentials", false, false);

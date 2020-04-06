@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -98,6 +100,16 @@ public class TestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
+
+
+        return view;
+
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Translater translater = new Translater();
         translater.checkModelExists(translater.configure());
@@ -173,9 +185,6 @@ public class TestFragment extends Fragment {
                 showBackConfirmation("Are you sure you want to exit?", "");
             }
         });
-
-        return view;
-
 
     }
 

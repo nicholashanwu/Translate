@@ -28,6 +28,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -55,7 +56,14 @@ public class MyListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_my_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_list, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
@@ -108,9 +116,9 @@ public class MyListFragment extends Fragment {
                 mAdapter.deleteItem(position);
 
                 if (customPhraseList.isEmpty()) {
-                    mTxtPlaceholder.setVisibility(view.VISIBLE);
+                    mTxtPlaceholder.setVisibility(getView().VISIBLE);
                 } else {
-                    mTxtPlaceholder.setVisibility(view.GONE);
+                    mTxtPlaceholder.setVisibility(getView().GONE);
                 }
             }
         });
@@ -208,7 +216,7 @@ public class MyListFragment extends Fragment {
             }
         });
 
-        return view;
+
     }
 
     public void addWord(String phraseEn, String phraseCn, View view) {

@@ -217,13 +217,13 @@ public class LearningFragment extends Fragment {
 
     public void setTitle(String learningType) {
         if (learningType.equals("numbers")) {
-            mTxtLevelTitle.setText("Level 1 : Numbers");
+            mTxtLevelTitle.setText("Numbers");
         } else if (learningType.equals("essentials")) {
-            mTxtLevelTitle.setText("Level 2 : Essentials");
+            mTxtLevelTitle.setText("Essentials");
         } else if (learningType.equals("food")) {
-            mTxtLevelTitle.setText("Level 3 : Food");
+            mTxtLevelTitle.setText("Food");
         } else if (learningType.equals("help")) {
-            mTxtLevelTitle.setText("Level 4 : Help");
+            mTxtLevelTitle.setText("Help");
         } else if (learningType.equals("saved")) {
             mTxtLevelTitle.setText("Saved Words");
         } else if (learningType.equals("learned")) {

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 
@@ -59,10 +60,11 @@ public class ProfileFragment extends Fragment {
         ImageView mIvMastered = view.findViewById(R.id.ivMastered);
         ImageView mIvMyList = view.findViewById(R.id.ivMyList);
 
-        Glide.with(getContext()).load(R.drawable.envelope).into(mIvSaved);
-        Glide.with(getContext()).load(R.drawable.tools).into(mIvMastered);
-        Glide.with(getContext()).load(R.drawable.exam).into(mIvMyList);
-        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImageProfile);
+
+        Glide.with(getContext()).load(R.drawable.envelope).apply(new RequestOptions().override(400, 400)).into(mIvSaved);
+        Glide.with(getContext()).load(R.drawable.tools).apply(new RequestOptions().override(400, 400)).into(mIvMastered);
+        Glide.with(getContext()).load(R.drawable.exam).apply(new RequestOptions().override(400, 400)).into(mIvMyList);
+        Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImageProfile);
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +108,7 @@ public class ProfileFragment extends Fragment {
 
     private void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_profile, null);
 
         TextView txtTitle = view.findViewById(R.id.title);
         ImageButton imageButton = view.findViewById(R.id.image);

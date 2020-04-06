@@ -117,7 +117,7 @@
 
                         <ImageView
                             android:id="@+id/ivNumbers"
-                            android:layout_width="wrap_content"
+                            android:layout_width="180dp"
                             android:layout_height="120dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
@@ -130,12 +130,12 @@
                         <Button
                             android:id="@+id/btnStartNumbers"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="64dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="#FFFFFF"
                             android:text="@string/button_start"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorGreen"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGreenDark"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -186,7 +186,7 @@
 
                         <ImageView
                             android:id="@+id/ivGreetings"
-                            android:layout_width="wrap_content"
+                            android:layout_width="180dp"
                             android:layout_height="120dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
@@ -199,11 +199,11 @@
                         <Button
                             android:id="@+id/btnStartGreetings"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="64dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/button_start"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorGreen"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGreenDark"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -254,7 +254,7 @@
 
                         <ImageView
                             android:id="@+id/ivFood"
-                            android:layout_width="wrap_content"
+                            android:layout_width="180dp"
                             android:layout_height="120dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
@@ -267,11 +267,11 @@
                         <Button
                             android:id="@+id/btnStartFood"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="64dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/button_start"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorGreen"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGreenDark"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -322,7 +322,7 @@
 
                         <ImageView
                             android:id="@+id/ivHelp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="180dp"
                             android:layout_height="120dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
@@ -335,11 +335,11 @@
                         <Button
                             android:id="@+id/btnStartHelp"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="64dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/button_start"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorGreen"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/colorGreenDark"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
 

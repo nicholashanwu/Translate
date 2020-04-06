@@ -2,16 +2,20 @@ package com.example.translate.ui.profile;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.Phrase;
 import com.example.translate.R;
@@ -40,7 +44,9 @@ public class MyListFragment extends Fragment {
 
     private TextView mTxtPlaceholder;
 
+    private ImageButton mBtnBack;
     private CardView mCvWords;
+    private Cursor res;
 
     public MyListFragment() {
     }
@@ -52,7 +58,6 @@ public class MyListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_my_list, container, false);
 
         final RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
-        //mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
@@ -67,18 +72,29 @@ public class MyListFragment extends Fragment {
         Button mBtnAdapter = view.findViewById(R.id.btnAdapter);
         CircleImageView mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
         mTxtPlaceholder = view.findViewById(R.id.txtPlaceholder);
+        mBtnBack = view.findViewById(R.id.btnBack);
 
-        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImageMyList);
+        Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(200, 200)).into(mBtnProfileImageMyList);
 
 
         DatabaseHelper myDb = new DatabaseHelper(getActivity());
 
-        rebuildArrayList();
+        res = rebuildArrayList();
         if (customPhraseList.isEmpty()) {
             mTxtPlaceholder.setVisibility(view.VISIBLE);
         } else {
             mTxtPlaceholder.setVisibility(view.GONE);
         }
+
+
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                res.close();
+
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_my_list_fragment_to_navigation_profile);
+            }
+        });
 
         mAdapter.setOnItemClickListener(new PhraseAdapter.OnItemClickListener() {
             @Override
@@ -239,7 +255,7 @@ public class MyListFragment extends Fragment {
         builder.show();
     }
 
-    public void rebuildArrayList() {
+    public Cursor rebuildArrayList() {
         DatabaseHelper myDb = new DatabaseHelper(getActivity());
         Cursor res = myDb.getCategory("custom");
 
@@ -267,7 +283,7 @@ public class MyListFragment extends Fragment {
             );
         }
 
-        res.close();
+        return res;
     }
 
     public void closeKeyboard(View view) {
@@ -276,6 +292,34 @@ public class MyListFragment extends Fragment {
             imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 
         }
+    }
+
+    private void showBackConfirmation(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Red));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_test, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.over_30);
+
+        builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+            }
+        });
+
+        txtTitle.setText(title);
+        builder.setView(view);
+        builder.show();
+
     }
 
 }

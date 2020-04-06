@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.R;
 
 import androidx.annotation.RequiresApi;
@@ -46,13 +47,13 @@ public class TestHomeFragment extends Fragment {
         ImageView mIvHelp = view.findViewById(R.id.ivHelp);
 
 
-        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImageTest);
-        Glide.with(getContext()).load(R.drawable.pearl_tower).into(mIvTestHome);
+        Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImageTest);
+        Glide.with(getContext()).load(R.drawable.pearl_tower).apply(new RequestOptions().override(800, 800)).into(mIvTestHome);
 
-        Glide.with(getContext()).load(R.drawable.undraw_visual_data_red).into(mIvNumbers);
-        Glide.with(getContext()).load(R.drawable.undraw_conversation_red).into(mIvGreetings);
-        Glide.with(getContext()).load(R.drawable.undraw_hamburger_red).into(mIvFood);
-        Glide.with(getContext()).load(R.drawable.undraw_fatherhood_red).into(mIvHelp);
+        Glide.with(getContext()).load(R.drawable.undraw_visual_data_red).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
+        Glide.with(getContext()).load(R.drawable.undraw_conversation_red).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);
+        Glide.with(getContext()).load(R.drawable.undraw_hamburger_red).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvFood);
+        Glide.with(getContext()).load(R.drawable.undraw_fatherhood_red).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvHelp);
 
 
         mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {

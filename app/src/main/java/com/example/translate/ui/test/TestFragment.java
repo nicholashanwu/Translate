@@ -227,7 +227,7 @@ public class TestFragment extends Fragment {
             showReaction(true);
 
             score++;
-            mTxtScore.setText(Integer.toString(score));
+            mTxtScore.setText("Score: " + Integer.toString(score));
 
             if (myDb.getLearnedStatus(res.getString(1)).equals("1")) {
                 mastered++;
@@ -383,13 +383,13 @@ public class TestFragment extends Fragment {
 
     public void setTitle(String testingType) {
         if (testingType.equals("numbers")) {
-            mTxtLevelTitle.setText("Level 1 : Numbers");
+            mTxtLevelTitle.setText("Numbers");
         } else if (testingType.equals("essentials")) {
-            mTxtLevelTitle.setText("Level 2 : Essentials");
+            mTxtLevelTitle.setText("Essentials");
         } else if (testingType.equals("food")) {
-            mTxtLevelTitle.setText("Level 3 : Food");
+            mTxtLevelTitle.setText("Food");
         } else {
-            mTxtLevelTitle.setText("Level 4 : Help");
+            mTxtLevelTitle.setText("Help");
         }
 
     }

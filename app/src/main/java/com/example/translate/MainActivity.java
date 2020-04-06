@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     int[] colors = new int[]{
             Color.WHITE,
+            Color.GRAY,
             Color.WHITE,
-            Color.WHITE,
-            Color.WHITE
+            Color.GRAY
     };
 
     boolean isTest;
@@ -96,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
                     bottomBar.setBackgroundColor(Color.parseColor("#444444"));
                     enableBottomBar(false);
                 } else if (destination.getId() == R.id.navigation_my_list_fragment) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    enableBottomBar(false);
                     setStatusBarColor(R.color.colorBlueDark);
                 }
 

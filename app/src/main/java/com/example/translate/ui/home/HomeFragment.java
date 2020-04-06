@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.R;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,8 @@ public class HomeFragment extends Fragment {
 		return root;
 	}
 
-	@Override
+	
+    @Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
@@ -42,12 +44,13 @@ public class HomeFragment extends Fragment {
 
         CircleImageView mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
 
-        Glide.with(getContext()).load(R.drawable.tzuyu).into(mBtnProfileImage);
-        Glide.with(getContext()).load(R.drawable.forbidden_city_small).into(mIvHome);
-        Glide.with(getContext()).load(R.drawable.undraw_visual_data).into(mIvNumbers);
-        Glide.with(getContext()).load(R.drawable.undraw_conversation).into(mIvGreetings);
-        Glide.with(getContext()).load(R.drawable.undraw_hamburger).into(mIvFood);
-        Glide.with(getContext()).load(R.drawable.undraw_fatherhood).into(mIvHelp);
+        Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImage);
+        Glide.with(getContext()).load(R.drawable.forbidden_city_small).apply(new RequestOptions().override(800, 800)).into(mIvHome);
+
+        Glide.with(getContext()).load(R.drawable.undraw_visual_data).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
+        Glide.with(getContext()).load(R.drawable.undraw_conversation).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);
+        Glide.with(getContext()).load(R.drawable.undraw_hamburger).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvFood);
+        Glide.with(getContext()).load(R.drawable.undraw_fatherhood).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvHelp);
 
 
 		mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {

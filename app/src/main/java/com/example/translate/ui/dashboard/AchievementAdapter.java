@@ -69,15 +69,16 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
 
         if (complete.equals("1")) {
             holder.mIsAchieved.setText("yes");
-        } else {
-            holder.mIsAchieved.setText("no");
-        }
-
-        holder.mIsAchieved.setText(Integer.valueOf(currentProgress) + "/" + Integer.valueOf(totalProgress));
-        if (progressInt == 100) {
             holder.mIsAchieved.setTypeface(Typeface.DEFAULT_BOLD);
             holder.mIsAchieved.setTextColor(Color.parseColor("#29B6F6"));
+        } else {
+            holder.mIsAchieved.setText("no");
+            holder.mIsAchieved.setTypeface(Typeface.DEFAULT);
+            holder.mIsAchieved.setTextColor(Color.parseColor("#666666"));
         }
+        holder.mIsAchieved.setText(Integer.valueOf(currentProgress) + "/" + Integer.valueOf(totalProgress));
+
+
     }
 
     @Override
@@ -95,4 +96,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             notifyDataSetChanged();
         }
     }
+
+
 }

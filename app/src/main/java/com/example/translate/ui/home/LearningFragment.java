@@ -133,7 +133,10 @@ public class LearningFragment extends Fragment {
                     mTxtProgress.setText("");
                     mProgressBar.setProgress(100, true);
 
-                    showMessage("You're Finished!", "You completed the " + learningType + " learning module!");
+                    showMessage("You're Finished!");
+
+                    checkAchievement(learningType);
+
                     res.close();
 
                     if (learningType.equals("custom")) {
@@ -153,8 +156,10 @@ public class LearningFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // TODO: FIX
-
-                if (res.getString(6).equals("1")) {
+                Cursor temp = myDb.getSaveStatus(res.getString(1));
+                temp.moveToFirst();
+                //System.out.println(res.getString(6));
+                if (temp.getString(6).equals("1")) {
                     myDb.updateSave(res.getString(1), false);
 
                     mTxtSavedMessage.setVisibility(View.GONE);
@@ -167,6 +172,7 @@ public class LearningFragment extends Fragment {
                 } else {
                     myDb.updateSave(res.getString(1), true);
 
+
                     mTxtUnsavedMessage.setVisibility(View.GONE);
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
 
@@ -174,6 +180,9 @@ public class LearningFragment extends Fragment {
                     YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtSavedMessage);
 
                     mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+
+//
+
                 }
             }
         });
@@ -202,9 +211,43 @@ public class LearningFragment extends Fragment {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showBackConfirmation("Are you sure you want to exit?", "", learningType);
+                showBackConfirmation("Are you sure you want to exit?", learningType);
             }
         });
+
+    }
+
+    public void checkAchievement(String learningType) {
+        if (learningType.equals("numbers")) {
+            if (myDb.progressAchievement("Number Novice")) {
+                showAchievement("Number Novice");
+                if (myDb.progressAchievement("Lingo Learner")) {
+                    showAchievement("Lingo Learner");
+                }
+            }
+        } else if (learningType.equals("essentials")) {
+            if (myDb.progressAchievement("Great Greeter")) {
+                showAchievement("Great Greeter");
+                if (myDb.progressAchievement("Lingo Learner")) {
+                    showAchievement("Lingo Learner");
+                }
+            }
+        } else if (learningType.equals("food")) {
+            if (myDb.progressAchievement("Food Fight")) {
+                showAchievement("Food Fight");
+                if (myDb.progressAchievement("Lingo Learner")) {
+                    showAchievement("Lingo Learner");
+                }
+            }
+        } else if (learningType.equals("help")) {
+            if (myDb.progressAchievement("Helping Hand")) {
+                showAchievement("Helping Hand");
+                if (myDb.progressAchievement("Lingo Learner")) {
+                    showAchievement("Lingo Learner");
+                }
+            }
+        }
+
 
     }
 
@@ -254,14 +297,49 @@ public class LearningFragment extends Fragment {
         return res;
     }
 
-    private void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(title);
-        builder.setMessage(message);
+    private void showMessage(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Green));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_learning, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.over_75);
+
+        builder.setPositiveButton("AWESOME", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+
+        });
+
+        txtTitle.setText(title);
+        builder.setView(view);
         builder.show();
     }
 
-    private void showBackConfirmation(String title, String message, final String learningType) {
+    private void showAchievement(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Yellow));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_achievement, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.over_95);
+
+        builder.setPositiveButton("AWESOME", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+
+        });
+
+        txtTitle.setText(title);
+        builder.setView(view);
+        builder.show();
+    }
+
+    private void showBackConfirmation(String title, final String learningType) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Green));
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_learning, null);
         TextView txtTitle = view.findViewById(R.id.title);

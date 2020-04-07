@@ -52,14 +52,17 @@ public class AchievementFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         myDb = new DatabaseHelper(getActivity());
 
+        Cursor res = getAllAchievements();
         RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new AchievementAdapter(getContext(), getAllAchievements());
+        mAdapter = new AchievementAdapter(getContext(), res);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.setNestedScrollingEnabled(false);
+
+        //res.close();
 
 
     }

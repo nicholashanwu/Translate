@@ -21,7 +21,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
-import com.example.translate.Translater;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -56,11 +55,13 @@ public class TestFragment extends Fragment {
 
     private Cursor res;
 
-    private double percentage;
+    private int percentage;
     private int score = 0;
     private int learned = 0;
     private int mastered = 0;
     private int forgotten = 0;
+    private int wrongStreak = 0;
+    private int rightStreak = 0;
 
     public boolean answered;
     public boolean timedOut;
@@ -75,6 +76,7 @@ public class TestFragment extends Fragment {
     private boolean mTimerRunning;
 
     private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    private String testingType;
 
 
     private ArrayList<String> answerList = new ArrayList<>();
@@ -111,9 +113,6 @@ public class TestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Translater translater = new Translater();
-        translater.checkModelExists(translater.configure());
-
         myDb = new DatabaseHelper(getContext());
 
         mProgressBar = view.findViewById(R.id.pbTest);
@@ -132,7 +131,7 @@ public class TestFragment extends Fragment {
         mTxtTimer = view.findViewById(R.id.txtTimer);
         mBtnBack = view.findViewById(R.id.btnBack);
 
-        final String testingType = getArguments().getString("testingType");
+        testingType = getArguments().getString("testingType");
 
         res = getData(testingType);
 
@@ -234,11 +233,13 @@ public class TestFragment extends Fragment {
         if (answerNum == answerIndex) {
 
             showReaction(true);
-
+            rightStreak++;
+            wrongStreak = 0;
             score++;
             mTxtScore.setText("Score: " + Integer.toString(score));
+            System.out.println(res.getString(5));
 
-            if (myDb.getLearnedStatus(res.getString(1)).equals("1")) {
+            if (res.getString(5).equals("1")) {
                 mastered++;
                 myDb.updateLearned(res.getString(1), true);
             } else {
@@ -246,15 +247,44 @@ public class TestFragment extends Fragment {
                 myDb.updateLearned(res.getString(1), true);
             }
 
+            if (rightStreak == 3) {
+                if (myDb.progressAchievement("Oh Baby a Triple!")) {
+                    showAchievement("Oh Baby a Triple!");
+                }
+            } else if (rightStreak == 5) {
+                if (myDb.progressAchievement("Pentakill!")) {
+                    showAchievement("Pentakill!");
+                }
+            }
+
 
         } else {
 
+            wrongStreak++;
+            rightStreak = 0;
             showReaction(false);
 
-            if (myDb.getLearnedStatus(res.getString(1)).equals("1")) {
+            if (res.getPosition() == 0) {
+                if (myDb.progressAchievement("Off to a Great Start")) {
+                    showAchievement("Off to a Great Start");
+                }
+            }
+            if (res.getString(5).equals("1")) {
                 forgotten++;
                 myDb.updateLearned(res.getString(1), false);
             }
+
+            if (wrongStreak == 3) {
+                if (myDb.progressAchievement("Abort?")) {
+                    showAchievement("Abort?");
+                }
+            } else if (wrongStreak == 5) {
+                if (myDb.progressAchievement("Abandon Ship!")) {
+                    showAchievement("Abandon Ship!");
+                }
+            }
+
+
 
         }
         showSolution(answerIndex, res);
@@ -291,7 +321,69 @@ public class TestFragment extends Fragment {
     private void finishTest(Cursor res) {
         mTxtProgress.setText("");
         mProgressBar.setProgress(99, true);
-        percentage = 100 * (double) score / res.getCount();
+        percentage = 100 * score / res.getCount();
+
+
+        System.out.println(percentage);
+
+        if (testingType.equals("numbers")) {
+            if (myDb.progressAchievement("Number Cruncher")) {
+                showAchievement("Number Cruncher");
+                if (myDb.progressAchievement("Lingo Lord")) {
+                    showAchievement("Lingo Lord");
+                }
+            }
+        } else if (testingType.equals("essentials")) {
+            if (myDb.progressAchievement("The Nice Guy")) {
+                showAchievement("The Nice Guy");
+                if (myDb.progressAchievement("Lingo Lord")) {
+                    showAchievement("Lingo Lord");
+                }
+            }
+        } else if (testingType.equals("food")) {
+            if (myDb.progressAchievement("Shef")) {
+                showAchievement("Shef");
+                if (myDb.progressAchievement("Lingo Lord")) {
+                    showAchievement("Lingo Lord");
+                }
+            }
+        } else if (testingType.equals("help")) {
+            if (myDb.progressAchievement("Public Service")) {
+                showAchievement("Public Service");
+                if (myDb.progressAchievement("Lingo Lord")) {
+                    showAchievement("Lingo Lord");
+                }
+            }
+        }
+
+
+        if (percentage == 100) {
+            if (myDb.progressAchievement("Lingo Legend")) {
+                showAchievement("Lingo Legend");
+            }
+        } else if (percentage >= 90 && percentage < 100) {
+            if (myDb.progressAchievement("Nice Nine")) {
+                showAchievement("Nice Nine");
+            }
+        } else if (percentage >= 80 && percentage < 90) {
+            if (myDb.progressAchievement("Excellent Eight")) {
+                showAchievement("Excellent Eight");
+            }
+        } else if (percentage >= 70 && percentage < 80) {
+            if (myDb.progressAchievement("Sensational Seven")) {
+                showAchievement("Sensational Seven");
+            }
+        } else if (percentage >= 60 && percentage < 70) {
+            if (myDb.progressAchievement("Sexy Six")) {
+                showAchievement("Sexy Six");
+            }
+        } else if (percentage < 30) {
+            if (myDb.progressAchievement("Did you even try?")) {
+                showAchievement("Did you even try?");
+            }
+        } else {
+
+        }
 
         showMessage("You're Finished!");
         res.close();
@@ -325,7 +417,6 @@ public class TestFragment extends Fragment {
         res.moveToPosition(numTwo);
         answerList.add(res.getString(1));
         res.moveToPosition(currentCardNumber);
-        System.out.println(res.getPosition());
 
         Collections.shuffle(answerList);
 
@@ -518,7 +609,26 @@ public class TestFragment extends Fragment {
 
     }
 
+    private void showAchievement(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Yellow));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_achievement, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
 
+        imageButton.setImageResource(R.mipmap.over_95);
+
+        builder.setPositiveButton("AWESOME", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+
+        });
+
+        txtTitle.setText(title);
+        builder.setView(view);
+        builder.show();
+    }
 
 
 }

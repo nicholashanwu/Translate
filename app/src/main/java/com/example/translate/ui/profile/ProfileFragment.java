@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         myDb = new DatabaseHelper(getActivity());
 
-
-
         CardView mBtnStartSaved = view.findViewById(R.id.btnStartSaved);
         CardView mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
         CardView mBtnStartMyList = view.findViewById(R.id.btnStartMyList);
@@ -67,6 +66,26 @@ public class ProfileFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("learningType", "saved");
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_navigation_learning, bundle);
+
+                    if (myDb.progressAchievement("Dedicated")) {
+                        showAchievement("Dedicated");
+                        if (myDb.progressAchievement("Self-Improver")) {
+                            showAchievement("Self-Improver");
+                        }
+                    }
+
+
+                    for (int i = 0; i < res.getCount(); i++) {
+                        if (myDb.progressAchievement("Smart Saver")) {
+                            showAchievement("Smart Saver");
+                        }
+
+                        if (myDb.progressAchievement("Sophisticated Saver")) {
+                            showAchievement("Sophisticated Saver");
+                        }
+                    }
+
+
                 }
                 res.close();
             }
@@ -82,6 +101,12 @@ public class ProfileFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("learningType", "learned");
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_navigation_learning, bundle);
+                    if (myDb.progressAchievement("Pursuing Perfection")) {
+                        showAchievement("Pursuing Perfection");
+                        if (myDb.progressAchievement("Self-Improver")) {
+                            showAchievement("Self-Improver");
+                        }
+                    }
                 }
                 res.close();
             }
@@ -91,11 +116,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_profile_to_navigation_my_list_fragment);
+
+                if (myDb.progressAchievement("Average Addition")) {
+                    showAchievement("Average Addition");
+                    if (myDb.progressAchievement("Self-Improver")) {
+                        showAchievement("Self-Improver");
+                    }
+                }
             }
         });
 
     }
-
 
     private void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -118,9 +149,29 @@ public class ProfileFragment extends Fragment {
         builder.show();
     }
 
-    private Cursor getAllAchievements() {
-        return myDb.getAchievements();
+    private void showAchievement(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Yellow));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_achievement, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.over_95);
+
+        builder.setPositiveButton("AWESOME", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+
+        });
+
+        txtTitle.setText("You got the " + title + " achievement!");
+        builder.setView(view);
+        builder.show();
     }
+
+
+
 
 
 }

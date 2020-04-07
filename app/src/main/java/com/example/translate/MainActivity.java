@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottomBar = findViewById(R.id.nav_view);
 
+        Translater translater = new Translater();
+        translater.checkModelExists(translater.configure());
+
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
                 .build();
@@ -156,23 +159,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        if (isTest) {
-
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    public void setStatusBarColor(int id) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(id, this.getTheme()));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(id));
-        }
-    }
-
     public void initializeDatabase() {
         myDb = new DatabaseHelper(this);
         insertWordData();
@@ -217,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertData("Orange", "橙子", "Chéngzi", "food", false, false);
         myDb.insertData("Hamburger", "汉堡包", "Hànbǎobāo", "food", false, false);
         myDb.insertData("Dumpling", "饺子", "Jiǎozi", "food", false, false);
-        myDb.insertData("Baifan", "白饭", "Báifàn", "food", false, false);
+        myDb.insertData("Rice", "白饭", "Báifàn", "food", false, false);
         myDb.insertData("Noodles", "面条", "Miàntiáo", "food", false, false);
         myDb.insertData("Orange Juice", "橙汁", "Chéngzhī", "food", false, false);
         myDb.insertData("Apple Juice", "苹果汁", "Píngguǒ zhī", "food", false, false);
@@ -241,12 +227,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void enableBottomBar(boolean enable) {
-        for (int i = 0; i < bottomBar.getMenu().size(); i++) {
-            bottomBar.getMenu().getItem(i).setEnabled(enable);
-        }
-    }
-
     public void insertAchievementData() {
         myDb.insertAchievementData("Number Novice", "Complete the Numbers learning module", 0, 1, false);
         myDb.insertAchievementData("Great Greeter", "Complete the Essentials learning module", 0, 1, false);
@@ -254,10 +234,13 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertAchievementData("Helping Hand", "Complete the Help learning module", 0, 1, false);
         myDb.insertAchievementData("Dedicated", "Revise your saved words", 0, 1, false);
         myDb.insertAchievementData("Pursuing Perfection", "Revise your mastered words", 0, 1, false);
-        myDb.insertAchievementData("Quick Quick Quick", "Complete a test in under 30 seconds", 0, 1, false);
         myDb.insertAchievementData("Self-Improver", "Check out all components in your profile", 0, 3, false);
         myDb.insertAchievementData("Lingo Learner", "Complete all learning modules", 0, 4, false);
         myDb.insertAchievementData("Lingo Legend", "Complete a test without any mistakes", 0, 1, false);
+        myDb.insertAchievementData("Number Cruncher", "Complete the Numbers test module", 0, 1, false);
+        myDb.insertAchievementData("The Nice Guy", "Complete the Essentials test module", 0, 1, false);
+        myDb.insertAchievementData("Shef", "Complete the Food test module", 0, 1, false);
+        myDb.insertAchievementData("Public Service", "Complete the Help test module", 0, 1, false);
         myDb.insertAchievementData("Lingo Lord", "Complete all test modules", 0, 4, false);
         myDb.insertAchievementData("Nice Nine", "Achieve over 90% for any test", 0, 1, false);
         myDb.insertAchievementData("Excellent Eight", "Achieve over 80% for any test", 0, 1, false);
@@ -268,11 +251,10 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertAchievementData("Instant Noodles", "Get an answer correct in less than 1 second", 0, 1, false);
         myDb.insertAchievementData("Off to a Great Start", "Get the first answer wrong", 0, 1, false);
         myDb.insertAchievementData("Abort?", "Get 3 answers wrong in a row", 0, 1, false);
-        myDb.insertAchievementData("Abandon Ship!", "Get 5 answers incorrect in a row", 0, 1, false);
-        myDb.insertAchievementData("Oh baby a Triple!", "Get 3 answers correct in a row", 0, 1, false);
+        myDb.insertAchievementData("Abandon Ship!", "Get 5 answers wrong in a row", 0, 1, false);
+        myDb.insertAchievementData("Oh Baby a Triple!", "Get 3 answers correct in a row", 0, 1, false);
         myDb.insertAchievementData("Pentakill!", "Get 5 answers correct in a row", 0, 1, false);
-        myDb.insertAchievementData("Instant Noodles", "Get an answer correct in less than 1 second", 0, 1, false);
-        myDb.insertAchievementData("Addition", "Add 1 word to the My Words section", 0, 10, false);
+        myDb.insertAchievementData("Average Addition", "Visit your My Words list", 0, 1, false);
         myDb.insertAchievementData("Avid Addition", "Add 10 words to the My Words section", 0, 10, false);
         myDb.insertAchievementData("Awesome Addition", "Add 50 words to the My Words section", 0, 50, false);
         myDb.insertAchievementData("Ambitious Addition", "Add 500 words to the My Words section", 0, 500, false);
@@ -280,6 +262,29 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertAchievementData("Sophisticated Saver", "Save 20 words", 0, 20, false);
         myDb.insertAchievementData("Foolish Forgetter", "Forget 10 words", 0, 10, false);
 
+    }
+
+    private void enableBottomBar(boolean enable) {
+        for (int i = 0; i < bottomBar.getMenu().size(); i++) {
+            bottomBar.getMenu().getItem(i).setEnabled(enable);
+        }
+    }
+
+    public void setStatusBarColor(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(id, this.getTheme()));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(id));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isTest) {
+
+        } else {
+            super.onBackPressed();
+        }
     }
 
 

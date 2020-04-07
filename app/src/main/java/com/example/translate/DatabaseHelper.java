@@ -183,4 +183,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean checkAchievementStatus(String achievementName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT complete FROM " + A_TABLE_NAME + " WHERE name = '" + achievementName + "' ", null);
+        res.moveToFirst();
+        if (res.getString(0).equals("1")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -10,6 +10,7 @@
     tools:context="ui.profile.MyListFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="56dp"
@@ -87,16 +88,16 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/text_input_phrase"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="246dp"
+                            android:layout_height="76dp"
                             android:layout_marginStart="32dp"
                             android:layout_marginTop="32dp"
-                            android:layout_marginEnd="32dp"
+                            android:layout_marginEnd="8dp"
                             app:boxBackgroundColor="#FFFFFF"
                             app:counterEnabled="true"
                             app:counterMaxLength="15"
                             app:errorEnabled="true"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/fabAddWord"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtName">
 
@@ -132,14 +133,14 @@
                             android:id="@+id/fabAddWord"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="32dp"
                             android:clickable="true"
                             android:src="@android:drawable/ic_input_add"
                             android:tint="#FFFFFF"
                             app:backgroundTint="@color/colorBlue"
-                            app:layout_constraintEnd_toStartOf="@+id/fabDeleteAll"
-                            app:layout_constraintStart_toEndOf="@+id/fabLearn"
-                            app:layout_constraintTop_toBottomOf="@+id/text_input_phrase"
+                            app:layout_constraintBottom_toBottomOf="@+id/text_input_phrase"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/text_input_phrase"
                             app:rippleColor="#80FFFFFF"
                             app:tint="@color/design_default_color_background" />
 
@@ -148,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:layout_marginEnd="32dp"
+                            android:layout_marginEnd="64dp"
                             android:clickable="true"
                             android:elevation="0dp"
                             android:src="@drawable/outline_delete_forever_black_48dp"
@@ -164,7 +165,7 @@
                             android:id="@+id/fabLearn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="32dp"
+                            android:layout_marginStart="64dp"
                             android:layout_marginTop="16dp"
                             android:clickable="true"
                             android:elevation="0dp"
@@ -229,6 +230,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test"
+        app:tint="#FFFFFF" />
+
+    <ImageButton
+        android:id="@+id/btnDownload"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_get_app_black_48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="#FFFFFF" />
 
 

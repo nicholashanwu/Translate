@@ -6,13 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.translate.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
-import com.example.translate.DatabaseHelper;
-import com.example.translate.R;
 
 public class DashboardFragment extends Fragment {
 
@@ -48,7 +47,7 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Button mBtnAchievements = view.findViewById(R.id.btnAchievements);
-        Button mBtnProgress = view.findViewById(R.id.btnProgress);
+
 
         mBtnAchievements.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,17 +57,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        mBtnProgress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper myDb = new DatabaseHelper(getActivity());
-                if (myDb.progressAchievement("Lingo Lord")) {
-                    System.out.println("ACHIEVED");
-                } else {
-                    System.out.println("PROGRESSED");
-                }
-            }
-        });
+
     }
 
 

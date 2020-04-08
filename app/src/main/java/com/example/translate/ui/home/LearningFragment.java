@@ -94,9 +94,9 @@ public class LearningFragment extends Fragment {
         final String learningType = getArguments().getString("learningType");
 
         res = getData(learningType);
+        setParameters(res);
 
         setTitle(learningType);
-        setParameters(res);
         mTxtAnswerMessage.setVisibility(View.GONE);
         mTxtSavedMessage.setVisibility(View.GONE);
         mTxtUnsavedMessage.setVisibility(View.GONE);
@@ -155,10 +155,9 @@ public class LearningFragment extends Fragment {
         mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: FIX
                 Cursor temp = myDb.getSaveStatus(res.getString(1));
                 temp.moveToFirst();
-                //System.out.println(res.getString(6));
+
                 if (temp.getString(6).equals("1")) {
                     myDb.updateSave(res.getString(1), false);
 
@@ -180,10 +179,8 @@ public class LearningFragment extends Fragment {
                     YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtSavedMessage);
 
                     mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-
-//
-
                 }
+                temp.close();
             }
         });
 

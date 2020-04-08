@@ -1,13 +1,25 @@
 package com.example.translate;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+
+import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +35,7 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper myDb;
+    private FirebaseTranslator englishChineseTranslator;
     private BottomNavigationView bottomBar;
     int[][] states = new int[][]{
             new int[]{android.R.attr.state_enabled}, // enabled
@@ -46,8 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
+
         if (firstStart) {
-            initializeDatabase();
+
+            initDatabase task = new initDatabase(this);
+            task.execute();
+            downloadModel();
+
+            updateSharedPreferences();
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -57,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomBar = findViewById(R.id.nav_view);
 
-        Translater translater = new Translater();
-        translater.checkModelExists(translater.configure());
+
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
@@ -92,29 +110,29 @@ public class MainActivity extends AppCompatActivity {
                 .setPopUpTo(navController.getGraph().getStartDestination(), false)
                 .build();
 
-//        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                boolean handled = false;
-//                if (navController.getCurrentDestination().getId() == R.id.navigation_home) {
-//                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
-//                    handled = true;
-//                } else if (navController.getCurrentDestination().getId() == R.id.navigation_profile || navController.getCurrentDestination().getId() == R.id.navigation_my_list_fragment) {
-//                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
-//                    handled = true;
-//                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_home) {
-//                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
-//                    handled = true;
-//                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_profile) {
-//                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
-//                    handled = true;
-//                } else {
-//                    System.out.println("something happened");
-//                }
-//
-//                    return handled;
-//            }
-//        });
+        /*bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                boolean handled = false;
+                if (navController.getCurrentDestination().getId() == R.id.navigation_home) {
+                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_profile || navController.getCurrentDestination().getId() == R.id.navigation_my_list_fragment) {
+                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_home) {
+                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_profile) {
+                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+                    handled = true;
+                } else {
+                    System.out.println("something happened");
+                }
+
+                    return handled;
+            }
+        });*/
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -159,17 +177,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void initializeDatabase() {
-        myDb = new DatabaseHelper(this);
-        insertWordData();
-        insertAchievementData();
+    private static class initDatabase extends AsyncTask<Void, Void, Void> {
+
+        WeakReference<MainActivity> activityWeakReference;
+        DatabaseHelper myDb;
+
+        initDatabase(MainActivity activity) {
+            activityWeakReference = new WeakReference<MainActivity>(activity);
+            myDb = new DatabaseHelper(activity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            MainActivity activity = activityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+
+
+            insertWordData(myDb, activity);
+            insertAchievementData(myDb, activity);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            myDb.close();
+            System.out.println("DATABASE");
+        }
+    }
+
+
+    public void updateSharedPreferences() {
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("firstStart", false);
         editor.apply();
     }
 
-    public void insertWordData() {
+    public static void insertWordData(DatabaseHelper myDb, Activity activity) {
         myDb.insertData("One", "一", "Yī", "numbers", false, false);
         myDb.insertData("Two", "二", "Èr", "numbers", false, false);
         myDb.insertData("Three", "三", "Sān", "numbers", false, false);
@@ -227,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void insertAchievementData() {
+    public static void insertAchievementData(DatabaseHelper myDb, Activity activity) {
         myDb.insertAchievementData("Number Novice", "Complete the Numbers learning module", 0, 1, false);
         myDb.insertAchievementData("Great Greeter", "Complete the Essentials learning module", 0, 1, false);
         myDb.insertAchievementData("Food Fight", "Complete the Food learning module", 0, 1, false);
@@ -286,6 +336,49 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    public void downloadModel() {
+
+        FirebaseTranslatorOptions options =
+                new FirebaseTranslatorOptions.Builder()
+                        .setSourceLanguage(FirebaseTranslateLanguage.EN)
+                        .setTargetLanguage(FirebaseTranslateLanguage.ZH)
+                        .build();
+        englishChineseTranslator =
+                FirebaseNaturalLanguage.getInstance().getTranslator(options);
+
+        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        englishChineseTranslator.downloadModelIfNeeded(conditions)
+                .addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void v) {
+                                System.out.println("succeess");
+                                showMessage("Translation Model has been downloaded", "");
+
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("failure");
+                                showMessage("Translation Model failed to download", "");
+                            }
+                        });
+
+
+    }
+
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
+
 
 
 }

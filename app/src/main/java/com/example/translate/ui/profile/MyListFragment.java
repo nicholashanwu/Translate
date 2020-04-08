@@ -41,12 +41,15 @@ public class MyListFragment extends Fragment {
     private TextInputLayout mTextInputWord;
     private PhraseAdapter mAdapter;
     private ArrayList<Phrase> customPhraseList = new ArrayList<Phrase>();
-
     private TextView mTxtPlaceholder;
+
 
     private ImageButton mBtnBack;
 
     private Cursor res;
+    boolean modelDownloaded;
+
+    private Translater translater;
 
     public MyListFragment() {
     }
@@ -57,13 +60,10 @@ public class MyListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_my_list, container, false);
 
+        translater = new Translater();
+        translater.checkModelExists(translater.configure());
+
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
     }
 
     @Override
@@ -77,8 +77,10 @@ public class MyListFragment extends Fragment {
         Button mBtnDebug = view.findViewById(R.id.btnDebug);
         Button mBtnAdapter = view.findViewById(R.id.btnAdapter);
         CircleImageView mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
+        ImageButton mBtnDownload = view.findViewById(R.id.btnDownload);
         mTxtPlaceholder = view.findViewById(R.id.txtPlaceholder);
         mBtnBack = view.findViewById(R.id.btnBack);
+
 
         final DatabaseHelper myDb = new DatabaseHelper(getActivity());
 
@@ -111,11 +113,37 @@ public class MyListFragment extends Fragment {
 
         Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(200, 200)).into(mBtnProfileImageMyList);
 
-        mBtnBack.setOnClickListener(new View.OnClickListener() {
+
+        mFabAddWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
+                if (mTextInputWord.getEditText().getText().toString().trim().isEmpty()) {
+                    mTextInputWord.setError("field cannot be empty");
+                } else if (mTextInputWord.getEditText().getText().toString().length() > 15) {
+                    mTextInputWord.setError("too many characters");
+                } else {
+                    boolean exists = false;
+                    for (int i = 0; i < customPhraseList.size(); i++) {
+                        if (customPhraseList.get(i).getPhraseEn().equals(mTextInputWord.getEditText().getText().toString())) {
+                            mTextInputWord.setError("phrase already exists");
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        mTextInputWord.setError(null);
+                        translate(mTextInputWord.getEditText().getText().toString().trim(), view);
+                        mTextInputWord.getEditText().clearAnimation();
+                    }
+                }
+            }
+
+        });
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_my_list_fragment_to_navigation_profile);
             }
         });
@@ -200,38 +228,10 @@ public class MyListFragment extends Fragment {
             }
         });
 
-        mFabAddWord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                closeKeyboard(view);
-
-                if (mTextInputWord.getEditText().getText().toString().trim().isEmpty()) {
-                    mTextInputWord.setError("field cannot be empty");
-                } else if (mTextInputWord.getEditText().getText().toString().length() > 15) {
-                    mTextInputWord.setError("too many characters");
-                } else {
-                    boolean exists = false;
-                    for (int i = 0; i < customPhraseList.size(); i++) {
-                        if (customPhraseList.get(i).getPhraseEn().equals(mTextInputWord.getEditText().getText().toString())) {
-                            mTextInputWord.setError("phrase already exists");
-                            exists = true;
-                            break;
-                        }
-                    }
-                    if (!exists) {
-                        mTextInputWord.setError(null);
-                        translate(mTextInputWord.getEditText().getText().toString().trim(), view);
-                        mTextInputWord.getEditText().clearAnimation();
-                    }
-                }
-            }
-        });
     }
 
     public void translate(final String phrase, final View view) {
-        Translater translater = new Translater();
-        translater.checkModelExists(translater.configure());
+
         translater.configure().translate(phrase)
                 .addOnSuccessListener(
                         new OnSuccessListener<String>() {
@@ -291,7 +291,6 @@ public class MyListFragment extends Fragment {
         builder.show();
     }
 
-
     public void closeKeyboard(View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -348,5 +347,6 @@ public class MyListFragment extends Fragment {
         builder.setView(view);
         builder.show();
     }
+
 
 }

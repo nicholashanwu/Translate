@@ -12,14 +12,14 @@
         android:title="@string/title_test" />
 
     <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/outline_dashboard_black_48dp"
+        android:title="Dashboard" />"
+
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/outline_perm_identity_black_48dp"
         android:title="@string/title_profile" />
-
-    <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/outline_perm_identity_black_48dp"
-        android:title="Dashboard" />"
 
 
 </menu>

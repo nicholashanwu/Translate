@@ -1,7 +1,5 @@
 package com.example.translate;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
@@ -11,6 +9,8 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguag
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateRemoteModel;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+
+import androidx.annotation.NonNull;
 
 public class Translater {
 
@@ -55,32 +55,11 @@ public class Translater {
 						});
 	}
 
-	public void translate(String text, FirebaseTranslator englishChineseTranslater) {
 
-		englishChineseTranslater.translate(text)
-				.addOnSuccessListener(
-						new OnSuccessListener<String>() {
-							@Override
-							public void onSuccess(@NonNull String translatedText) {
-								System.out.println(translatedText);
-
-								// Translation successful.
-							}
-						})
-				.addOnFailureListener(
-						new OnFailureListener() {
-							@Override
-							public void onFailure(@NonNull Exception e) {
-								System.out.println("ERROR");// Error.
-								// ...
-							}
-						});
-
-	}
 
 	public void deleteModel() {
 		FirebaseTranslateRemoteModel deModel =
-				new FirebaseTranslateRemoteModel.Builder(FirebaseTranslateLanguage.DE).build();
+				new FirebaseTranslateRemoteModel.Builder(FirebaseTranslateLanguage.ZH).build();
 		FirebaseModelManager modelManager = FirebaseModelManager.getInstance();
 		modelManager.deleteDownloadedModel(deModel)
 				.addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -97,6 +76,33 @@ public class Translater {
 				});
 
 	}
+
+	public FirebaseTranslateRemoteModel downloadModel() {
+		FirebaseModelManager modelManager = FirebaseModelManager.getInstance();
+
+		FirebaseTranslateRemoteModel cnModel =
+				new FirebaseTranslateRemoteModel.Builder(FirebaseTranslateLanguage.ZH).build();
+		FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
+				.requireWifi()
+				.build();
+		modelManager.download(cnModel, conditions)
+				.addOnSuccessListener(new OnSuccessListener<Void>() {
+					@Override
+					public void onSuccess(Void v) {
+						// Model downloaded.
+					}
+				})
+				.addOnFailureListener(new OnFailureListener() {
+					@Override
+					public void onFailure(@NonNull Exception e) {
+						// Error.
+					}
+				});
+
+		return cnModel;
+	}
+
+
 
 
 }

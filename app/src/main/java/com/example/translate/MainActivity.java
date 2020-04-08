@@ -10,17 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
-import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
-import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
-import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
-import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
-
-import java.lang.ref.WeakReference;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -31,6 +20,17 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+
+import java.lang.ref.WeakReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
             insertWordData(myDb, activity);
             insertAchievementData(myDb, activity);
+            insertScoreData(myDb, activity);
 
             return null;
         }
@@ -313,6 +314,27 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertAchievementData("Foolish Forgetter", "Forget 10 words", 0, 10, false);
 
     }
+
+    public static void insertScoreData(DatabaseHelper myDb, Activity activity) {
+        myDb.insertScoreData("Achievements", 0);
+        myDb.insertScoreData("Mastered Words", 0);
+        myDb.insertScoreData("Tests Taken", 0);
+        myDb.insertScoreData("Answers Correct", 0);
+        myDb.insertScoreData("Words Added", 0);
+        myDb.insertScoreData("Numbers", 0);
+        myDb.insertScoreData("Essentials", 0);
+        myDb.insertScoreData("Food", 0);
+        myDb.insertScoreData("Help", 0);
+        myDb.insertScoreData("HD", 0);
+        myDb.insertScoreData("D", 0);
+        myDb.insertScoreData("C", 0);
+        myDb.insertScoreData("P", 0);
+        myDb.insertScoreData("F", 0);
+        myDb.insertScoreData("Level", 0);
+        myDb.insertScoreData("Experience", 0);
+
+    }
+
 
     private void enableBottomBar(boolean enable) {
         for (int i = 0; i < bottomBar.getMenu().size(); i++) {

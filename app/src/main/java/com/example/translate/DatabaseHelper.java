@@ -216,13 +216,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Cursor getAchieved() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + A_TABLE_NAME + " WHERE complete = '1'", null);
+    }
+
 	////
 
-	public void updateScore(String name, int newScore) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(VAR_3, newScore);
-		db.update(SCORE_TABLE_NAME, contentValues, "name = ?", new String[]{name});
+    public void updateScore(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + SCORE_TABLE_NAME + " SET score = score + 1 WHERE name = '" + name + "'");
+
 	}
 
 }

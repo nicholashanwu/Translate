@@ -385,6 +385,8 @@ public class TestFragment extends Fragment {
 
         }
 
+        myDb.updateScore("Tests Taken");
+
         showMessage("You're Finished!");
         res.close();
     }
@@ -449,18 +451,25 @@ public class TestFragment extends Fragment {
         TextView mTxtForgot = view.findViewById(R.id.txtForgot);
 
         if (percentage > 85) {
+            myDb.updateScore("HD");
             imageButton.setImageResource(R.mipmap.over_95);
         } else if (percentage > 75) {
+            myDb.updateScore("D");
             imageButton.setImageResource(R.mipmap.over_75);
         } else if (percentage > 65) {
+            myDb.updateScore("C");
             imageButton.setImageResource(R.mipmap.over_65);
         } else if (percentage > 50) {
+            myDb.updateScore("P");
             imageButton.setImageResource(R.mipmap.over_50);
         } else if (percentage > 40) {
+            myDb.updateScore("F");
             imageButton.setImageResource(R.mipmap.over_40);
         } else if (percentage > 30) {
+            myDb.updateScore("F");
             imageButton.setImageResource(R.mipmap.over_30);
         } else {
+            myDb.updateScore("F");
             imageButton.setImageResource(R.mipmap.under_30);
         }
 

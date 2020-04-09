@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
         CircleImageView mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
 
         Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImage);
-        Glide.with(getContext()).load(R.drawable.forbidden_city_small).apply(new RequestOptions().override(800, 800)).into(mIvHome);
+        Glide.with(getContext()).load(R.drawable.wall_of_china).apply(new RequestOptions().override(800, 800)).into(mIvHome);
 
         Glide.with(getContext()).load(R.drawable.undraw_visual_data).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
         Glide.with(getContext()).load(R.drawable.undraw_conversation).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);

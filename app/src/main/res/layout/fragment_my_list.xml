@@ -140,6 +140,7 @@
                             app:backgroundTint="@color/colorBlue"
                             app:layout_constraintBottom_toBottomOf="@+id/text_input_phrase"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/text_input_phrase"
                             app:layout_constraintTop_toTopOf="@+id/text_input_phrase"
                             app:rippleColor="#80FFFFFF"
                             app:tint="@color/design_default_color_background" />
@@ -230,19 +231,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test"
-        app:tint="#FFFFFF" />
-
-    <ImageButton
-        android:id="@+id/btnDownload"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/baseline_get_app_black_48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:tint="#FFFFFF" />
 
 

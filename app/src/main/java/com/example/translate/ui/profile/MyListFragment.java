@@ -43,7 +43,7 @@ public class MyListFragment extends Fragment {
     private ArrayList<Phrase> customPhraseList = new ArrayList<Phrase>();
     private TextView mTxtPlaceholder;
 
-
+    private DatabaseHelper myDb;
     private ImageButton mBtnBack;
 
     private Cursor res;
@@ -77,12 +77,10 @@ public class MyListFragment extends Fragment {
         Button mBtnDebug = view.findViewById(R.id.btnDebug);
         Button mBtnAdapter = view.findViewById(R.id.btnAdapter);
         CircleImageView mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
-        ImageButton mBtnDownload = view.findViewById(R.id.btnDownload);
         mTxtPlaceholder = view.findViewById(R.id.txtPlaceholder);
         mBtnBack = view.findViewById(R.id.btnBack);
 
-
-        final DatabaseHelper myDb = new DatabaseHelper(getActivity());
+        myDb = new DatabaseHelper(getActivity());
 
         final RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
         Cursor res = myDb.getCategory("custom");
@@ -182,7 +180,6 @@ public class MyListFragment extends Fragment {
         mBtnDebug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper myDb = new DatabaseHelper(getActivity());
                 Cursor res = myDb.getCategory("custom");
 
                 StringBuilder string = new StringBuilder();
@@ -200,9 +197,6 @@ public class MyListFragment extends Fragment {
         mFabLearn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                DatabaseHelper myDb = new DatabaseHelper(getActivity());
-
                 if (mAdapter.getPhraseList().size() == 0) {
                     showMessage("No Data", "You haven't added any of your own words yet");
                 } else {
@@ -219,7 +213,6 @@ public class MyListFragment extends Fragment {
                 if (mAdapter.getPhraseList().size() == 0) {
                     showMessage("No Data", "You haven't added any of your own words yet");
                 } else {
-                    DatabaseHelper myDb = new DatabaseHelper(getActivity());
                     myDb.clearMyList();
                     customPhraseList.clear();
                     mAdapter.notifyDataSetChanged();
@@ -250,7 +243,6 @@ public class MyListFragment extends Fragment {
     }
 
     public void addWord(String phraseEn, String phraseCn, View view) {
-        DatabaseHelper myDb = new DatabaseHelper(getContext());
         PiPinyin piPinyin = new PiPinyin(getActivity());
         String phrasePinyin = piPinyin.toPinyin(phraseCn, " ");
 

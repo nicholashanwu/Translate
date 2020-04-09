@@ -65,9 +65,12 @@
                         android:layout_width="165dp"
                         android:layout_height="165dp"
                         android:layout_margin="8dp"
+                        android:clickable="true"
                         android:elevation="4dp"
+                        android:focusableInTouchMode="false"
                         app:cardCornerRadius="4dp"
                         app:cardElevation="4dp"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
                         app:cardMaxElevation="4dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,6 +120,8 @@
                         android:layout_height="165dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
                         android:elevation="4dp"
                         app:cardCornerRadius="4dp"
                         app:cardElevation="4dp"
@@ -170,7 +175,9 @@
                         android:layout_margin="8dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="8dp"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_marginBottom="8dp"
+                        android:clickable="true"
                         android:elevation="4dp"
                         app:cardCornerRadius="4dp"
                         app:cardElevation="4dp"

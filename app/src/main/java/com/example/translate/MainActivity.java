@@ -10,17 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +20,17 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -316,22 +316,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void insertScoreData(DatabaseHelper myDb, Activity activity) {
-        myDb.insertScoreData("Achievements", 0);
-        myDb.insertScoreData("Mastered Words", 0);
-        myDb.insertScoreData("Tests Taken", 0);
-        myDb.insertScoreData("Answers Correct", 0);
+        myDb.insertScoreData("Achievements", 0);            //
+        myDb.insertScoreData("Tests Taken", 0);             //
+        myDb.insertScoreData("Mastered Words", 0);          //
+        myDb.insertScoreData("Level", 0);                   //
         myDb.insertScoreData("Words Added", 0);
-        myDb.insertScoreData("Numbers", 0);
-        myDb.insertScoreData("Essentials", 0);
-        myDb.insertScoreData("Food", 0);
-        myDb.insertScoreData("Help", 0);
+        myDb.insertScoreData("Experience", 0);
         myDb.insertScoreData("HD", 0);
         myDb.insertScoreData("D", 0);
         myDb.insertScoreData("C", 0);
         myDb.insertScoreData("P", 0);
         myDb.insertScoreData("F", 0);
-        myDb.insertScoreData("Level", 0);
-        myDb.insertScoreData("Experience", 0);
+        myDb.insertScoreData("Numbers", 0);
+        myDb.insertScoreData("Essentials", 0);
+        myDb.insertScoreData("Food", 0);
+        myDb.insertScoreData("Help", 0);
 
     }
 
@@ -378,7 +377,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void v) {
                                 System.out.println("succeess");
-                                showMessage("Translation Model has been downloaded", "");
+                                showMessage("Translation Model needed", "Lingo Pal uses Google Firebase ML Kit API Translation services to perform translation. " +
+                                        "By using this app, you agree to have your data sent to Google. ");
 
                             }
                         })

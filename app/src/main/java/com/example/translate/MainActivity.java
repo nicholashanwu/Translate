@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper myDb;
     private static FirebaseTranslator englishChineseTranslator;
     private BottomNavigationView bottomBar;
-
-
     boolean isTest;
 
     public static void insertAchievementData(DatabaseHelper myDb, Activity activity) {
@@ -75,87 +73,6 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertAchievementData("Terrific Tester", "Take 10 tests", 0, 10, false);
         myDb.insertAchievementData("Talented Tester", "Save 20 tests", 0, 20, false);
         myDb.insertAchievementData("Tenacious Tester", "Save 30 tests words", 0, 30, false);
-
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        boolean firstStart = prefs.getBoolean("firstStart", true);
-
-        if (firstStart) {
-            initDatabase task = new initDatabase(this);
-            task.execute();
-            downloadModel();
-            updateSharedPreferences();
-        }
-
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-        setContentView(R.layout.activity_main);
-
-
-        bottomBar = findViewById(R.id.nav_view);
-        setColors();
-
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
-                .build();
-
-        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(bottomBar, navController);
-
-        setAnimations(navController);
-
-
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                enableBottomBar(true);
-                isTest = false;
-                if (destination.getId() == R.id.navigation_home) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreenDark));
-                    setStatusBarColor(R.color.colorGreenDark);
-                } else if (destination.getId() == R.id.navigation_test_home) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRedDark));
-                    setStatusBarColor(R.color.colorRedDark);
-                } else if (destination.getId() == R.id.navigation_profile) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                    setStatusBarColor(R.color.colorBlueDark);
-                } else if (destination.getId() == R.id.navigation_learning) {
-                    isTest = true;
-                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
-                    setStatusBarColor(R.color.colorGreenDark);
-                    enableBottomBar(false);
-                } else if (destination.getId() == R.id.navigation_test) {
-                    isTest = true;
-                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
-                    enableBottomBar(false);
-                } else if (destination.getId() == R.id.navigation_my_list_fragment) {
-                    isTest = true;
-                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
-                    enableBottomBar(false);
-                    setStatusBarColor(R.color.colorBlueDark);
-                } else if (destination.getId() == R.id.navigation_dashboard) {
-                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorYellowDark));
-                    setStatusBarColor(R.color.colorYellowDark);
-                } else if (destination.getId() == R.id.navigation_achievement) {
-                    isTest = true;
-                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
-                    enableBottomBar(false);
-                }
-
-            }
-        });
 
 
     }
@@ -251,6 +168,87 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStart", true);
+
+        if (firstStart) {
+            initDatabase task = new initDatabase(this);
+            task.execute();
+            downloadModel();
+            updateSharedPreferences();
+        }
+
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        setContentView(R.layout.activity_main);
+
+        bottomBar = findViewById(R.id.nav_view);
+
+        setColors();
+
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
+                .build();
+
+        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(bottomBar, navController);
+
+        setAnimations(navController);
+
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                enableBottomBar(true);
+                isTest = false;
+                if (destination.getId() == R.id.navigation_home) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorGreenDark));
+                    setStatusBarColor(R.color.colorGreenDark);
+                } else if (destination.getId() == R.id.navigation_test_home) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorRedDark));
+                    setStatusBarColor(R.color.colorRedDark);
+                } else if (destination.getId() == R.id.navigation_profile) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+                    setStatusBarColor(R.color.colorBlueDark);
+                } else if (destination.getId() == R.id.navigation_learning) {
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    setStatusBarColor(R.color.colorGreenDark);
+                    enableBottomBar(false);
+                } else if (destination.getId() == R.id.navigation_test) {
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    enableBottomBar(false);
+                } else if (destination.getId() == R.id.navigation_my_list_fragment) {
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    enableBottomBar(false);
+                    setStatusBarColor(R.color.colorBlueDark);
+                } else if (destination.getId() == R.id.navigation_dashboard) {
+                    bottomBar.setBackgroundColor(getResources().getColor(R.color.colorYellowDark));
+                    setStatusBarColor(R.color.colorYellowDark);
+                } else if (destination.getId() == R.id.navigation_achievement) {
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    enableBottomBar(false);
+                }
+
+            }
+        });
+
+
+    }
+
     public void updateSharedPreferences() {
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
@@ -317,12 +315,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isTest) {
-            showMessage("", "Please go back by using the button in the top left");
-        } else {
-            super.onBackPressed();
+    public void setStatusBarColor(int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().setStatusBarColor(getResources().getColor(id, this.getTheme()));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(id));
         }
     }
 
@@ -346,19 +343,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setStatusBarColor(int id) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(getResources().getColor(id, this.getTheme()));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(id));
+    public void downloadModel() {
+        showMessage("Translation Model Downloading", "Lingo Pal uses Google Firebase ML Kit API Translation services to perform translation. " +
+                "By using this app, you agree to have your data sent to Google. ");
+
+        DownloadModelTask task = new DownloadModelTask();
+        task.execute();
+
+    }
+
+    public void showMessage(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isTest) {
+            showMessage("", "Please go back by using the button in the bottom left");
+        } else {
+            super.onBackPressed();
         }
     }
 
     private static class initDatabase extends AsyncTask<Void, Void, Void> {
 
         WeakReference<MainActivity> activityWeakReference;
-        DatabaseHelper myDb;
 
+        DatabaseHelper myDb;
         initDatabase(MainActivity activity) {
             activityWeakReference = new WeakReference<MainActivity>(activity);
             myDb = new DatabaseHelper(activity);
@@ -385,14 +399,6 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             myDb.close();
         }
-    }
-
-    public void downloadModel() {
-        showMessage("Translation Model Downloading", "Lingo Pal uses Google Firebase ML Kit API Translation services to perform translation. " +
-                "By using this app, you agree to have your data sent to Google. ");
-
-        DownloadModelTask task = new DownloadModelTask();
-        task.execute();
 
     }
 
@@ -432,15 +438,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+
     }
-
-
-    public void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
-
 
 }

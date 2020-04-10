@@ -21,7 +21,7 @@
                 android:shape="ring"
                 android:thicknessRatio="15"
                 android:useLevel="true">
-                <solid android:color="@color/colorYellowDark" />
+                <solid android:color="@color/colorYellow" />
             </shape>
         </rotate>
     </item>

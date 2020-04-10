@@ -23,9 +23,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         mCursor = cursor;
     }
 
-    public interface RecyclerViewClickListener {
-        void onClick(View view, int position);
-    }
+//    public interface RecyclerViewClickListener {
+//        void onClick(View view, int position);
+//    }
 
     public static class AchievementViewHolder extends RecyclerView.ViewHolder {
         public TextView mName, mIsAchieved, mDescription;
@@ -59,26 +59,19 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         String totalProgress = mCursor.getString(4);
         String complete = mCursor.getString(5);
 
-        double progressDouble = 100 * (Double.valueOf(currentProgress) / Double.valueOf(totalProgress));
-        int progressInt = (int) progressDouble;
-
+        int progressInt = calculateProgress(currentProgress, totalProgress);
         holder.mProgressBar.setProgress(progressInt, true);
-
         holder.mName.setText(name);
         holder.mDescription.setText(description);
 
         if (complete.equals("1")) {
-            holder.mIsAchieved.setText("yes");
             holder.mIsAchieved.setTypeface(Typeface.DEFAULT_BOLD);
-            holder.mIsAchieved.setTextColor(Color.parseColor("#29B6F6"));
+            holder.mIsAchieved.setTextColor(Color.parseColor("#FFD54F"));
         } else {
-            holder.mIsAchieved.setText("no");
             holder.mIsAchieved.setTypeface(Typeface.DEFAULT);
             holder.mIsAchieved.setTextColor(Color.parseColor("#666666"));
         }
         holder.mIsAchieved.setText(Integer.valueOf(currentProgress) + "/" + Integer.valueOf(totalProgress));
-
-
     }
 
     @Override
@@ -86,16 +79,11 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         return mCursor.getCount();
     }
 
-    public void swapCursor(Cursor newCursor) {
-        if (mCursor != null) {
-            mCursor.close();
-        }
+    public int calculateProgress(String currentProgress, String totalProgress) {
+        double progressDouble = 100 * (Double.valueOf(currentProgress) / Double.valueOf(totalProgress));
+        int progressInt = (int) progressDouble;
 
-        mCursor = newCursor;
-        if (newCursor != null) {
-            notifyDataSetChanged();
-        }
+        return progressInt;
     }
-
 
 }

@@ -17,7 +17,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 public class AchievementFragment extends Fragment {
 
     private AchievementAdapter mAdapter;
@@ -28,20 +27,9 @@ public class AchievementFragment extends Fragment {
 
     }
 
-    public static AchievementFragment newInstance(String param1, String param2) {
-        AchievementFragment fragment = new AchievementFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override
@@ -55,33 +43,32 @@ public class AchievementFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         mBtnBackAchievements = view.findViewById(R.id.btnBackAchievements);
+
         myDb = new DatabaseHelper(getActivity());
+        final Cursor res = getAllAchievements();
+        setAdapter(view, res);
 
+        mBtnBackAchievements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_achievement_to_navigation_dashboard);
+                res.close();
+            }
+        });
 
-        Cursor res = getAllAchievements();
+    }
+
+    private Cursor getAllAchievements() {
+        return myDb.getAchievements();
+    }
+
+    private void setAdapter(View view, Cursor res) {
         RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new AchievementAdapter(getContext(), res);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
-
         mRecyclerView.setNestedScrollingEnabled(false);
-
-        mBtnBackAchievements.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getView()).navigate(R.id.action_navigation_achievement_to_navigation_dashboard);
-            }
-        });
-
-
-        //res.close();
-
-
-    }
-
-    private Cursor getAllAchievements() {
-        return myDb.getAchievements();
     }
 }

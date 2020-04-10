@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardFragment extends Fragment {
 
-    DatabaseHelper myDb;
+    private DatabaseHelper myDb;
     private TextView mTxtAchievements;
     private TextView mTxtTestsTaken;
     private TextView mTxtWordsMastered;
@@ -42,28 +42,18 @@ public class DashboardFragment extends Fragment {
     private RoundCornerProgressBar mPbAchievement;
     private CircleImageView mBtnProfileImage;
 
+
     public DashboardFragment() {
-    }
-
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
@@ -78,7 +68,6 @@ public class DashboardFragment extends Fragment {
         mTxtLevel = view.findViewById(R.id.txtExperienceLevel);
         mTxtWordsAdded = view.findViewById(R.id.txtWordsAdded);
         mTxtToNextLevel = view.findViewById(R.id.txtToNextLevel);
-        mBtnProfileImage = view.findViewById(R.id.btnProfileImageDashboard);
         mPbExp = view.findViewById(R.id.pbExp);
         mPbHd = view.findViewById(R.id.pbHd);
         mPbD = view.findViewById(R.id.pbD);
@@ -86,9 +75,9 @@ public class DashboardFragment extends Fragment {
         mPbP = view.findViewById(R.id.pbP);
         mPbF = view.findViewById(R.id.pbF);
         mPbAchievement = view.findViewById(R.id.pbAchievement);
+        mBtnProfileImage = view.findViewById(R.id.btnProfileImageDashboard);
 
         Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImage);
-
 
         mBtnProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,72 +90,12 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_dashboard_to_navigation_achievement);
-
-
             }
         });
 
         myDb = new DatabaseHelper(getActivity());
 
-        Cursor res = myDb.getScores();
-        res.moveToFirst();
-        mTxtAchievements.setText(String.valueOf(res.getInt(2)));
-        res.move(1);
-        mTxtTestsTaken.setText(String.valueOf(res.getInt(2)));
-        if (res.getInt(2) > 30) {
-            if (myDb.progressAchievement("Tenacious Tester")) {
-                showAchievement("Tenacious Tester");
-            }
-        } else if (res.getInt(2) > 20) {
-            if (myDb.progressAchievement("Talented Tester")) {
-                showAchievement("Talented Tester");
-            }
-        } else if (res.getInt(2) > 10) {
-            if (myDb.progressAchievement("Tenacious Tester")) {
-                showAchievement("Tenacious Tester");
-            }
-        }
-
-        res.move(1);
-        mTxtWordsMastered.setText(String.valueOf(res.getInt(2)));
-        res.move(1);
-        mTxtLevel.setText(String.valueOf(res.getInt(2)));
-        res.move(1);
-        mTxtWordsAdded.setText(String.valueOf(res.getInt(2)));
-        res.move(1);
-        mPbExp.setProgress(res.getInt(2));
-        res.move(1);
-        int totalTests = 0;
-
-        int hd = res.getInt(2);
-        totalTests += hd;
-        res.move(1);
-        int d = res.getInt(2);
-        totalTests += d;
-        res.move(1);
-        int c = res.getInt(2);
-        totalTests += c;
-        res.move(1);
-        int p = res.getInt(2);
-        totalTests += p;
-        res.move(1);
-        int f = res.getInt(2);
-        totalTests += f;
-        res.move(1);
-        mPbHd.setMax(totalTests);
-        mPbD.setMax(totalTests);
-        mPbC.setMax(totalTests);
-        mPbP.setMax(totalTests);
-        mPbF.setMax(totalTests);
-
-        mPbHd.setProgress(hd);
-        mPbD.setProgress(d);
-        mPbC.setProgress(c);
-        mPbP.setProgress(p);
-        mPbF.setProgress(f);
-
-        res.close();
-
+        getValues();
 
         getMyListWords();
 
@@ -174,11 +103,74 @@ public class DashboardFragment extends Fragment {
 
         int achievementCount = getAchievements();
 
-        myDb.close();
-
         int level = getExperience(achievementCount);
 
         mTxtLevel.setText(String.valueOf(level));
+
+        myDb.close();
+    }
+
+    public void getValues() {
+
+        try (Cursor res = myDb.getScores()) {
+
+            res.moveToFirst();
+            mTxtAchievements.setText(String.valueOf(res.getInt(2)));
+            res.move(1);
+            mTxtTestsTaken.setText(String.valueOf(res.getInt(2)));
+            if (res.getInt(2) > 30) {
+                if (myDb.progressAchievement("Tenacious Tester")) {
+                    showAchievement("Tenacious Tester");
+                }
+            } else if (res.getInt(2) > 20) {
+                if (myDb.progressAchievement("Talented Tester")) {
+                    showAchievement("Talented Tester");
+                }
+            } else if (res.getInt(2) > 10) {
+                if (myDb.progressAchievement("Tenacious Tester")) {
+                    showAchievement("Tenacious Tester");
+                }
+            }
+
+            res.move(1);
+            mTxtWordsMastered.setText(String.valueOf(res.getInt(2)));
+            res.move(1);
+            mTxtLevel.setText(String.valueOf(res.getInt(2)));
+            res.move(1);
+            mTxtWordsAdded.setText(String.valueOf(res.getInt(2)));
+            res.move(1);
+            mPbExp.setProgress(res.getInt(2));
+            res.move(1);
+            int totalTests = 0;
+
+            int hd = res.getInt(2);
+            totalTests += hd;
+            res.move(1);
+            int d = res.getInt(2);
+            totalTests += d;
+            res.move(1);
+            int c = res.getInt(2);
+            totalTests += c;
+            res.move(1);
+            int p = res.getInt(2);
+            totalTests += p;
+            res.move(1);
+            int f = res.getInt(2);
+            totalTests += f;
+            res.move(1);
+            mPbHd.setMax(totalTests);
+            mPbD.setMax(totalTests);
+            mPbC.setMax(totalTests);
+            mPbP.setMax(totalTests);
+            mPbF.setMax(totalTests);
+
+            mPbHd.setProgress(hd);
+            mPbD.setProgress(d);
+            mPbC.setProgress(c);
+            mPbP.setProgress(p);
+            mPbF.setProgress(f);
+
+        }
     }
 
     public int getExperience(int achievements) {
@@ -219,9 +211,10 @@ public class DashboardFragment extends Fragment {
     }
 
     public int getAchievements() {
-        Cursor cur = myDb.getAchieved();
 
+        Cursor cur = null;
         try {
+            cur = myDb.getAchieved();
             mPbAchievement.setMax(32);
             mPbAchievement.setProgress(cur.getCount());
             mTxtAchievements.setText(cur.getCount() + "/32");
@@ -235,7 +228,6 @@ public class DashboardFragment extends Fragment {
         }
 
         return cur.getCount();
-
     }
 
     public void getMyListWords() {
@@ -289,6 +281,5 @@ public class DashboardFragment extends Fragment {
         builder.setView(view);
         builder.show();
     }
-
 
 }

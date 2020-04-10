@@ -20,6 +20,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
 
+	private CircleImageView mBtnProfileImage;
+
 	public View onCreateView(@NonNull LayoutInflater inflater,
 							 ViewGroup container, Bundle savedInstanceState) {
 
@@ -35,22 +37,8 @@ public class HomeFragment extends Fragment {
         Button mBtnStartGreetings = view.findViewById(R.id.btnStartGreetings);
         Button mBtnStartFood = view.findViewById(R.id.btnStartFood);
         Button mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
-        ImageView mIvHome = view.findViewById(R.id.ivHome);
-        ImageView mIvNumbers = view.findViewById(R.id.ivNumbers);
-        ImageView mIvGreetings = view.findViewById(R.id.ivGreetings);
-        ImageView mIvFood = view.findViewById(R.id.ivFood);
-        ImageView mIvHelp = view.findViewById(R.id.ivHelp);
 
-        CircleImageView mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
-
-        Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImage);
-        Glide.with(getContext()).load(R.drawable.wall_of_china).apply(new RequestOptions().override(800, 800)).into(mIvHome);
-
-        Glide.with(getContext()).load(R.drawable.undraw_visual_data).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
-        Glide.with(getContext()).load(R.drawable.undraw_conversation).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);
-        Glide.with(getContext()).load(R.drawable.undraw_hamburger).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvFood);
-        Glide.with(getContext()).load(R.drawable.undraw_fatherhood).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvHelp);
-
+		loadImages(view);
 
 		mBtnStartNumbers.setOnClickListener(new View.OnClickListener() {
 			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -103,6 +91,21 @@ public class HomeFragment extends Fragment {
 			}
 		});
 
+	}
+
+	private void loadImages(View view) {
+		mBtnProfileImage = view.findViewById(R.id.btnProfileImageHome);
+		ImageView mIvHome = view.findViewById(R.id.ivHome);
+		ImageView mIvNumbers = view.findViewById(R.id.ivNumbers);
+		ImageView mIvGreetings = view.findViewById(R.id.ivGreetings);
+		ImageView mIvFood = view.findViewById(R.id.ivFood);
+		ImageView mIvHelp = view.findViewById(R.id.ivHelp);
+		Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImage);
+		Glide.with(getContext()).load(R.drawable.wall_of_china).apply(new RequestOptions().override(800, 800)).into(mIvHome);
+		Glide.with(getContext()).load(R.drawable.undraw_visual_data).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
+		Glide.with(getContext()).load(R.drawable.undraw_conversation).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);
+		Glide.with(getContext()).load(R.drawable.undraw_hamburger).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvFood);
+		Glide.with(getContext()).load(R.drawable.undraw_fatherhood).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvHelp);
 	}
 
 

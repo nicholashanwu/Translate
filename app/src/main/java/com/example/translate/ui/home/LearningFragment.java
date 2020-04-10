@@ -43,6 +43,8 @@ public class LearningFragment extends Fragment {
 
     private Cursor res;
 
+    private String learningType;
+
     private DatabaseHelper myDb;
 
     private int progressInt = 0;
@@ -50,18 +52,9 @@ public class LearningFragment extends Fragment {
     public LearningFragment() {
     }
 
-    public static LearningFragment newInstance(String param1, String param2) {
-        LearningFragment fragment = new LearningFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -92,7 +85,7 @@ public class LearningFragment extends Fragment {
         mTxtUnsavedMessage = view.findViewById(R.id.txtUnsavedMessage);
         mBtnBack = view.findViewById(R.id.btnBack);
 
-        final String learningType = getArguments().getString("learningType");
+        learningType = getArguments().getString("learningType");
 
         res = getData(learningType);
         setParameters(res);
@@ -114,39 +107,23 @@ public class LearningFragment extends Fragment {
                     mTxtChineseCharacter.setText(res.getString(2));
                     mTxtPinyin.setText(res.getString(3));
 
-                    mTxtSavedMessage.setVisibility(View.GONE);
-                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
-                    mTxtUnsavedMessage.setVisibility(View.GONE);
-                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
-                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
+                    hideMessages();
 
-                    progressInt = 100 * res.getPosition() / res.getCount();
-                    mTxtProgress.setText((res.getPosition() + 1) + "/" + res.getCount());
-                    mProgressBar.setProgress(progressInt, true);
+                    advanceProgressBar();
 
-                    if (res.getString(6).equals("1")) {
-                        mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
-                    } else {
-                        mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
-                    }
+                    showSavedStatus();
 
                 } else {
-                    mTxtProgress.setText("");
-                    mProgressBar.setProgress(100, true);
+
+                    fillProgressBar();
 
                     showMessage("You're Finished!");
 
-                    checkAchievement(learningType);
+                    checkAchievement();
 
                     res.close();
 
-                    if (learningType.equals("custom")) {
-                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_my_list_fragment);
-                    } else if (learningType.equals("saved") || learningType.equals("learned")) {
-                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_profile);
-                    } else {
-                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
-                    }
+                    returnToFragment();
 
                     mProgressBar.setProgress(0, true);
                 }
@@ -156,6 +133,7 @@ public class LearningFragment extends Fragment {
         mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Cursor temp = myDb.getSaveStatus(res.getString(1));
                 temp.moveToFirst();
 
@@ -215,7 +193,7 @@ public class LearningFragment extends Fragment {
 
     }
 
-    public void checkAchievement(String learningType) {
+    public void checkAchievement() {
         if (learningType.equals("numbers")) {
             if (myDb.progressAchievement("Number Novice")) {
                 showAchievement("Number Novice");
@@ -371,5 +349,41 @@ public class LearningFragment extends Fragment {
         builder.show();
 
     }
+
+    private void hideMessages() {
+        YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
+        YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
+        YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
+    }
+
+    private void advanceProgressBar() {
+        progressInt = 100 * res.getPosition() / res.getCount();
+        mTxtProgress.setText((res.getPosition() + 1) + "/" + res.getCount());
+        mProgressBar.setProgress(progressInt, true);
+    }
+
+    private void showSavedStatus() {
+        if (res.getString(6).equals("1")) {
+            mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+        } else {
+            mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+        }
+    }
+
+    private void fillProgressBar() {
+        mTxtProgress.setText("");
+        mProgressBar.setProgress(100, true);
+    }
+
+    private void returnToFragment() {
+        if (learningType.equals("custom")) {
+            Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_my_list_fragment);
+        } else if (learningType.equals("saved") || learningType.equals("learned")) {
+            Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_profile);
+        } else {
+            Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
+        }
+    }
+
 
 }

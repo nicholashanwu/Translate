@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-16dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="64dp">
 
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                 android:id="@+id/pbExp"
@@ -52,8 +52,9 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:letterSpacing="0.1"
                 android:text="Experience"
                 android:textAllCaps="true"
@@ -66,9 +67,8 @@
                 android:id="@+id/cv1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:clipChildren="true"
                 android:clipToPadding="true"
@@ -76,7 +76,6 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:cardMaxElevation="@dimen/default_nav_item_badge_padding"
-                app:layout_constraintBottom_toTopOf="@+id/cv4"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/cv2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -105,6 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/quicksand_bold"
                     android:letterSpacing="0.1"
                     android:text="Achievements"
                     android:textAllCaps="true"
@@ -116,7 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/quicksand_bold"
                     android:text="1"
                     android:textSize="36sp" />
 
@@ -141,6 +142,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_bold"
                     android:letterSpacing="0.1"
                     android:text="Tests Taken"
                     android:textAllCaps="true"
@@ -152,7 +154,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/quicksand_bold"
                     android:text="10"
                     android:textSize="36sp" />
             </androidx.cardview.widget.CardView>
@@ -161,8 +164,8 @@
                 android:id="@+id/cv3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 app:cardCornerRadius="16dp"
@@ -177,6 +180,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_bold"
                     android:letterSpacing="0.1"
                     android:text="Words Mastered"
                     android:textAllCaps="true"
@@ -188,7 +192,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/quicksand_bold"
                     android:text="100"
                     android:textSize="36sp" />
             </androidx.cardview.widget.CardView>
@@ -197,25 +202,25 @@
                 android:id="@+id/cv4"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:cardMaxElevation="@dimen/default_nav_item_badge_padding"
                 app:contentPadding="8dp"
-                app:layout_constraintBottom_toTopOf="@id/cv6"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/cv5"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cv1">
+                app:layout_constraintTop_toTopOf="@+id/cv5">
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/quicksand_bold"
                     android:letterSpacing="0.1"
                     android:text="Level"
                     android:textAllCaps="true"
@@ -227,7 +232,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/quicksand_bold"
                     android:text="2"
                     android:textSize="36sp" />
             </androidx.cardview.widget.CardView>
@@ -236,8 +242,8 @@
                 android:id="@+id/cv5"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 app:cardCornerRadius="16dp"
@@ -247,7 +253,7 @@
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="2.14"
-                app:layout_constraintStart_toEndOf="@id/cv4"
+                app:layout_constraintStart_toStartOf="@+id/cv2"
                 app:layout_constraintTop_toBottomOf="@+id/cv2">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -342,6 +348,7 @@
                         android:id="@+id/textView14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_bold"
                         android:letterSpacing="0.1"
                         android:text="Grades"
                         android:textAllCaps="true"
@@ -354,6 +361,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="12dp"
+                        android:fontFamily="@font/quicksand_bold"
                         android:text="H"
                         app:layout_constraintBottom_toTopOf="@+id/textView6"
                         app:layout_constraintStart_toStartOf="parent"
@@ -363,6 +371,7 @@
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_bold"
                         android:text="D"
                         app:layout_constraintBottom_toTopOf="@+id/textView10"
                         app:layout_constraintStart_toStartOf="@+id/textView15"
@@ -372,6 +381,7 @@
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_bold"
                         android:text="C"
                         app:layout_constraintBottom_toTopOf="@+id/textView12"
                         app:layout_constraintStart_toStartOf="@+id/textView6"
@@ -381,6 +391,7 @@
                         android:id="@+id/textView12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_bold"
                         android:text="P"
                         app:layout_constraintBottom_toTopOf="@+id/textView13"
                         app:layout_constraintStart_toStartOf="@+id/textView10"
@@ -391,6 +402,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/quicksand_bold"
                         android:text="F"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/textView12"
@@ -403,16 +415,16 @@
                 android:id="@+id/cv6"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackgroundBorderless"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:cardMaxElevation="@dimen/default_nav_item_badge_padding"
                 app:contentPadding="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/cv5"
+                app:layout_constraintDimensionRatio="H, 1:1"
                 app:layout_constraintEnd_toStartOf="@+id/cv5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv4">
@@ -425,33 +437,37 @@
                     android:text="Words Added"
                     android:textAllCaps="true"
                     android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/quicksand_bold" />
 
                 <TextView
                     android:id="@+id/txtWordsAdded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/quicksand_bold"
                     android:text="5"
                     android:textSize="36sp" />
             </androidx.cardview.widget.CardView>
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/btnAchievements"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00FFFFFF"
-                android:scaleType="fitCenter"
-                android:src="@drawable/outline_star_border_black_48dp"
-                android:tint="@color/colorYellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/colorYellowDark"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="achievements"
+                android:textColor="#FFFFFF"
+                app:icon="@drawable/outline_star_border_black_48dp"
+                app:iconTint="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/cv5" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

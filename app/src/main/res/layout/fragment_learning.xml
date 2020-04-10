@@ -28,9 +28,12 @@
 
             <TextView
                 android:id="@+id/txtChineseCharacter"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="@string/phrase_placeholder"
                 android:textAlignment="center"
@@ -44,6 +47,7 @@
                 android:id="@+id/txtPinyin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="pinyin"
                 android:textAlignment="center"
                 android:textSize="24sp"
@@ -56,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="32dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="@string/progress_placeholder"
                 android:textAlignment="textStart"
                 app:layout_constraintBottom_toTopOf="@+id/fabDone"
@@ -155,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Saved!"
                 android:textColor="@color/colorYellow"
                 android:textStyle="bold"
@@ -167,6 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Unsaved!"
                 android:textColor="@color/colorYellow"
                 android:textStyle="bold"
@@ -179,6 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Here's a hint..."
                 android:textColor="@color/colorBlue"
                 android:textStyle="bold"
@@ -218,7 +226,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLevelTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLevelTitle"
+        android:fontFamily="@font/quicksand_bold" />
 
     <ImageButton
         android:id="@+id/btnBack"

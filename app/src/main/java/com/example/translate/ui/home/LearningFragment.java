@@ -16,6 +16,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,7 @@ public class LearningFragment extends Fragment {
 
     private ProgressBar mProgressBar;
 
-    private ImageButton mBtnBack;
+    private ExtendedFloatingActionButton mBtnBack;
 
     private TextView mTxtChineseCharacter;
     private TextView mTxtPinyin;
@@ -119,7 +120,7 @@ public class LearningFragment extends Fragment {
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
                     YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
 
-                    progressInt = (int) 100 * res.getPosition() / res.getCount();
+                    progressInt = 100 * res.getPosition() / res.getCount();
                     mTxtProgress.setText((res.getPosition() + 1) + "/" + res.getCount());
                     mProgressBar.setProgress(progressInt, true);
 

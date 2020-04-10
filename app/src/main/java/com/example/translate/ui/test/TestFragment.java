@@ -21,6 +21,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class TestFragment extends Fragment {
     private TextView mTxtTimer;
     private FloatingActionButton mFabSubmit;
 
-    private ImageButton mBtnBack;
+    private ExtendedFloatingActionButton mBtnBack;
 
     private DatabaseHelper myDb;
 
@@ -133,11 +134,14 @@ public class TestFragment extends Fragment {
 
         testingType = getArguments().getString("testingType");
 
+
         res = getData(testingType);
 
-        getData(testingType);
-        setTitle(testingType);
+
+        //getData(testingType);
         setParameters(res);
+
+        setTitle(testingType);
 
         mTxtMessage.setText("");
 
@@ -236,8 +240,8 @@ public class TestFragment extends Fragment {
             rightStreak++;
             wrongStreak = 0;
             score++;
-            mTxtScore.setText("Score: " + Integer.toString(score));
-            System.out.println(res.getString(5));
+            mTxtScore.setText("Score: " + score);
+
 
             if (res.getString(5).equals("1")) {
                 mastered++;
@@ -254,6 +258,16 @@ public class TestFragment extends Fragment {
             } else if (rightStreak == 5) {
                 if (myDb.progressAchievement("Pentakill!")) {
                     showAchievement("Pentakill!");
+                }
+            }
+
+            if (mTxtScore.getText().equals("9") || mTxtScore.getText().equals("10")) {
+                if (myDb.progressAchievement("Instant Noodles")) {
+                    showAchievement("Instant Noodles");
+                }
+            } else if (mTxtScore.getText().equals("8")) {
+                if (myDb.progressAchievement("Slick Speedster")) {
+                    showAchievement("Slick Speedster");
                 }
             }
 
@@ -323,9 +337,6 @@ public class TestFragment extends Fragment {
         mProgressBar.setProgress(99, true);
         percentage = 100 * score / res.getCount();
 
-
-        System.out.println(percentage);
-
         if (testingType.equals("numbers")) {
             if (myDb.progressAchievement("Number Cruncher")) {
                 showAchievement("Number Cruncher");
@@ -354,6 +365,7 @@ public class TestFragment extends Fragment {
                     showAchievement("Lingo Lord");
                 }
             }
+        } else {
         }
 
 
@@ -481,7 +493,7 @@ public class TestFragment extends Fragment {
         });
 
         txtTitle.setText(title);
-        mTxtMessage.setText((int) percentage + "%");
+        mTxtMessage.setText(percentage + "%");
         mTxtLearned.setText("Learned " + learned + " new words!");
         mTxtMastered.setText("Mastered " + mastered + " words!");
         mTxtForgot.setText("Forgot " + forgotten + " words...");

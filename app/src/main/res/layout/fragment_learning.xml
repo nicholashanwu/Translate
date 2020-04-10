@@ -8,6 +8,21 @@
     tools:context=".ui.home.LearningFragment"
     tools:targetApi="lollipop">
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="84dp"
+        android:text="BACK"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="@color/colorGreen"
+        app:icon="@drawable/abc_vector_test"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="#33FFFFFF" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -100,7 +115,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:rippleColor="#80FFFFFF"
+                app:rippleColor="#33FFFFFF"
                 app:tint="#FFFFFF" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -228,17 +243,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLevelTitle"
         android:fontFamily="@font/quicksand_bold" />
-
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/transparent"
-        android:src="@drawable/abc_vector_test"
-        android:tint="@color/colorGreen"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

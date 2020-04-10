@@ -194,9 +194,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (curPro == totPro) {
                 contentValues.put(ATT_6, "1");
                 db.update(A_TABLE_NAME, contentValues, "name = ?", new String[]{achievementName});
+                updateScore(achievementName);
                 return true;
             } else {
-                System.out.println("hi");
                 return false;
             }
         } else {
@@ -209,11 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT complete FROM " + A_TABLE_NAME + " WHERE name = '" + achievementName + "' ", null);
         res.moveToFirst();
-        if (res.getString(0).equals("1")) {
-            return true;
-        } else {
-            return false;
-        }
+        return res.getString(0).equals("1");
     }
 
     public Cursor getAchieved() {

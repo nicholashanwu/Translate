@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import com.example.translate.R;
 import com.example.translate.Translater;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,7 +44,7 @@ public class MyListFragment extends Fragment {
     private TextView mTxtPlaceholder;
 
     private DatabaseHelper myDb;
-    private ImageButton mBtnBack;
+    private ExtendedFloatingActionButton mBtnBack;
 
     private Cursor res;
     boolean modelDownloaded;
@@ -74,9 +74,9 @@ public class MyListFragment extends Fragment {
         FloatingActionButton mFabAddWord = view.findViewById(R.id.fabAddWord);
         FloatingActionButton mFabDeleteAll = view.findViewById(R.id.fabDeleteAll);
         FloatingActionButton mFabLearn = view.findViewById(R.id.fabLearn);
-        Button mBtnDebug = view.findViewById(R.id.btnDebug);
-        Button mBtnAdapter = view.findViewById(R.id.btnAdapter);
+        FloatingActionButton mFabTest = view.findViewById(R.id.fabTest);
         CircleImageView mBtnProfileImageMyList = view.findViewById(R.id.btnProfileImageMyList);
+
         mTxtPlaceholder = view.findViewById(R.id.txtPlaceholder);
         mBtnBack = view.findViewById(R.id.btnBack);
 
@@ -86,9 +86,9 @@ public class MyListFragment extends Fragment {
         Cursor res = myDb.getCategory("custom");
 
         if (res.getCount() == 0) {
-            mTxtPlaceholder.setVisibility(view.VISIBLE);
+            mTxtPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            mTxtPlaceholder.setVisibility(view.GONE);
+            mTxtPlaceholder.setVisibility(View.GONE);
             while (res.moveToNext()) {
                 customPhraseList.add(new Phrase(
                         res.getString(0),
@@ -112,6 +112,21 @@ public class MyListFragment extends Fragment {
         Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(200, 200)).into(mBtnProfileImageMyList);
 
 
+        mFabTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mAdapter.getPhraseList().size() <= 2) {
+                    showMessage("No Enough Data", "You need at least three words to take a test!");
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("testingType", "custom");
+                    Navigation.findNavController(getView()).navigate(R.id.action_navigation_my_list_fragment_to_navigation_test, bundle);
+                }
+
+            }
+        });
+
         mFabAddWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,6 +137,7 @@ public class MyListFragment extends Fragment {
                 } else if (mTextInputWord.getEditText().getText().toString().length() > 15) {
                     mTextInputWord.setError("too many characters");
                 } else {
+                    closeKeyboard(view);
                     boolean exists = false;
                     for (int i = 0; i < customPhraseList.size(); i++) {
                         if (customPhraseList.get(i).getPhraseEn().equals(mTextInputWord.getEditText().getText().toString())) {
@@ -165,35 +181,6 @@ public class MyListFragment extends Fragment {
             }
         });
 
-        mBtnAdapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder s = new StringBuilder();
-                for (int i = 0; i < mAdapter.getPhraseList().size(); i++) {
-                    s.append(mAdapter.getPhraseList().get(i).getPhraseEn() + "\n\n");
-                }
-                showMessage("adaptercontents", s.toString());
-
-            }
-        });
-
-        mBtnDebug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Cursor res = myDb.getCategory("custom");
-
-                StringBuilder string = new StringBuilder();
-                if (res.getCount() == 0) {
-                } else {
-                    while (res.moveToNext()) {
-                        string.append(res.getString(1) + "\n\n");
-                    }
-                }
-                showMessage("database", string.toString());
-                res.close();
-            }
-        });
-
         mFabLearn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,13 +197,12 @@ public class MyListFragment extends Fragment {
         mFabDeleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (mAdapter.getPhraseList().size() == 0) {
                     showMessage("No Data", "You haven't added any of your own words yet");
                 } else {
-                    myDb.clearMyList();
-                    customPhraseList.clear();
-                    mAdapter.notifyDataSetChanged();
-                    mTxtPlaceholder.setVisibility(view.VISIBLE);
+                    showDeleteConfirmation("Delete All Words?", "Delete all words?", view);
+
                 }
             }
         });
@@ -252,9 +238,9 @@ public class MyListFragment extends Fragment {
 
 
         if (customPhraseList.isEmpty()) {
-            mTxtPlaceholder.setVisibility(view.VISIBLE);
+            mTxtPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            mTxtPlaceholder.setVisibility(view.GONE);
+            mTxtPlaceholder.setVisibility(View.GONE);
 
         }
 
@@ -336,6 +322,37 @@ public class MyListFragment extends Fragment {
         });
 
         txtTitle.setText(title);
+        builder.setView(view);
+        builder.show();
+    }
+
+    public void showDeleteConfirmation(String title, String message, final View anotherView) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.Green));
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.custom_alert_dialog_profile, null);
+        TextView txtTitle = view.findViewById(R.id.title);
+        ImageButton imageButton = view.findViewById(R.id.image);
+
+        imageButton.setImageResource(R.mipmap.under_30);
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                myDb.clearMyList();
+                customPhraseList.clear();
+                mAdapter.notifyDataSetChanged();
+                mTxtPlaceholder.setVisibility(View.VISIBLE);
+            }
+        });
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        txtTitle.setText(title);
+
         builder.setView(view);
         builder.show();
     }

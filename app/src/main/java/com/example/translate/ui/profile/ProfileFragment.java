@@ -51,9 +51,9 @@ public class ProfileFragment extends Fragment {
         ImageView mIvMyList = view.findViewById(R.id.ivMyList);
 
 
-        Glide.with(getContext()).load(R.drawable.envelope).apply(new RequestOptions().override(400, 400)).into(mIvSaved);
-        Glide.with(getContext()).load(R.drawable.tools).apply(new RequestOptions().override(400, 400)).into(mIvMastered);
-        Glide.with(getContext()).load(R.drawable.exam).apply(new RequestOptions().override(400, 400)).into(mIvMyList);
+        Glide.with(getContext()).load(R.drawable.envelope).apply(new RequestOptions().override(600, 600)).into(mIvSaved);
+        Glide.with(getContext()).load(R.drawable.tools).apply(new RequestOptions().override(600, 600)).into(mIvMastered);
+        Glide.with(getContext()).load(R.drawable.exam).apply(new RequestOptions().override(600, 600)).into(mIvMyList);
         Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImageProfile);
 
         mBtnStartSaved.setOnClickListener(new View.OnClickListener() {

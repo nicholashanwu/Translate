@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Window;
+import android.view.MenuItem;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,102 +37,85 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper myDb;
     private static FirebaseTranslator englishChineseTranslator;
     private BottomNavigationView bottomBar;
-    int[][] states = new int[][]{
-            new int[]{android.R.attr.state_enabled}, // enabled
-            new int[]{-android.R.attr.state_enabled}, // disabled
-            new int[]{-android.R.attr.state_checked}, // unchecked
-            new int[]{android.R.attr.state_pressed}  // pressed
-    };
 
-    int[] colors = new int[]{
-            Color.WHITE,
-            Color.GRAY,
-            Color.WHITE,
-            Color.GRAY
-    };
 
     boolean isTest;
+
+    public static void insertAchievementData(DatabaseHelper myDb, Activity activity) {
+        myDb.insertAchievementData("Number Novice", "Complete the Numbers learning module", 0, 1, false);
+        myDb.insertAchievementData("Great Greeter", "Complete the Essentials learning module", 0, 1, false);
+        myDb.insertAchievementData("Food Fight", "Complete the Food learning module", 0, 1, false);
+        myDb.insertAchievementData("Helping Hand", "Complete the Help learning module", 0, 1, false);
+        myDb.insertAchievementData("Dedicated", "Revise your saved words", 0, 1, false);
+        myDb.insertAchievementData("Pursuing Perfection", "Revise your mastered words", 0, 1, false);
+        myDb.insertAchievementData("Self-Improver", "Check out all components in your profile", 0, 3, false);
+        myDb.insertAchievementData("Lingo Learner", "Complete all learning modules", 0, 4, false);
+        myDb.insertAchievementData("Lingo Legend", "Complete a test without any mistakes", 0, 1, false);
+        myDb.insertAchievementData("Number Cruncher", "Complete the Numbers test module", 0, 1, false);
+        myDb.insertAchievementData("The Nice Guy", "Complete the Essentials test module", 0, 1, false);
+        myDb.insertAchievementData("Shef", "Complete the Food test module", 0, 1, false);
+        myDb.insertAchievementData("Public Service", "Complete the Help test module", 0, 1, false);
+        myDb.insertAchievementData("Lingo Lord", "Complete all test modules", 0, 4, false);
+        myDb.insertAchievementData("Nice Nine", "Achieve over 90% for any test", 0, 1, false);
+        myDb.insertAchievementData("Excellent Eight", "Achieve over 80% for any test", 0, 1, false);
+        myDb.insertAchievementData("Sensational Seven", "Achieve over 70% for any test", 0, 1, false);
+        myDb.insertAchievementData("Sexy Six", "Achieve over 60% for any test", 0, 1, false);
+        myDb.insertAchievementData("Did you even try?", "Achieve under 30% for any test", 0, 1, false);
+        myDb.insertAchievementData("Off to a Great Start", "Get the first answer wrong", 0, 1, false);
+        myDb.insertAchievementData("Abort?", "Get 3 answers wrong in a row", 0, 1, false);
+        myDb.insertAchievementData("Abandon Ship!", "Get 5 answers wrong in a row", 0, 1, false);
+        myDb.insertAchievementData("Oh Baby a Triple!", "Get 3 answers correct in a row", 0, 1, false);
+        myDb.insertAchievementData("Pentakill!", "Get 5 answers correct in a row", 0, 1, false);
+        myDb.insertAchievementData("Average Addition", "Visit your My Words list", 0, 1, false);
+        myDb.insertAchievementData("Avid Addition", "Add 10 words to the My Words section", 0, 10, false);
+        myDb.insertAchievementData("Awesome Addition", "Add 50 words to the My Words section", 0, 50, false);
+        myDb.insertAchievementData("Ambitious Addition", "Add 500 words to the My Words section", 0, 500, false);
+        myDb.insertAchievementData("Smart Saver", "Save 5 words", 0, 5, false);
+        myDb.insertAchievementData("Sophisticated Saver", "Save 20 words", 0, 20, false);
+        myDb.insertAchievementData("Terrific Tester", "Take 10 tests", 0, 10, false);
+        myDb.insertAchievementData("Talented Tester", "Save 20 tests", 0, 20, false);
+        myDb.insertAchievementData("Tenacious Tester", "Save 30 tests words", 0, 30, false);
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);
 
         if (firstStart) {
-
             initDatabase task = new initDatabase(this);
             task.execute();
             downloadModel();
-
             updateSharedPreferences();
         }
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
         setContentView(R.layout.activity_main);
 
-        bottomBar = findViewById(R.id.nav_view);
 
+        bottomBar = findViewById(R.id.nav_view);
+        setColors();
 
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_test_home, R.id.navigation_profile)
                 .build();
 
-
         final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomBar, navController);
 
-        final ColorStateList colorList = new ColorStateList(states, colors);
-        bottomBar.setItemIconTintList(colorList);
-        bottomBar.setItemTextColor(colorList);
+        setAnimations(navController);
 
-        final NavOptions slideLeftNavOptions = new NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setEnterAnim(R.anim.slide_in_right)
-                .setExitAnim(R.anim.slide_out_left)
-                .setPopEnterAnim(R.anim.slide_in_right)
-                .setPopExitAnim(R.anim.slide_out_left)
-                .setPopUpTo(navController.getGraph().getStartDestination(), false)
-                .build();
-
-        final NavOptions slideRightNavOptions = new NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setEnterAnim(R.anim.slide_in_left)
-                .setExitAnim(R.anim.slide_out_right)
-                .setPopEnterAnim(R.anim.slide_in_left)
-                .setPopExitAnim(R.anim.slide_out_right)
-                .setPopUpTo(navController.getGraph().getStartDestination(), false)
-                .build();
-
-        /*bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                boolean handled = false;
-                if (navController.getCurrentDestination().getId() == R.id.navigation_home) {
-                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
-                    handled = true;
-                } else if (navController.getCurrentDestination().getId() == R.id.navigation_profile || navController.getCurrentDestination().getId() == R.id.navigation_my_list_fragment) {
-                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
-                    handled = true;
-                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_home) {
-                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
-                    handled = true;
-                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_profile) {
-                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
-                    handled = true;
-                } else {
-                    System.out.println("something happened");
-                }
-
-                    return handled;
-            }
-        });*/
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
@@ -165,52 +148,108 @@ public class MainActivity extends AppCompatActivity {
                 } else if (destination.getId() == R.id.navigation_dashboard) {
                     bottomBar.setBackgroundColor(getResources().getColor(R.color.colorYellowDark));
                     setStatusBarColor(R.color.colorYellowDark);
-
+                } else if (destination.getId() == R.id.navigation_achievement) {
+                    isTest = true;
+                    bottomBar.setBackgroundColor(Color.parseColor("#444444"));
+                    enableBottomBar(false);
                 }
 
             }
         });
 
-        /////////////////
-
 
     }
 
+    private void setColors() {
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_enabled}, // enabled
+                new int[]{-android.R.attr.state_enabled}, // disabled
+                new int[]{-android.R.attr.state_checked}, // unchecked
+                new int[]{android.R.attr.state_pressed}  // pressed
+        };
 
-    private static class initDatabase extends AsyncTask<Void, Void, Void> {
+        int[] colors = new int[]{
+                Color.WHITE,
+                Color.GRAY,
+                Color.WHITE,
+                Color.GRAY
+        };
 
-        WeakReference<MainActivity> activityWeakReference;
-        DatabaseHelper myDb;
+        final ColorStateList colorList = new ColorStateList(states, colors);
+        bottomBar.setItemIconTintList(colorList);
+        bottomBar.setItemTextColor(colorList);
+    }
 
-        initDatabase(MainActivity activity) {
-            activityWeakReference = new WeakReference<MainActivity>(activity);
-            myDb = new DatabaseHelper(activity);
-        }
+    private void setAnimations(final NavController navController) {
+        final NavOptions slideLeftNavOptions = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_right)
+                .setPopExitAnim(R.anim.slide_out_left)
+                .setPopUpTo(navController.getGraph().getStartDestination(), false)
+                .build();
 
-        @Override
-        protected Void doInBackground(Void... voids) {
+        final NavOptions slideRightNavOptions = new NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setEnterAnim(R.anim.slide_in_left)
+                .setExitAnim(R.anim.slide_out_right)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .setPopUpTo(navController.getGraph().getStartDestination(), false)
+                .build();
 
-            MainActivity activity = activityWeakReference.get();
-            if (activity == null || activity.isFinishing()) {
-                return null;
+        bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                boolean handled = false;
+                if (navController.getCurrentDestination().getId() == R.id.navigation_home && item.getItemId() != R.id.navigation_home) {                //if learn is selected
+                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_profile && item.getItemId() != R.id.navigation_profile) {      //if profile is selected
+                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && (item.getItemId() == R.id.navigation_dashboard || item.getItemId() == R.id.navigation_profile) && item.getItemId() != R.id.navigation_test_home) {
+                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test_home && item.getItemId() == R.id.navigation_home && item.getItemId() != R.id.navigation_test_home) {
+                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_dashboard && (item.getItemId() == R.id.navigation_profile) && item.getItemId() != R.id.navigation_dashboard) {
+                    navController.navigate(item.getItemId(), null, slideLeftNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_dashboard && (item.getItemId() == R.id.navigation_home || item.getItemId() == R.id.navigation_test_home) && item.getItemId() != R.id.navigation_dashboard) {
+                    navController.navigate(item.getItemId(), null, slideRightNavOptions);
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_test) {
+                    enableBottomBar(false);
+                    isTest = true;
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_learning) {
+                    enableBottomBar(false);
+                    isTest = true;
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_my_list_fragment) {
+                    enableBottomBar(false);
+                    isTest = true;
+                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_achievement) {
+//                    enableBottomBar(false);
+//                    isTest = true;
+//                    handled = true;
+                } else if (navController.getCurrentDestination().getId() == R.id.navigation_dashboard && item.getItemId() == R.id.navigation_achievement) {
+                    enableBottomBar(false);
+                    isTest = true;
+                    handled = true;
+                } else {
+                    navController.navigate(item.getItemId(), null);
+                    handled = true;
+                }
+                return handled;
+
             }
-
-
-            insertWordData(myDb, activity);
-            insertAchievementData(myDb, activity);
-            insertScoreData(myDb, activity);
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            myDb.close();
-            System.out.println("DATABASE");
-        }
+        });
     }
-
 
     public void updateSharedPreferences() {
 
@@ -278,41 +317,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static void insertAchievementData(DatabaseHelper myDb, Activity activity) {
-        myDb.insertAchievementData("Number Novice", "Complete the Numbers learning module", 0, 1, false);
-        myDb.insertAchievementData("Great Greeter", "Complete the Essentials learning module", 0, 1, false);
-        myDb.insertAchievementData("Food Fight", "Complete the Food learning module", 0, 1, false);
-        myDb.insertAchievementData("Helping Hand", "Complete the Help learning module", 0, 1, false);
-        myDb.insertAchievementData("Dedicated", "Revise your saved words", 0, 1, false);
-        myDb.insertAchievementData("Pursuing Perfection", "Revise your mastered words", 0, 1, false);
-        myDb.insertAchievementData("Self-Improver", "Check out all components in your profile", 0, 3, false);
-        myDb.insertAchievementData("Lingo Learner", "Complete all learning modules", 0, 4, false);
-        myDb.insertAchievementData("Lingo Legend", "Complete a test without any mistakes", 0, 1, false);
-        myDb.insertAchievementData("Number Cruncher", "Complete the Numbers test module", 0, 1, false);
-        myDb.insertAchievementData("The Nice Guy", "Complete the Essentials test module", 0, 1, false);
-        myDb.insertAchievementData("Shef", "Complete the Food test module", 0, 1, false);
-        myDb.insertAchievementData("Public Service", "Complete the Help test module", 0, 1, false);
-        myDb.insertAchievementData("Lingo Lord", "Complete all test modules", 0, 4, false);
-        myDb.insertAchievementData("Nice Nine", "Achieve over 90% for any test", 0, 1, false);
-        myDb.insertAchievementData("Excellent Eight", "Achieve over 80% for any test", 0, 1, false);
-        myDb.insertAchievementData("Sensational Seven", "Achieve over 70% for any test", 0, 1, false);
-        myDb.insertAchievementData("Sexy Six", "Achieve over 60% for any test", 0, 1, false);
-        myDb.insertAchievementData("Did you even try?", "Achieve under 30% for any test", 0, 1, false);
-        myDb.insertAchievementData("Slick Speedster", "Get an answer correct in less than 2 seconds", 0, 1, false);
-        myDb.insertAchievementData("Instant Noodles", "Get an answer correct in less than 1 second", 0, 1, false);
-        myDb.insertAchievementData("Off to a Great Start", "Get the first answer wrong", 0, 1, false);
-        myDb.insertAchievementData("Abort?", "Get 3 answers wrong in a row", 0, 1, false);
-        myDb.insertAchievementData("Abandon Ship!", "Get 5 answers wrong in a row", 0, 1, false);
-        myDb.insertAchievementData("Oh Baby a Triple!", "Get 3 answers correct in a row", 0, 1, false);
-        myDb.insertAchievementData("Pentakill!", "Get 5 answers correct in a row", 0, 1, false);
-        myDb.insertAchievementData("Average Addition", "Visit your My Words list", 0, 1, false);
-        myDb.insertAchievementData("Avid Addition", "Add 10 words to the My Words section", 0, 10, false);
-        myDb.insertAchievementData("Awesome Addition", "Add 50 words to the My Words section", 0, 50, false);
-        myDb.insertAchievementData("Ambitious Addition", "Add 500 words to the My Words section", 0, 500, false);
-        myDb.insertAchievementData("Smart Saver", "Save 5 words", 0, 5, false);
-        myDb.insertAchievementData("Sophisticated Saver", "Save 20 words", 0, 20, false);
-        myDb.insertAchievementData("Foolish Forgetter", "Forget 10 words", 0, 10, false);
-
+    @Override
+    public void onBackPressed() {
+        if (isTest) {
+            showMessage("", "Please go back by using the button in the top left");
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public static void insertScoreData(DatabaseHelper myDb, Activity activity) {
@@ -327,11 +338,6 @@ public class MainActivity extends AppCompatActivity {
         myDb.insertScoreData("C", 0);
         myDb.insertScoreData("P", 0);
         myDb.insertScoreData("F", 0);
-        myDb.insertScoreData("Numbers", 0);
-        myDb.insertScoreData("Essentials", 0);
-        myDb.insertScoreData("Food", 0);
-        myDb.insertScoreData("Help", 0);
-
     }
 
     private void enableBottomBar(boolean enable) {
@@ -348,12 +354,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isTest) {
+    private static class initDatabase extends AsyncTask<Void, Void, Void> {
 
-        } else {
-            super.onBackPressed();
+        WeakReference<MainActivity> activityWeakReference;
+        DatabaseHelper myDb;
+
+        initDatabase(MainActivity activity) {
+            activityWeakReference = new WeakReference<MainActivity>(activity);
+            myDb = new DatabaseHelper(activity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            MainActivity activity = activityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
+
+
+            insertWordData(myDb, activity);
+            insertAchievementData(myDb, activity);
+            insertScoreData(myDb, activity);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            myDb.close();
         }
     }
 
@@ -386,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
                             new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void v) {
-                                    System.out.println("succeess");
+                                    System.out.println("success");
                                     showMessage("Translation Model downloaded", "Check out the My Words section!");
 
                                 }
@@ -411,7 +441,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
-
 
 
 }

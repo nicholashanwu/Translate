@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,7 @@ public class AchievementFragment extends Fragment {
 
     private AchievementAdapter mAdapter;
     private DatabaseHelper myDb;
+    private ExtendedFloatingActionButton mBtnBackAchievements;
 
     public AchievementFragment() {
 
@@ -50,7 +53,10 @@ public class AchievementFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        mBtnBackAchievements = view.findViewById(R.id.btnBackAchievements);
         myDb = new DatabaseHelper(getActivity());
+
 
         Cursor res = getAllAchievements();
         RecyclerView mRecyclerView = view.findViewById(R.id.rvAchievement);
@@ -61,6 +67,14 @@ public class AchievementFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.setNestedScrollingEnabled(false);
+
+        mBtnBackAchievements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getView()).navigate(R.id.action_navigation_achievement_to_navigation_dashboard);
+            }
+        });
+
 
         //res.close();
 

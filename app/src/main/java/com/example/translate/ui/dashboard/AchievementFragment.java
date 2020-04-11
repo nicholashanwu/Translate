@@ -52,7 +52,10 @@ public class AchievementFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_achievement_to_navigation_dashboard);
-                res.close();
+                if (res != null) {
+                    res.close();
+                    myDb.close();
+                }
             }
         });
 

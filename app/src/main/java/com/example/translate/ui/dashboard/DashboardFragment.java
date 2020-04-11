@@ -17,12 +17,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardFragment extends Fragment {
 
@@ -40,7 +40,7 @@ public class DashboardFragment extends Fragment {
     private RoundCornerProgressBar mPbP;
     private RoundCornerProgressBar mPbF;
     private RoundCornerProgressBar mPbAchievement;
-    private CircleImageView mBtnProfileImage;
+    private RoundedImageView mBtnProfileImage;
 
 
     public DashboardFragment() {

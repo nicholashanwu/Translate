@@ -38,22 +38,20 @@ public class TestFragment extends Fragment {
     private TextView mTxtChineseCharacter;
     private TextView mTxtLevelTitle;
     private TextView mTxtMessage;
+    private TextView mTxtProgress;
+    private TextView mTxtScore;
+    private TextView mTxtTimer;
+    private TextView mTxtViewCountDown;
     private ImageView mIvReaction;
-
     private RadioGroup mRbGroup;
     private RadioButton mRbAnswerOne;
     private RadioButton mRbAnswerTwo;
     private RadioButton mRbAnswerThree;
     private ProgressBar mProgressBar;
-    private TextView mTxtProgress;
-    private TextView mTxtScore;
-    private TextView mTxtTimer;
     private FloatingActionButton mFabSubmit;
-
     private ExtendedFloatingActionButton mBtnBack;
 
     private DatabaseHelper myDb;
-
     private Cursor res;
 
     private int percentage;
@@ -65,49 +63,31 @@ public class TestFragment extends Fragment {
     private int rightStreak = 0;
 
     public boolean answered;
-    public boolean timedOut;
-
     private int answerIndex;
-    private static final long START_TIME_IN_MILLIS = 11000;
+    private long mTimeLeftInMillis = 11000;
 
-    private TextView mTextViewCountDown;
 
     private CountDownTimer mCountDownTimer;
 
     private boolean mTimerRunning;
 
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
     private String testingType;
-
 
     private ArrayList<String> answerList = new ArrayList<>();
 
     public TestFragment() {
     }
 
-    public static TestFragment newInstance(String param1, String param2) {
-        TestFragment fragment = new TestFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
-
-
         return view;
-
-
     }
 
     @Override
@@ -121,7 +101,6 @@ public class TestFragment extends Fragment {
         mTxtChineseCharacter = view.findViewById(R.id.txtChineseCharacter);
         mTxtLevelTitle = view.findViewById(R.id.txtLevelTitle);
         mTxtMessage = view.findViewById(R.id.txtMessage);
-
         mRbGroup = view.findViewById(R.id.rbGroup);
         mRbAnswerOne = view.findViewById(R.id.rbAnswerOne);
         mRbAnswerTwo = view.findViewById(R.id.rbAnswerTwo);
@@ -134,22 +113,18 @@ public class TestFragment extends Fragment {
 
         testingType = getArguments().getString("testingType");
 
-
         res = getData(testingType);
 
-
-        //getData(testingType);
         setParameters(res);
-
         setTitle(testingType);
 
-        mTxtMessage.setText("");
+
 
 
         showNextQuestion(res);
 
         /////////////
-        mTextViewCountDown = view.findViewById(R.id.txtTimer);
+        mTxtViewCountDown = view.findViewById(R.id.txtTimer);
 
         updateCountDownText();
 
@@ -298,15 +273,11 @@ public class TestFragment extends Fragment {
                 }
             }
 
-
-
         }
         showSolution(answerIndex, res);
     }
 
     private void showSolution(int answerIndex, Cursor res) {
-        RadioButton rbSelected = getView().findViewById(mRbGroup.getCheckedRadioButtonId());
-
         mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
         mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
         mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
@@ -327,7 +298,6 @@ public class TestFragment extends Fragment {
                 mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
                 mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
                 break;
-
         }
         res.move(1);
     }
@@ -400,7 +370,11 @@ public class TestFragment extends Fragment {
         myDb.updateScore("Tests Taken");
 
         showMessage("You're Finished!");
-        res.close();
+        if (res != null) {
+            res.close();
+            myDb.close();
+        }
+
     }
 
     private ArrayList<String> getAnswerList(int currentCardNumber, Cursor res) {
@@ -516,6 +490,7 @@ public class TestFragment extends Fragment {
     }
 
     public void setParameters(Cursor res) {
+        mTxtMessage.setText("");
         mProgressBar.setProgress(1);
         mTxtProgress.setText("1/" + res.getCount());
         res.moveToFirst();
@@ -587,18 +562,17 @@ public class TestFragment extends Fragment {
     }
 
     private void resetTimer() {
-        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        mTimeLeftInMillis = 11000;
         updateCountDownText();
 
     }
 
     private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
 
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds);
 
-        mTextViewCountDown.setText(timeLeftFormatted);
+        mTxtViewCountDown.setText(timeLeftFormatted);
     }
 
     private void showBackConfirmation(String title, String message) {
@@ -620,7 +594,11 @@ public class TestFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_test_to_navigation_test_home);
                 pauseTimer();
-                res.close();
+                if (res != null) {
+                    res.close();
+                    myDb.close();
+                }
+
             }
         });
 

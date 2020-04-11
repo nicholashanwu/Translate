@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TestHomeFragment extends Fragment {
 
@@ -40,7 +40,7 @@ public class TestHomeFragment extends Fragment {
         Button mBtnStartFood = view.findViewById(R.id.btnStartFood);
         Button mBtnStartHelp = view.findViewById(R.id.btnStartHelp);
         ImageView mIvTestHome = view.findViewById(R.id.ivTestHome);
-        CircleImageView mBtnProfileImageTest = view.findViewById(R.id.btnProfileImageTest);
+        RoundedImageView mBtnProfileImageTest = view.findViewById(R.id.btnProfileImageTest);
         ImageView mIvNumbers = view.findViewById(R.id.ivNumbers);
         ImageView mIvGreetings = view.findViewById(R.id.ivGreetings);
         ImageView mIvFood = view.findViewById(R.id.ivFood);

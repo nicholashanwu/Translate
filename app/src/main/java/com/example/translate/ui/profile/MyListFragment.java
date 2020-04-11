@@ -83,7 +83,7 @@ public class MyListFragment extends Fragment {
         myDb = new DatabaseHelper(getActivity());
 
         final RecyclerView mRecyclerView = view.findViewById(R.id.rvMyWords);
-        Cursor res = myDb.getCategory("custom");
+        res = myDb.getCategory("custom");
 
         if (res.getCount() == 0) {
             mTxtPlaceholder.setVisibility(View.VISIBLE);
@@ -101,7 +101,6 @@ public class MyListFragment extends Fragment {
                 );
             }
         }
-        res.close();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -155,9 +154,14 @@ public class MyListFragment extends Fragment {
             }
 
         });
+
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (res != null) {
+                    res.close();
+                    myDb.close();
+                }
                 Navigation.findNavController(getView()).navigate(R.id.action_navigation_my_list_fragment_to_navigation_profile);
             }
         });

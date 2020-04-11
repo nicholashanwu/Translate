@@ -18,12 +18,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.translate.DatabaseHelper;
 import com.example.translate.R;
 import com.example.translate.ui.dashboard.AchievementAdapter;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
 
@@ -45,7 +45,7 @@ public class ProfileFragment extends Fragment {
         CardView mBtnStartLearned = view.findViewById(R.id.btnStartLearned);
         CardView mBtnStartMyList = view.findViewById(R.id.btnStartMyList);
         HorizontalScrollView mHsvCards = view.findViewById(R.id.hsvCards);
-        CircleImageView mBtnProfileImageProfile = view.findViewById(R.id.btnProfileImageProfile);
+        RoundedImageView mBtnProfileImageProfile = view.findViewById(R.id.btnProfileImageProfile);
         ImageView mIvSaved = view.findViewById(R.id.ivSaved);
         ImageView mIvMastered = view.findViewById(R.id.ivMastered);
         ImageView mIvMyList = view.findViewById(R.id.ivMyList);

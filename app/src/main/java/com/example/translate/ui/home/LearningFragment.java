@@ -121,7 +121,10 @@ public class LearningFragment extends Fragment {
 
                     checkAchievement();
 
-                    res.close();
+                    if (res != null) {
+                        res.close();
+                        myDb.close();
+                    }
 
                     returnToFragment();
 
@@ -133,33 +136,18 @@ public class LearningFragment extends Fragment {
         mFabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Cursor temp = myDb.getSaveStatus(res.getString(1));
                 temp.moveToFirst();
 
                 if (temp.getString(6).equals("1")) {
-                    myDb.updateSave(res.getString(1), false);
-
-                    mTxtSavedMessage.setVisibility(View.GONE);
-                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
-
-                    mTxtUnsavedMessage.setVisibility(View.VISIBLE);
-                    YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtUnsavedMessage);
-
-                    mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+                    markAsUnsaved();
                 } else {
-                    myDb.updateSave(res.getString(1), true);
-
-
-                    mTxtUnsavedMessage.setVisibility(View.GONE);
-                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
-
-                    mTxtSavedMessage.setVisibility(View.VISIBLE);
-                    YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtSavedMessage);
-
-                    mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+                    markAsSaved();
                 }
-                temp.close();
+
+                if (temp != null) {
+                    temp.close();
+                }
             }
         });
 
@@ -167,18 +155,9 @@ public class LearningFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (mTxtPinyin.getText().equals(res.getString(3))) {
-                    mTxtPinyin.setText(res.getString(1));
-
-                    mTxtAnswerMessage.setVisibility(View.VISIBLE);
-                    YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtAnswerMessage);
-
-                    mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
+                    hideAnswer();
                 } else {
-                    mTxtPinyin.setText(res.getString(3));
-
-                    YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
-
-                    mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
+                    showAnswer();
                 }
             }
         });
@@ -284,9 +263,7 @@ public class LearningFragment extends Fragment {
         builder.setPositiveButton("AWESOME", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
-
         });
 
         txtTitle.setText(title);
@@ -305,9 +282,7 @@ public class LearningFragment extends Fragment {
         builder.setPositiveButton("AWESOME", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
             }
-
         });
 
         txtTitle.setText(title);
@@ -322,7 +297,6 @@ public class LearningFragment extends Fragment {
         ImageButton imageButton = view.findViewById(R.id.image);
 
         imageButton.setImageResource(R.mipmap.over_30);
-
 
         builder.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
@@ -339,15 +313,16 @@ public class LearningFragment extends Fragment {
                 } else {
                     Navigation.findNavController(getView()).navigate(R.id.action_navigation_learning_to_navigation_home);
                 }
-                res.close();
+                if (res != null) {
+                    res.close();
+                    myDb.close();
+                }
             }
         });
-
 
         txtTitle.setText(title);
         builder.setView(view);
         builder.show();
-
     }
 
     private void hideMessages() {
@@ -385,5 +360,46 @@ public class LearningFragment extends Fragment {
         }
     }
 
+    private void markAsUnsaved() {
+        myDb.updateSave(res.getString(1), false);
+
+        mTxtSavedMessage.setVisibility(View.GONE);
+        YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtSavedMessage);
+
+        mTxtUnsavedMessage.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtUnsavedMessage);
+
+        mFabSave.setImageResource(R.drawable.outline_bookmark_border_white_48);
+    }
+
+    private void markAsSaved() {
+        myDb.updateSave(res.getString(1), true);
+
+
+        mTxtUnsavedMessage.setVisibility(View.GONE);
+        YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtUnsavedMessage);
+
+        mTxtSavedMessage.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtSavedMessage);
+
+        mFabSave.setImageResource(R.drawable.baseline_bookmark_white_48);
+    }
+
+    private void hideAnswer() {
+        mTxtPinyin.setText(res.getString(1));
+
+        mTxtAnswerMessage.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.FadeInUp).duration(300).playOn(mTxtAnswerMessage);
+
+        mFabAnswer.setImageResource(R.drawable.baseline_visibility_white_48);
+    }
+
+    private void showAnswer() {
+        mTxtPinyin.setText(res.getString(3));
+
+        YoYo.with(Techniques.FadeOutDown).duration(300).playOn(mTxtAnswerMessage);
+
+        mFabAnswer.setImageResource(R.drawable.outline_visibility_off_white_48);
+    }
 
 }

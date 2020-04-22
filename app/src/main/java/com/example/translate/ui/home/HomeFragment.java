@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment {
 		ImageView mIvFood = view.findViewById(R.id.ivFood);
 		ImageView mIvHelp = view.findViewById(R.id.ivHelp);
 		Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImage);
-		Glide.with(getContext()).load(R.drawable.wall_of_china).apply(new RequestOptions().override(800, 800)).into(mIvHome);
+        Glide.with(getContext()).load(R.drawable.wall_of_china).apply(new RequestOptions().centerCrop()).into(mIvHome);
 		Glide.with(getContext()).load(R.drawable.undraw_visual_data).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
 		Glide.with(getContext()).load(R.drawable.undraw_conversation).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);
 		Glide.with(getContext()).load(R.drawable.undraw_hamburger).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvFood);

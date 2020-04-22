@@ -48,7 +48,7 @@ public class TestHomeFragment extends Fragment {
 
 
         Glide.with(getContext()).load(R.drawable.tzuyu).apply(new RequestOptions().override(100, 100)).into(mBtnProfileImageTest);
-        Glide.with(getContext()).load(R.drawable.pearl_tower).apply(new RequestOptions().override(800, 800)).into(mIvTestHome);
+        Glide.with(getContext()).load(R.drawable.pearl_tower).apply(new RequestOptions().centerCrop()).into(mIvTestHome);
 
         Glide.with(getContext()).load(R.drawable.undraw_visual_data_red).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvNumbers);
         Glide.with(getContext()).load(R.drawable.undraw_conversation_red).apply(new RequestOptions().override(800, 600).centerCrop()).into(mIvGreetings);

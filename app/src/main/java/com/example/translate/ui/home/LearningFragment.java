@@ -2,6 +2,7 @@ package com.example.translate.ui.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
@@ -64,6 +65,12 @@ public class LearningFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
 
         return view;
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
     }
 
     @Override

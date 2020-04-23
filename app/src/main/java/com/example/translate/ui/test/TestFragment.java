@@ -35,6 +35,7 @@ import androidx.navigation.Navigation;
 
 public class TestFragment extends Fragment {
 
+    private static final String TAG = "TestFragment";
     private TextView mTxtChineseCharacter;
     private TextView mTxtLevelTitle;
     private TextView mTxtMessage;
@@ -51,6 +52,8 @@ public class TestFragment extends Fragment {
     private FloatingActionButton mFabSubmit;
     private ExtendedFloatingActionButton mBtnBack;
 
+    private View view;
+
     private DatabaseHelper myDb;
     private Cursor res;
 
@@ -65,7 +68,6 @@ public class TestFragment extends Fragment {
     public boolean answered;
     private int answerIndex;
     private long mTimeLeftInMillis = 11000;
-
 
     private CountDownTimer mCountDownTimer;
 
@@ -86,7 +88,7 @@ public class TestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_test, container, false);
+        view = inflater.inflate(R.layout.fragment_test, container, false);
         return view;
     }
 
@@ -118,12 +120,8 @@ public class TestFragment extends Fragment {
         setParameters(res);
         setTitle(testingType);
 
-
-
-
         showNextQuestion(res);
 
-        /////////////
         mTxtViewCountDown = view.findViewById(R.id.txtTimer);
 
         updateCountDownText();
@@ -164,6 +162,11 @@ public class TestFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void showNextQuestion(Cursor res) {
@@ -278,25 +281,25 @@ public class TestFragment extends Fragment {
     }
 
     private void showSolution(int answerIndex, Cursor res) {
-        mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
-        mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
-        mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
+        mRbAnswerOne.setTextColor(Color.parseColor("#FF5252"));
+        mRbAnswerTwo.setTextColor(Color.parseColor("#FF5252"));
+        mRbAnswerThree.setTextColor(Color.parseColor("#FF5252"));
 
         switch (answerIndex) {
             case 1:
-                mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorGreen));
-                mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
-                mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
+                mRbAnswerOne.setTextColor(Color.parseColor("#D4E157"));
+                mRbAnswerTwo.setTextColor(Color.parseColor("#FF5252"));
+                mRbAnswerThree.setTextColor(Color.parseColor("#FF5252"));
                 break;
             case 2:
-                mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorGreen));
-                mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
-                mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorRed));
+                mRbAnswerTwo.setTextColor(Color.parseColor("#D4E157"));
+                mRbAnswerOne.setTextColor(Color.parseColor("#FF5252"));
+                mRbAnswerThree.setTextColor(Color.parseColor("#FF5252"));
                 break;
             case 3:
-                mRbAnswerThree.setTextColor(getResources().getColor(R.color.colorGreen));
-                mRbAnswerOne.setTextColor(getResources().getColor(R.color.colorRed));
-                mRbAnswerTwo.setTextColor(getResources().getColor(R.color.colorRed));
+                mRbAnswerThree.setTextColor(Color.parseColor("#D4E157"));
+                mRbAnswerOne.setTextColor(Color.parseColor("#FF5252"));
+                mRbAnswerTwo.setTextColor(Color.parseColor("#FF5252"));
                 break;
         }
         res.move(1);
@@ -517,13 +520,11 @@ public class TestFragment extends Fragment {
             mIvReaction.setVisibility(View.VISIBLE);
             YoYo.with(Techniques.FadeInUp).duration(300).playOn(mIvReaction);
             YoYo.with(Techniques.FadeOutUp).duration(300).delay(700).playOn(mIvReaction);
-            YoYo.with(Techniques.Bounce).duration(300).playOn(mRbGroup.getChildAt(answerIndex - 1));
         } else {
             mIvReaction.setImageResource(badList.get(0));
             mIvReaction.setVisibility(View.VISIBLE);
             YoYo.with(Techniques.FadeInUp).duration(300).playOn(mIvReaction);
             YoYo.with(Techniques.FadeOutUp).duration(300).delay(700).playOn(mIvReaction);
-            YoYo.with(Techniques.Shake).duration(300).playOn(mRbGroup.getChildAt(answerIndex - 1));
         }
 
     }
